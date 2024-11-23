@@ -1,21 +1,7 @@
 import random
-
-total_skill = {
-    "Level 1": {"Bark": random.randint(20, 50)},
-    "Level 2": {
-        "Scratch": random.randint(20, 50),
-        "Digging": random.randint(20, 50),
-    },
-    "Level 3": {
-        "Tail Whip": random.randint(20, 50),
-        "Bite": random.randint(20, 50),
-    }
-}
-
+from make_board_each_level import *
 
 def make_character():
-    # Make Character
-    # Exp full = 1000?
     return {
         "Stat": {
             "HP": 100,
