@@ -12,6 +12,7 @@ total_skill = {
     }
 }
 
+
 def make_character():
     # Make Character
     # Exp full = 1000?
@@ -37,6 +38,13 @@ def make_character():
         },
         "Inventory": {}
     }
+
+
+def make_character_location(grid):
+    first_location = (1, 1)
+    prev_cell_content = grid[first_location[0]][first_location[1]]
+    grid[first_location[0]][first_location[1]] = '🐶'
+    return first_location, prev_cell_content
 
 
 def game():
