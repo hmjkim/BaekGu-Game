@@ -72,3 +72,8 @@ def make_board_lv1():
                 grid[row][col] = '.'
 
     return grid
+
+
+def display_grid(grid):
+    for row in grid:
+        print(' '.join(row))
