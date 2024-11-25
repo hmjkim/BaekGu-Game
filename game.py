@@ -3,6 +3,19 @@ from make_board_each_level import *
 import time
 
 def make_character():
+    skill_set = {
+        "Level 1": {
+            "Bark": random.randint(20, 50),
+        },
+        "Level 2": {
+            "Scratch": random.randint(20, 50),
+            "Digging": random.randint(20, 50),
+        },
+        "Level 3": {
+            "Tail Whip": random.randint(20, 50),
+            "Bite": random.randint(20, 50),
+        }
+    }
     return {
         "Stat": {
             "HP": 100,
@@ -13,15 +26,8 @@ def make_character():
         },
         "Skill": {
             "Basic Attack": random.randint(10, 30),
-            "Level 1": {"Bark": random.randint(20, 50)},
-            "Level 2": {
-                "Scratch": random.randint(20, 50),
-                "Digging": random.randint(20, 50),
-            },
-            "Level 3": {
-                "Tail Whip": random.randint(20, 50),
-                "Bite": random.randint(20, 50),
-            }
+            "Current Skills": skill_set["Level 1"],
+            "Skill Set": skill_set
         },
         "Inventory": {}
     }
