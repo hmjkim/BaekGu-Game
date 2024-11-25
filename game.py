@@ -70,7 +70,7 @@ def get_user_choice(character):
         while direction_input not in direction:
             print('again1')
             direction_input = input("enter the direction they wish to travel").lower()
-        return direction_input
+        return direction_input, character
 
 
 def move_character_valid_move(grid, position, direction, prev_cell_content, character):
@@ -127,12 +127,17 @@ def game():
     achieved_goal_lv1 = False
     while not achieved_goal_lv1:
         display_grid(grid)
-        direction = get_user_choice(character)
+
+        if character["Stat"]['Hunger'] == 1:
+            print('alert!!!!!!!!!!!!!!!!!!!! your hunger is now 1! u must sleep now')
+
+        direction, character = get_user_choice(character)
         if direction == 'q':
             print("end")
             achieved_goal_lv1 = True
         (new_row, new_col), prev_cell_content, character = move_character_valid_move(grid, first_location, direction, prev_cell_content, character)
         first_location = (new_row, new_col)
+        check_character_hunger(character)
 
 
 
