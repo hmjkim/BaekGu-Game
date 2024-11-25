@@ -2,6 +2,7 @@ import random
 from make_board_each_level import *
 import time
 
+
 def make_character():
     skill_set = {
         "Level 1": {
@@ -54,6 +55,8 @@ def get_user_choice(character):
         if user_wanted_input == '4':
             print("go to sleep for 15sec")
             time.sleep(15)
+            character['Stat']['Hunger'] = 10
+            character['Stat']['HP'] = 100
             user_wanted_input = input("which do you want to do again? ['1: Direction','2: Inventory','3: Stat','4: Sleep']")
         if user_wanted_input not in types_input:
             print("invalid input")
@@ -64,7 +67,38 @@ def get_user_choice(character):
         for count, element in enumerate(direction):
             print("%s : %s." % (full_direction[count], element), end=' ')
         direction_input = input("\nenter the direction they wish to travel").lower()
+        while direction_input not in direction:
+            print('again1')
+            direction_input = input("enter the direction they wish to travel").lower()
         return direction_input
+
+
+def move_character_valid_move(grid, position, direction, prev_cell_content, character):
+    row, col = position
+    new_row, new_col = row, col
+
+    if direction == 'w':
+        new_row -= 1
+    elif direction == 's':
+        new_row += 1
+    elif direction == 'a':
+        new_col -= 1
+    elif direction == 'd':
+        new_col += 1
+    else:
+        print("Invalid input.")
+
+    if grid[new_row][new_col] != '#':
+        grid[row][col] = prev_cell_content
+        new_prev_cell_content = grid[new_row][new_col]
+        grid[new_row][new_col] = '🐶'
+        character["Stat"]["Hunger"] -= 1
+        return (new_row, new_col), new_prev_cell_content, character
+    else:
+        print("can't move this way")
+        return (row, col), prev_cell_content, character
+
+
 
 
 def game():
@@ -77,7 +111,6 @@ def game():
 
     user_name = input("Hi, there! What's your name? : ")
 
-
     first_location, prev_cell_content = make_character_location(grid)
     character = make_character()
 
@@ -88,6 +121,8 @@ def game():
         if direction == 'q':
             print("end")
             achieved_goal_lv1 = True
+        (new_row, new_col), prev_cell_content, character = move_character_valid_move(grid, first_location, direction, prev_cell_content, character)
+        first_location = (new_row, new_col)
 
 
 
