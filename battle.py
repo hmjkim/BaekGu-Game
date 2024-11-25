@@ -65,7 +65,7 @@ def battle(character):
                               enemy_stat["Skill Damage"]["Level 2"],
                               'Web Trap')
 
-        enemy = random.choice([mouse, spider])
+        enemy = random.choice([mouse, spider]).copy()
 
     elif character["Stat"]["Level"] == 2:
         # Mid-Level Mobs (Ground Level)
@@ -81,7 +81,7 @@ def battle(character):
                                  enemy_stat["Basic Attack"]["Level 3"],
                                  enemy_stat["Skill Damage"]["Level 3"],
                                  'Hiss')
-        enemy = random.choice[robotic_vacuum, guard_cat]
+        enemy = random.choice([robotic_vacuum, guard_cat]).copy()
     else:
         # High Level Mobs (Upper Level - Attic)
         giant_moth = make_enemies('Giant Moth',
@@ -96,7 +96,7 @@ def battle(character):
                              enemy_stat["Basic Attack"]["Level 4"],
                              enemy_stat["Skill Damage"]["Level 4"],
                              'Chill Touch')
-        enemy = random.choice[giant_moth, ghost]
+        enemy = random.choice([giant_moth, ghost]).copy()
 
     # Display enemy information
     print("--------------------------------------------\n"
@@ -107,8 +107,19 @@ def battle(character):
           f"Level: {enemy['Level']}\n"
           f"HP: currentHP/{enemy['HP']}\n"
           "--------------------------------------------")
+
+    # Get user choice
     while character["Stat"]["HP"] > 0 and enemy["HP"] > 0:
-        input('Enter battle options ("Attack", "Skill", or "Flee" to run away):')
+        options = ['Attack', 'Skill', 'Flee']
+        user_choice = input(f'Enter battle options ("%s", "%s", or "%s" to run away):' % (options[0], options[1], options[2]))
+        if user_choice.lower() == "attack":
+            print("attack")
+        elif user_choice.lower() == "skill":
+            print("skill")
+        elif user_choice.lower() == "flee":
+            print("flee")
+        else:
+            print("Invalid input")
 
 def main():
     character = make_character()
