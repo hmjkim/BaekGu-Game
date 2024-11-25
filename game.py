@@ -99,6 +99,16 @@ def move_character_valid_move(grid, position, direction, prev_cell_content, char
         return (row, col), prev_cell_content, character
 
 
+def check_character_hunger(character):
+    if character["Stat"]['Hunger'] == 0:
+        print("force to sleep for 30sec")
+        for i in range(1, 31):
+            time.sleep(1)
+            print("%d sec" % i)
+        character["Stat"]["Hunger"] = 10
+        character["Stat"]["HP"] = 100
+        return character
+
 
 
 def game():
