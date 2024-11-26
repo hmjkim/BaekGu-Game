@@ -44,12 +44,12 @@ def configure_enemy_stat():
     }
 
 
-def make_enemies(name, icon, description, hp_range, basic_attack, skill_damage, skill_name):
+def make_enemies(name, icon, description, level, hp_range, basic_attack, skill_damage, skill_name):
     return {
             "Name": name,
             "Icon": icon,
             "Description": description,
-            "Level": 1,
+            "Level": level,
             "HP": random.randint(*hp_range),
             # "MP": 50,
             "Attack":
@@ -75,6 +75,7 @@ def battle(character):
                              '🐭',
                              "A tiny mouse nibbling on a piece of cheese. It looks harmless, "
                              "but don't let your guard down!",
+                             '1',
                              enemy_stat["HP Range"]["Level 1"],
                              enemy_stat["Basic Attack"]["Level 1"],
                              enemy_stat["Skill Damage"]["Level 1"],
@@ -83,6 +84,7 @@ def battle(character):
         spider = make_enemies('Spider',
                               '🕷️',
                               'Spider Description',
+                              '2',
                               enemy_stat["HP Range"]["Level 2"],
                               enemy_stat["Basic Attack"]["Level 2"],
                               enemy_stat["Skill Damage"]["Level 2"],
@@ -95,6 +97,7 @@ def battle(character):
         robotic_vacuum = make_enemies('Robotic Vacuum',
                                       '🤖',
                                       'Robotic Vacuum Description',
+                                      '2',
                                       enemy_stat["HP Range"]["Level 2"],
                                       enemy_stat["Basic Attack"]["Level 2"],
                                       enemy_stat["Skill Damage"]["Level 2"],
@@ -102,6 +105,7 @@ def battle(character):
         guard_cat = make_enemies('Guard Cat',
                                  '🐱',
                                  'Guard Cat Description',
+                                 '3',
                                  enemy_stat["HP Range"]["Level 3"],
                                  enemy_stat["Basic Attack"]["Level 3"],
                                  enemy_stat["Skill Damage"]["Level 3"],
@@ -114,6 +118,7 @@ def battle(character):
         giant_moth = make_enemies('Giant Moth',
                                   '🪰',
                                   'Giant Moth Description',
+                                  '3',
                                   enemy_stat["HP Range"]["Level 3"],
                                   enemy_stat["Basic Attack"]["Level 3"],
                                   enemy_stat["Skill Damage"]["Level 3"],
@@ -121,6 +126,7 @@ def battle(character):
         ghost = make_enemies('Ghost',
                              '👻',
                              'Ghost Description',
+                             '4',
                              enemy_stat["HP Range"]["Level 4"],
                              enemy_stat["Basic Attack"]["Level 4"],
                              enemy_stat["Skill Damage"]["Level 4"],
