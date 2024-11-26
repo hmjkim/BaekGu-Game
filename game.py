@@ -61,7 +61,9 @@ def get_user_choice(character):
             user_wanted_input = input("which do you want to do again? ['1: Direction','2: Inventory','3: Stat','4: Sleep']")
         if user_wanted_input == '4':
             print("go to sleep for 15sec")
-            time.sleep(15)
+            for i in range(15):
+                time.sleep(1)
+                print("%d sec" % i)
             character['Stat']['Hunger'] = 10
             character['Stat']['HP'] = 100
             user_wanted_input = input("which do you want to do again? ['1: Direction','2: Inventory','3: Stat','4: Sleep']")
