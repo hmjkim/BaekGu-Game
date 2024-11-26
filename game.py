@@ -26,16 +26,18 @@ def make_character():
             "HP": 100,
             "Current HP": 100,
             "Level": 1,
-            "Exp": 0,
+            "Exp": 1500,
+            #나중에 바꾸끼
             "Heart": 10,
-            "Hunger": 10
+            "Hunger": 100
+            #나중에 바꾸끼
         },
         "Skill": {
             "Basic Attack": random.randint(10, 30),
             "Current Skills": skill_set["Level 1"],
             "Skill Set": skill_set
         },
-        "Inventory": {}
+        "Inventory": {"key": 2}
     }
 
 
@@ -71,10 +73,10 @@ def get_user_choice(character):
         full_direction = ['North', 'West', 'South', 'East', 'Quit']
         for count, element in enumerate(direction):
             print("%s : %s." % (full_direction[count], element), end=' ')
-        direction_input = input("\nenter the direction they wish to travel").lower()
+        direction_input = input("\nenter the direction they wish to travel\n").lower()
         while direction_input not in direction:
             print('again1')
-            direction_input = input("enter the direction they wish to travel").lower()
+            direction_input = input("\nenter the direction they wish to travel\n").lower()
         return direction_input, character
 
 
@@ -132,9 +134,6 @@ def game():
     Drive the game.
     """
     grid = make_board_lv1()
-    grid_lv2 = make_board_lv2()
-    grid_lv3 = make_board_lv3()
-
     user_name = input("Hi, there! What's your name? : ")
 
     first_location, prev_cell_content = make_character_location(grid)
@@ -154,6 +153,11 @@ def game():
         (new_row, new_col), prev_cell_content, character = move_character_valid_move(grid, first_location, direction, prev_cell_content, character)
         first_location = (new_row, new_col)
         check_character_hunger(character)
+        there_is_a_challenger = check_probability(0.5)
+        if there_is_a_challenger:
+            gamelist = ['battle', 'hangman', 'memory game']
+            print(random.choice(gamelist))
+            # gamelist에 게임함수들 불러와서 넣고 게임 이기면 보상받고, charater return.
 
         if check_character_1_level_location_exp(first_location, character):
             grid = make_board_lv2()
