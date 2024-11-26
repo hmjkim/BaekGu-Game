@@ -3,6 +3,10 @@ from make_board_each_level import *
 import time
 
 
+def check_probability(rate):
+    return random.random() <= rate
+
+
 def make_character():
     skill_set = {
         "Level 1": {
@@ -20,6 +24,7 @@ def make_character():
     return {
         "Stat": {
             "HP": 100,
+            "Current HP": 100,
             "Level": 1,
             "Exp": 0,
             "Heart": 10,
