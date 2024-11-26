@@ -23,7 +23,7 @@ def make_character():
     }
     return {
         "Stat": {
-            "HP": 100,
+            "HP": 500,
             "Current HP": 100,
             "Level": 1,
             "Exp": 1500,
@@ -31,6 +31,7 @@ def make_character():
             "Heart": 10,
             "Hunger": 100
             #나중에 바꾸끼
+
         },
         "Skill": {
             "Basic Attack": random.randint(10, 30),
@@ -131,6 +132,13 @@ def check_character_2_level_location_exp(first_location, character):
         return True
 
 
+def check_character_3_level_location_for_final(first_location, character):
+    if first_location == (4, 4) and character['Stat']['Level'] == 3:
+        print('마지막 보스를 만나러 갑니다 화이팅!')
+        print("bosee")
+        return True
+
+
 def game():
     """
     Drive the game.
@@ -188,6 +196,10 @@ def game():
                                       "Scratch": random.randint(20, 50),
                                       "Digging": random.randint(20, 50),
                                   }, "Level 3": {"Tail Whip": random.randint(20, 50), "Bite": random.randint(20, 50)}}
+
+        if check_character_3_level_location_for_final(first_location, character):
+            print("game clear! good job!")
+            break
 
 
 def main():
