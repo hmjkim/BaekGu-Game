@@ -1,5 +1,20 @@
 import random
+from pprint import pprint
+import time
+
 from game import make_character
+
+attack_descriptions = [
+    "You strike fiercely, leaving a mark on the enemy!",
+    "Your attack lands cleanly, leaving the enemy struggling to recover!",
+    "With a focused attack, you manage to break through the enemy's guard, causing visible pain!"
+    "Your powerful attack stunned the enemy.",
+    "Your strike pierced through the enemy with precision."
+]
+
+def attack_description(enemy):
+    description = random.choice(attack_descriptions)
+    print(description.replace("enemy", enemy))
 
 def configure_enemy_stat():
     # Configure enemies
@@ -35,7 +50,7 @@ def make_enemies(name, description, hp_range, basic_attack, skill_damage, skill_
             "Description": description,
             "Level": 1,
             "HP": random.randint(*hp_range),
-            "MP": 50,
+            # "MP": 50,
             "Attack":
                 {
                     f"{skill_name}": random.randint(*skill_damage),
@@ -65,8 +80,8 @@ def battle(character):
                               enemy_stat["Skill Damage"]["Level 2"],
                               'Web Trap')
 
-        enemy = random.choice([mouse, spider]).copy()
-
+        enemy = random.choice([mouse, spider])
+        enemy_copy = enemy.copy()
     elif character["Stat"]["Level"] == 2:
         # Mid-Level Mobs (Ground Level)
         robotic_vacuum = make_enemies('Robotic Vacuum',
@@ -81,7 +96,9 @@ def battle(character):
                                  enemy_stat["Basic Attack"]["Level 3"],
                                  enemy_stat["Skill Damage"]["Level 3"],
                                  'Hiss')
-        enemy = random.choice([robotic_vacuum, guard_cat]).copy()
+
+        enemy = random.choice([robotic_vacuum, guard_cat])
+        enemy_copy = enemy.copy()
     else:
         # High Level Mobs (Upper Level - Attic)
         giant_moth = make_enemies('Giant Moth',
@@ -96,7 +113,8 @@ def battle(character):
                              enemy_stat["Basic Attack"]["Level 4"],
                              enemy_stat["Skill Damage"]["Level 4"],
                              'Chill Touch')
-        enemy = random.choice([giant_moth, ghost]).copy()
+        enemy = random.choice([giant_moth, ghost])
+        enemy_copy = enemy.copy()
 
     # Display enemy information
     print("--------------------------------------------\n"
@@ -105,21 +123,47 @@ def battle(character):
           f"{enemy['Name']}\n"
           f"{enemy['Description']}\n"
           f"Level: {enemy['Level']}\n"
-          f"HP: currentHP/{enemy['HP']}\n"
+          f"HP: {enemy_copy['HP']}/{enemy['HP']}\n"
           "--------------------------------------------")
 
     # Get user choice
-    while character["Stat"]["HP"] > 0 and enemy["HP"] > 0:
+    character_hp = character["Stat"]["Current HP"]
+    while character_hp > 0:
         options = ['Attack', 'Skill', 'Flee']
         user_choice = input(f'Enter battle options ("%s", "%s", or "%s" to run away):' % (options[0], options[1], options[2]))
         if user_choice.lower() == "attack":
-            print("attack")
+            print("basic attack description")
+            enemy_copy['HP'] -= character["Skill"]['Basic Attack']
+            print("TODO: You attacked the enemy")
+            print(f'*** {enemy_copy['Name']} HP is now {enemy_copy['HP']}/{enemy['HP']} ***')
         elif user_choice.lower() == "skill":
-            print("skill")
+            print("skill description")
+
+            current_skills = character['Skill']['Current Skills']
+            formatted_skill = '\n'.join(current_skills.keys())
+            skill_choice = input("--------------------------------------------\n"
+                                 "⚔️ Skills: \n"
+                                 f"{formatted_skill}\n"
+                                 "--------------------------------------------\n"
+                                 "Choose skill you would like to use:")
+            print("TODO(Update this description): You used this {skill} on the enemy")
+            selected_skill_damage = current_skills[skill_choice.title()]
+            enemy_copy['HP'] -= selected_skill_damage
+            print(f'*** {enemy_copy['Name']}\'s HP is now {enemy_copy['HP']}/{enemy['HP']} ***')
         elif user_choice.lower() == "flee":
-            print("flee")
+            print(f"{enemy["Name"]} seems to be too strong for me.. Let me retreat before it's too late!")
+            character["Heart"] -= 1
+
         else:
             print("Invalid input")
+        if enemy_copy["HP"] > 0:
+            # ADD TIME HERE
+            time.sleep(2)
+            enemy_skill = random.choice(list(enemy_copy['Attack'].items()))
+            character_hp -= enemy_skill[1]
+            print("TODO: Ouch! Enemy attacked you!")
+            print(f'*** Your HP is now {character_hp}/{character['Stat']['HP']} ***')
+
 
 def main():
     character = make_character()
