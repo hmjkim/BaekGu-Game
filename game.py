@@ -110,6 +110,17 @@ def check_character_hunger(character):
         return character
 
 
+def check_character_1_level_location_exp(first_location, character):
+    if first_location == (7, 1) and character['Inventory']['key'] > 1 and character['Stat']['Level'] == 1 and character['Stat']['Exp'] >= 1000 :
+        print('1렙 claer! 1렙 up 다음 2렙 맵으로 move')
+        return True
+
+
+def check_character_2_level_location_exp(first_location, character):
+    if first_location == (4, 8) and character['Inventory']['key'] > 1 and character['Stat']['Level'] == 2 and character['Stat']['Exp'] >= 1500 :
+        print('2렙 claer! 1렙 up 다음 3렙 맵으로 move')
+        return True
+
 
 def game():
     """
@@ -139,6 +150,33 @@ def game():
         first_location = (new_row, new_col)
         check_character_hunger(character)
 
+        if check_character_1_level_location_exp(first_location, character):
+            grid = make_board_lv2()
+            first_location, prev_cell_content = make_character_location(grid)
+            character['Stat']['HP'] = 150
+            character['Stat']['Level'] = 2
+            character['Stat']['Exp'] = 1500
+            # 나중에 Exp = 0으로
+            character['Stat']['Hunger'] = 100
+            character['Skill'] = {"Basic Attack": random.randint(10, 30),
+                                  "Level1": {"Bark": random.randint(20, 50)},
+                                  "Level2": {
+                                      "Scratch": random.randint(20, 50),
+                                      "Digging": random.randint(20, 50),
+                                  }}
+        if check_character_2_level_location_exp(first_location, character):
+            grid = make_board_lv3()
+            first_location, prev_cell_content = make_character_location(grid)
+            character['Stat']['HP'] = 200
+            character['Stat']['Level'] = 3
+            character['Stat']['Exp'] = 0
+            character['Stat']['Hunger'] = 100
+            character['Skill'] = {"Basic Attack": random.randint(10, 30),
+                                  "Level1": {"Bark": random.randint(20, 50)},
+                                  "Level2": {
+                                      "Scratch": random.randint(20, 50),
+                                      "Digging": random.randint(20, 50),
+                                  }, "Level 3": {"Tail Whip": random.randint(20, 50), "Bite": random.randint(20, 50)}}
 
 
 def main():
