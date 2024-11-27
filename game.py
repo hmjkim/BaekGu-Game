@@ -137,7 +137,15 @@ def check_character_3_level_location_for_final(first_location, character):
     if first_location == (4, 4) and character['Stat']['Level'] == 3:
         print('마지막 보스를 만나러 갑니다 화이팅!')
         print("bosee")
+        #보스만나고 이기면 true, 지면 False로 return
         return True
+
+
+def is_alive(character):
+    alive = True
+    if character['Stat']['Heart'] == 0:
+        alive = False
+    return alive
 
 
 def game():
@@ -151,7 +159,7 @@ def game():
     character = make_character()
 
     achieved_goal_lv1 = False
-    while not achieved_goal_lv1:
+    while is_alive(character) and not achieved_goal_lv1:
         display_grid(grid)
 
         if character["Stat"]['Hunger'] == 1:
@@ -164,7 +172,7 @@ def game():
         (new_row, new_col), prev_cell_content, character = move_character_valid_move(grid, first_location, direction, prev_cell_content, character)
         first_location = (new_row, new_col)
         check_character_hunger(character)
-        there_is_a_challenger = check_probability(0.5)
+        there_is_a_challenger = check_probability(0.9)
         if there_is_a_challenger:
             gamelist = ['battle', 'hangman', 'memory game']
             a = random.choice(gamelist)
@@ -207,8 +215,14 @@ def game():
 
         if check_character_3_level_location_for_final(first_location, character):
             print("game clear! good job!")
-            break
+            achieved_goal_lv1 = True
+        else:
+            print('안녕 태초마을이야')
 
+    if achieved_goal_lv1:
+        print('Congratulations! You have reached the goal.')
+    else:
+        print('Game over! You have lost all your HP.')
 
 def main():
     """
