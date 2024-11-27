@@ -148,6 +148,10 @@ def is_alive(character):
     return alive
 
 
+def reward(character):
+    pass
+
+
 def game():
     """
     Drive the game.
@@ -172,7 +176,7 @@ def game():
         (new_row, new_col), prev_cell_content, character = move_character_valid_move(grid, first_location, direction, prev_cell_content, character)
         first_location = (new_row, new_col)
         check_character_hunger(character)
-        there_is_a_challenger = check_probability(0.9)
+        there_is_a_challenger = check_probability(0.8)
         if there_is_a_challenger:
             gamelist = ['battle', 'hangman', 'memory game']
             a = random.choice(gamelist)
@@ -183,9 +187,15 @@ def game():
                 level = check_character_level(character)
                 i, j = hangman(level, stages, character)
                 print(i, j)
-            # gamelist에 게임함수들 불러와서 넣고 게임 이기면 보상받고, charater return.
+                if i:
+                    print("you win")
+                    print("get reward")
+                else:
+                    print("continue game")
+            # gamelist에 게임함수들 불러와서 넣고 게임 이기면 보상받고 아님 말고
 
-        if check_character_1_level_location_exp(first_location, character):
+        goal_lv1 = check_character_1_level_location_exp(first_location, character)
+        if goal_lv1:
             grid = make_board_lv2()
             first_location, prev_cell_content = make_character_location(grid)
             character['Stat']['HP'] = 150
@@ -199,7 +209,8 @@ def game():
                                       "Scratch": random.randint(20, 50),
                                       "Digging": random.randint(20, 50),
                                   }}
-        if check_character_2_level_location_exp(first_location, character):
+        goal_lv2 = check_character_2_level_location_exp(first_location, character)
+        if goal_lv2:
             grid = make_board_lv3()
             first_location, prev_cell_content = make_character_location(grid)
             character['Stat']['HP'] = 200
@@ -212,11 +223,11 @@ def game():
                                       "Scratch": random.randint(20, 50),
                                       "Digging": random.randint(20, 50),
                                   }, "Level 3": {"Tail Whip": random.randint(20, 50), "Bite": random.randint(20, 50)}}
-
-        if check_character_3_level_location_for_final(first_location, character):
+        final_goal = check_character_3_level_location_for_final(first_location, character)
+        if final_goal:
             print("game clear! good job!")
             achieved_goal_lv1 = True
-        else:
+        elif final_goal is False:
             print('안녕 태초마을이야')
 
     if achieved_goal_lv1:
