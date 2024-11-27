@@ -1,7 +1,8 @@
 import random
 from make_board_each_level import *
 import time
-
+from hangman import *
+from hangman_art import stages
 
 def check_probability(rate):
     return random.random() <= rate
@@ -166,7 +167,14 @@ def game():
         there_is_a_challenger = check_probability(0.5)
         if there_is_a_challenger:
             gamelist = ['battle', 'hangman', 'memory game']
-            print(random.choice(gamelist))
+            a = random.choice(gamelist)
+            if a == 'battle':
+                print("play battle")
+            elif a == 'hangman':
+                print("play hangman")
+                level = check_character_level(character)
+                i, j = hangman(level, stages, character)
+                print(i, j)
             # gamelist에 게임함수들 불러와서 넣고 게임 이기면 보상받고, charater return.
 
         if check_character_1_level_location_exp(first_location, character):
