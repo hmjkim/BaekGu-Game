@@ -167,6 +167,7 @@ def check_probability(rate):
 
 
 def reward(character, check_probability):
+    character['Stat']['Exp'] += random.randint(100,300)
     if check_probability(0.3):
         print("reward!")
         print(" you get 'bone'")
