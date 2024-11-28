@@ -4,8 +4,7 @@ import time
 from hangman import *
 from hangman_art import stages
 
-def check_probability(rate):
-    return random.random() <= rate
+
 
 
 def make_character():
@@ -35,7 +34,8 @@ def make_character():
 
         },
         "Skill": {
-            "Basic Attack": random.randint(10, 30),
+            # "Basic Attack": random.randint(10, 30),
+            "Basic Attack": 30,
             "Current Skills": skill_set["Level 1"],
             "Skill Set": skill_set
         },
@@ -56,6 +56,7 @@ def get_user_choice(character):
     while user_wanted_input != '1':
         if user_wanted_input == '2':
             print(character['Inventory'])
+
             user_wanted_input = input("which do you want to do again? ['1: Direction','2: Inventory','3: Stat','4: Sleep']")
         if user_wanted_input == '3':
             print("stats = ", character['Stat'])
@@ -148,8 +149,42 @@ def is_alive(character):
     return alive
 
 
-def reward(character):
-    pass
+def check_probability(rate):
+    return random.random() <= rate
+
+
+def reward(character, check_probability):
+    if check_probability(0.3):
+        print("reward!")
+        print(" you get 'bone'")
+        print(" it Increase basic attack damage  permanet +30")
+        character['Skill']['Basic Attack'] += 30
+    if check_probability(0.3):
+        print('reward!1')
+        print("you get 'Paw boots'")
+        print(' increase HP permanet +100')
+        character['Stat']['HP'] += 100
+    if check_probability(0.3):
+        print('reward!2')
+        print("you get 'Kibble'")
+        print(' increase hunger +1 when you use it')
+        try:
+            character['Inventory']['Kibble'] += 1
+        except KeyError:
+            character['Inventory']['Kibble'] = 1
+    if check_probability(0.3):
+        print('reward!3')
+        print("you get 'Bowl collar'")
+        print(' increase hunger +1 permanent')
+        character['Stat']['Hunger'] += 1
+    if check_probability(0.3):
+        print('reward!4')
+        print("you get 'key'")
+        try:
+            character['Inventory']['key'] += 1
+        except KeyError:
+            character['Inventory']['key'] = 1
+    return character
 
 
 def game():
@@ -190,6 +225,7 @@ def game():
                 if i:
                     print("you win")
                     print("get reward")
+                    reward(character, check_probability)
                 else:
                     print("continue game")
             # gamelist에 게임함수들 불러와서 넣고 게임 이기면 보상받고 아님 말고
