@@ -58,9 +58,12 @@ def get_user_choice(character):
             print(character['Inventory'])
             while True:
                 use = input("which do you want to use? %s" % character['Inventory'].keys())
+                if use not in character['Inventory'].keys():
+                    print("invalid input, try again")
+                    continue
                 if use == 'Kibble':
                     character['Stat']['Hunger'] += 1
-                    print("you eat 'Kibble' and your hunger +1")]
+                    print("you eat 'Kibble' and your hunger +1")
                     break
                     #아이템 더 잇으면 여기에 추가하기
                 else:
@@ -280,6 +283,7 @@ def game():
         print('Congratulations! You have reached the goal.')
     else:
         print('Game over! You have lost all your HP.')
+
 
 def main():
     """
