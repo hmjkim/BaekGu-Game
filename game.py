@@ -56,6 +56,16 @@ def get_user_choice(character):
     while user_wanted_input != '1':
         if user_wanted_input == '2':
             print(character['Inventory'])
+            while True:
+                use = input("which do you want to use? %s" % character['Inventory'].keys())
+                if use == 'Kibble':
+                    character['Stat']['Hunger'] += 1
+                    print("you eat 'Kibble' and your hunger +1")]
+                    break
+                    #아이템 더 잇으면 여기에 추가하기
+                else:
+                    print("invalid input, try again")
+                    use = input("which do you want to use again? %s" % character['Inventory'].keys())
 
             user_wanted_input = input("which do you want to do again? ['1: Direction','2: Inventory','3: Stat','4: Sleep']")
         if user_wanted_input == '3':
