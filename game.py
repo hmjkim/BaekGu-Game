@@ -8,36 +8,24 @@ from hangman_art import stages
 
 
 def make_character():
-    skill_set = {
-        "Level 1": {
-            "Bark": random.randint(20, 50),
-        },
-        "Level 2": {
-            "Scratch": random.randint(20, 50),
-            "Digging": random.randint(20, 50),
-        },
-        "Level 3": {
-            "Tail Whip": random.randint(20, 50),
-            "Bite": random.randint(20, 50),
-        }
-    }
     return {
         "Stat": {
             "HP": 500,
             "Current HP": 500,
             "Level": 1,
             "Exp": 0,
-            #나중에 바꾸끼
             "Heart": 10,
             "Hunger": 10
-            #나중에 바꾸끼
-
         },
         "Skill": {
-            # "Basic Attack": random.randint(10, 30),
-            "Basic Attack": 30,
-            "Current Skills": skill_set["Level 1"],
-            "Skill Set": skill_set
+            "Basic Attack": random.randint(10, 30),
+            "Current Skills": {
+                "Bark": random.randint(20, 50),
+                "Scratch": random.randint(20, 50),
+                "Digging": random.randint(20, 50),
+                "Tail Whip": random.randint(20, 50),
+                "Bite": random.randint(20, 50),
+            }
         },
         "Inventory": {"Kibble": 2, "HP potion": 4}
     }
