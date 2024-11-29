@@ -1,6 +1,8 @@
 import random
 
 from hangman_art import stages
+import warnings
+warnings.filterwarnings("ignore")
 
 
 def lists_of_words():
@@ -38,7 +40,7 @@ def word_strike(text):
     return ' '.join([u'\u0336{}'.format(c) for c in text])
 
 
-def hangman(word_list, stages):
+def hangman(word_list, stages, character):
     chosen_word = random.choice(word_list)
     word_length = len(chosen_word)
     lives = 8
@@ -48,15 +50,14 @@ def hangman(word_list, stages):
 
     print("Current lives: %d" % lives)
     empty_incorrect = []
-    end_of_game = False
 
+    end_of_game = False
     while not end_of_game:
         guess = input("Guess a letter: ").lower()
         if guess in display or guess in empty_incorrect:
             print(f"You've already guessed '{guess}'")
-            continue  # Skip the rest of the loop
+            continue
 
-        # Check guessed letter
         correct_guess = False
         for position in range(word_length):
             letter = chosen_word[position]
@@ -75,6 +76,7 @@ def hangman(word_list, stages):
             if lives == 0:
                 print("You lose.")
                 print(f"The word was: '{chosen_word}'")
+                character['Stat']['Heart'] -= 1
                 break
 
         print(f"{' '.join(display)}")
@@ -84,12 +86,15 @@ def hangman(word_list, stages):
             print("You win!")
 
         print(stages[lives])
+    return end_of_game, character
 
 
 def main():
-    character = {'Stat': {'Level': 1}}
+    character = {'Stat': {'Level': 1, 'Heart': 1}}
     list = check_character_level(character)
-    hangman(list, stages)
+    i, j = hangman(list, stages, character)
+    print(i,j)
+
 
 
 if __name__ == "__main__":

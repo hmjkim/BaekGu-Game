@@ -1,10 +1,10 @@
 import random
 from make_board_each_level import *
 import time
+from hangman import *
+from hangman_art import stages
 
 
-def check_probability(rate):
-    return random.random() <= rate
 
 
 def make_character():
@@ -34,7 +34,8 @@ def make_character():
 
         },
         "Skill": {
-            "Basic Attack": random.randint(10, 30),
+            # "Basic Attack": random.randint(10, 30),
+            "Basic Attack": 30,
             "Current Skills": skill_set["Level 1"],
             "Skill Set": skill_set
         },
@@ -55,6 +56,20 @@ def get_user_choice(character):
     while user_wanted_input != '1':
         if user_wanted_input == '2':
             print(character['Inventory'])
+            while True:
+                use = input("which do you want to use? %s" % character['Inventory'].keys())
+                if use not in character['Inventory'].keys():
+                    print("invalid input, try again")
+                    continue
+                if use == 'Kibble':
+                    character['Stat']['Hunger'] += 1
+                    print("you eat 'Kibble' and your hunger +1")
+                    break
+                    #아이템 더 잇으면 여기에 추가하기
+                else:
+                    print("invalid input, try again")
+                    use = input("which do you want to use again? %s" % character['Inventory'].keys())
+
             user_wanted_input = input("which do you want to do again? ['1: Direction','2: Inventory','3: Stat','4: Sleep']")
         if user_wanted_input == '3':
             print("stats = ", character['Stat'])
@@ -136,7 +151,54 @@ def check_character_3_level_location_for_final(first_location, character):
     if first_location == (4, 4) and character['Stat']['Level'] == 3:
         print('마지막 보스를 만나러 갑니다 화이팅!')
         print("bosee")
+        #보스만나고 이기면 true, 지면 False로 return
         return True
+
+
+def is_alive(character):
+    alive = True
+    if character['Stat']['Heart'] == 0:
+        alive = False
+    return alive
+
+
+def check_probability(rate):
+    return random.random() <= rate
+
+
+def reward(character, check_probability):
+    character['Stat']['Exp'] += random.randint(100,300)
+    if check_probability(0.3):
+        print("reward!")
+        print(" you get 'bone'")
+        print(" it Increase basic attack damage  permanet +30")
+        character['Skill']['Basic Attack'] += 30
+    if check_probability(0.3):
+        print('reward!1')
+        print("you get 'Paw boots'")
+        print(' increase HP permanet +100')
+        character['Stat']['HP'] += 100
+    if check_probability(0.3):
+        print('reward!2')
+        print("you get 'Kibble'")
+        print(' increase hunger +1 when you use it')
+        try:
+            character['Inventory']['Kibble'] += 1
+        except KeyError:
+            character['Inventory']['Kibble'] = 1
+    if check_probability(0.3):
+        print('reward!3')
+        print("you get 'Bowl collar'")
+        print(' increase hunger +1 permanent')
+        character['Stat']['Hunger'] += 1
+    if check_probability(0.3):
+        print('reward!4')
+        print("you get 'key'")
+        try:
+            character['Inventory']['key'] += 1
+        except KeyError:
+            character['Inventory']['key'] = 1
+    return character
 
 
 def game():
@@ -150,7 +212,7 @@ def game():
     character = make_character()
 
     achieved_goal_lv1 = False
-    while not achieved_goal_lv1:
+    while is_alive(character) and not achieved_goal_lv1:
         display_grid(grid)
 
         if character["Stat"]['Hunger'] == 1:
@@ -163,13 +225,27 @@ def game():
         (new_row, new_col), prev_cell_content, character = move_character_valid_move(grid, first_location, direction, prev_cell_content, character)
         first_location = (new_row, new_col)
         check_character_hunger(character)
-        there_is_a_challenger = check_probability(0.5)
+        there_is_a_challenger = check_probability(0.8)
         if there_is_a_challenger:
             gamelist = ['battle', 'hangman', 'memory game']
-            print(random.choice(gamelist))
-            # gamelist에 게임함수들 불러와서 넣고 게임 이기면 보상받고, charater return.
+            a = random.choice(gamelist)
+            if a == 'battle':
+                print("play battle")
+            elif a == 'hangman':
+                print("play hangman")
+                level = check_character_level(character)
+                i, j = hangman(level, stages, character)
+                print(i, j)
+                if i:
+                    print("you win")
+                    print("get reward")
+                    reward(character, check_probability)
+                else:
+                    print("continue game")
+            # gamelist에 게임함수들 불러와서 넣고 게임 이기면 보상받고 아님 말고
 
-        if check_character_1_level_location_exp(first_location, character):
+        goal_lv1 = check_character_1_level_location_exp(first_location, character)
+        if goal_lv1:
             grid = make_board_lv2()
             first_location, prev_cell_content = make_character_location(grid)
             character['Stat']['HP'] = 150
@@ -183,7 +259,8 @@ def game():
                                       "Scratch": random.randint(20, 50),
                                       "Digging": random.randint(20, 50),
                                   }}
-        if check_character_2_level_location_exp(first_location, character):
+        goal_lv2 = check_character_2_level_location_exp(first_location, character)
+        if goal_lv2:
             grid = make_board_lv3()
             first_location, prev_cell_content = make_character_location(grid)
             character['Stat']['HP'] = 200
@@ -196,10 +273,17 @@ def game():
                                       "Scratch": random.randint(20, 50),
                                       "Digging": random.randint(20, 50),
                                   }, "Level 3": {"Tail Whip": random.randint(20, 50), "Bite": random.randint(20, 50)}}
-
-        if check_character_3_level_location_for_final(first_location, character):
+        final_goal = check_character_3_level_location_for_final(first_location, character)
+        if final_goal:
             print("game clear! good job!")
-            break
+            achieved_goal_lv1 = True
+        elif final_goal is False:
+            print('안녕 태초마을이야')
+
+    if achieved_goal_lv1:
+        print('Congratulations! You have reached the goal.')
+    else:
+        print('Game over! You have lost all your HP.')
 
 
 def main():
