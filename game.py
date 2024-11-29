@@ -24,12 +24,12 @@ def make_character():
     return {
         "Stat": {
             "HP": 500,
-            "Current HP": 100,
+            "Current HP": 500,
             "Level": 1,
-            "Exp": 1500,
+            "Exp": 0,
             #나중에 바꾸끼
             "Heart": 10,
-            "Hunger": 100
+            "Hunger": 10
             #나중에 바꾸끼
 
         },
@@ -39,7 +39,7 @@ def make_character():
             "Current Skills": skill_set["Level 1"],
             "Skill Set": skill_set
         },
-        "Inventory": {"key": 2}
+        "Inventory": {"Kibble": 2, "HP potion": 4}
     }
 
 
@@ -57,19 +57,26 @@ def get_user_choice(character):
         if user_wanted_input == '2':
             print(character['Inventory'])
             while True:
-                use = input("which do you want to use? %s" % character['Inventory'].keys())
+                use = input("which do you want to use? %s, q:quit" % character['Inventory'].keys())
                 if use not in character['Inventory'].keys():
                     print("invalid input, try again")
                     continue
                 if use == 'Kibble':
+                    character['Inventory']['Kibble'] -= 1
                     character['Stat']['Hunger'] += 1
                     print("you eat 'Kibble' and your hunger +1")
+                    continue
+                if use == "HP Potion":
+                    character['Stat']['Current HP'] += character['Stat']['HP'] - character['Stat']['Current HP']
+                    character['Stat']['HP'] = character['Stat']['Current HP']
+                    print("you use 'HP Potion' and your HP +%d" % (character['Stat']['HP'] - character['Stat']['Current HP']))
+                    continue
+                if use == "q":
                     break
-                    #아이템 더 잇으면 여기에 추가하기
                 else:
                     print("invalid input, try again")
                     use = input("which do you want to use again? %s" % character['Inventory'].keys())
-
+                    continue
             user_wanted_input = input("which do you want to do again? ['1: Direction','2: Inventory','3: Stat','4: Sleep']")
         if user_wanted_input == '3':
             print("stats = ", character['Stat'])
@@ -278,7 +285,8 @@ def game():
         if goal_lv1:
             grid = make_board_lv2()
             first_location, prev_cell_content = make_character_location(grid)
-            character['Stat']['HP'] = 150
+            character['Stat']['HP'] += 200
+            character['Stat']['Current HP'] = character['Stat']['HP']
             character['Stat']['Level'] = 2
             character['Stat']['Exp'] = 1500
             # 나중에 Exp = 0으로
@@ -293,7 +301,8 @@ def game():
         if goal_lv2:
             grid = make_board_lv3()
             first_location, prev_cell_content = make_character_location(grid)
-            character['Stat']['HP'] = 200
+            character['Stat']['HP'] += 200
+            character['Stat']['Current HP'] = character['Stat']['HP']
             character['Stat']['Level'] = 3
             character['Stat']['Exp'] = 0
             character['Stat']['Hunger'] = 100
@@ -302,7 +311,9 @@ def game():
                                   "Level2": {
                                       "Scratch": random.randint(20, 50),
                                       "Digging": random.randint(20, 50),
-                                  }, "Level 3": {"Tail Whip": random.randint(20, 50), "Bite": random.randint(20, 50)}}
+                                  },
+                                  "Level 3": {"Tail Whip": random.randint(20, 50),
+                                              "Bite": random.randint(20, 50)}}
         final_goal = check_character_3_level_location_for_final(first_location, character)
         if final_goal:
             print("game clear! good job!")
