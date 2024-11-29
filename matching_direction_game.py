@@ -1,7 +1,21 @@
 import random
 import time
+from itertools import count
 
 from game import make_character
+
+
+def check_character_level_matching_game(character):
+    if character['Stat']['Level'] == 1:
+        matching_count = 5
+        return matching_count
+    if character['Stat']['Level'] == 2:
+        matching_count = 7
+        return matching_count
+    else:
+        matching_count = 9
+        return matching_count
+
 
 
 def play_game(level, character):
@@ -38,10 +52,8 @@ def play_game(level, character):
 
 def main():
     character = make_character()
-    # play_game(5) # level 1?
-    # play_game(7) # level 2?
-    # play_game(9) # level 3?
-    check, character = play_game(5, character)
+    level_matching_game = check_character_level_matching_game(character)
+    check, character = play_game(level_matching_game, character)
     print(check, character)
 
 
