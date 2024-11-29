@@ -5,8 +5,6 @@ from hangman import *
 from hangman_art import stages
 
 
-
-
 def make_character():
     return {
         "Stat": {
@@ -207,14 +205,13 @@ def check_user(user_name):
         with open("players.txt") as players:
             player_list = players.readlines()
     except FileNotFoundError:
-        # print(player_list)
         with open("players.txt", "w") as players:
             players.write(f'{user_name}')
             print("New user is created!")
             return False
     else:
         if f'{user_name}\n' in player_list or user_name in player_list:
-            print("You're already a player! Welcome back")
+            print("You're already a player! Welcome back, %s!" % user_name)
             return True
         else:
             print("New user is created!")
@@ -230,7 +227,7 @@ def game():
     grid = make_board_lv1()
     user_name = input("Hi, there! What's your name? : ")
 
-    if check_user(user_name):
+    if not check_user(user_name):
         introduce_game(user_name)
 
     first_location, prev_cell_content = make_character_location(grid)
