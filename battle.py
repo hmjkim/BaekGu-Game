@@ -4,8 +4,7 @@ import time
 import warnings
 warnings.filterwarnings("ignore")
 
-from game import make_character
-from game import is_alive
+from game import make_character, is_alive
 
 #
 # def defeat_message():
@@ -281,7 +280,7 @@ def battle(character):
 
     if not is_alive(character):
         print("I collapsed on the floor. The enemy stands victorious as my vision fades to darkness...")
-        print(f"You lost 1 heart. You have {character['Stat']['Heart']} heart(s) left.")
+        print(f"You lost 1 Heart. You have {character['Stat']['Heart']} Heart(s) left.")
         character["Stat"]["Heart"] -= 1
         has_won = False
     elif enemy_copy["HP"] < 0:
