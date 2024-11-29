@@ -27,7 +27,7 @@ def lists_of_words():
     return word_4_list, word_5_list, word_6_list
 
 
-def check_character_level(character, lists=lists_of_words()):
+def check_character_level_hangman(character, lists=lists_of_words()):
     if character['Stat']['Level'] == 1:
         return lists[2]
     if character['Stat']['Level'] == 2:
@@ -91,7 +91,7 @@ def hangman(word_list, stages, character):
 
 def main():
     character = {'Stat': {'Level': 1, 'Heart': 1}}
-    list = check_character_level(character)
+    list = check_character_level_hangman(character)
     i, j = hangman(list, stages, character)
     print(i,j)
 
