@@ -1,6 +1,6 @@
 import random
 import time
-from battle import display_attack_description, configure_enemy_stat, make_enemies, display_skill_uses
+from battle import *
 from game import make_character, is_alive
 
 
@@ -28,6 +28,8 @@ def battle(character):
           f"HP: {enemy_copy['HP']}/{enemy['HP']}\n"
           "--------------------------------------------")
 
+    # Get user choice
+    # Skill usage
     total_skill_use = 5
     skill_usage_limit = 5
     current_skill_usage = 0
@@ -37,19 +39,15 @@ def battle(character):
     while is_alive(character) and enemy_copy["HP"] > 0 and in_battle:
         options = ['Attack', 'Skill', 'Flee', 'Stat', 'Inventory']
         while True:
-            user_choice = input(
-                f'Enter battle options ("%s", "%s", "%s" to run away, "%s" to see your current condition, or "%s" to use items):' % (
-                options[0], options[1], options[2], options[3], options[4]))
+            user_choice = input(f'Enter battle options ("%s", "%s", "%s" to run away, "%s" to see your current condition, or "%s" to use items):' % (options[0], options[1], options[2], options[3], options[4]))
 
             if user_choice.lower() == "attack":
                 display_attack_description(enemy["Name"])
                 enemy_copy['HP'] -= character["Skill"]['Basic Attack']
-                if enemy_copy['HP'] < 0:
-                    enemy_copy['HP'] = 0
-                    print(f'*** 🩸 {enemy_copy['Name']} HP is now {enemy_copy['HP']}/{enemy['HP']} ***')
+
+                have_break = show_current_hp(enemy_copy['HP'], enemy['HP'], enemy_copy['Name'])
+                if have_break:
                     break
-                else:
-                    print(f'*** 🩸 {enemy_copy['Name']} HP is now {enemy_copy['HP']}/{enemy['HP']} ***')
             elif user_choice.lower() == "skill":
                 if skill_usage_limit > 0:
                     current_skills = character['Skill']['Current Skills']
@@ -66,12 +64,9 @@ def battle(character):
                     display_attack_description(enemy["Name"])
                     selected_skill_damage = current_skills[skill_choice.title()]
                     enemy_copy['HP'] -= selected_skill_damage
-                    if enemy_copy['HP'] < 0:
-                        enemy_copy['HP'] = 0
-                        print(f'*** 🩸 {enemy_copy['Name']} HP is now {enemy_copy['HP']}/{enemy['HP']} ***')
+                    have_break = show_current_hp(enemy_copy['HP'], enemy['HP'], enemy_copy['Name'])
+                    if have_break:
                         break
-                    else:
-                        print(f'*** 🩸 {enemy_copy['Name']} HP is now {enemy_copy['HP']}/{enemy['HP']} ***')
                     skill_usage_limit -= 1
                     current_skill_usage += 1
                 else:
@@ -81,7 +76,7 @@ def battle(character):
 
             elif user_choice.lower() == "flee":
                 print(f"{enemy["Name"]} seems to be too strong for me.. Let me retreat before it's too late!")
-                character["Stat"]["Heart"] -= 1
+                lose_heart(character)
                 in_battle = False
                 break
             elif user_choice.lower() == "stat":
@@ -91,22 +86,23 @@ def battle(character):
             elif user_choice.lower() == "inventory":
                 print("inventory = ", character['Inventory'])
                 print("--------------------------------------------\n"
-                      "🎒️ Items: \n"
-                      f"1. HP Potion : {character['Inventory']['HP Potion']}\n"
-                      f"2. Kibble : {character['Inventory']['Kibble']}\n"
-                      "--------------------------------------------\n")
+                         "🎒️ Items: \n"
+                         f"1. HP Potion : {character['Inventory']['HP Potion']}\n"
+                         f"2. Kibble : {character['Inventory']['Kibble']}\n"
+                         "--------------------------------------------\n")
                 item_to_use = input("Enter item to use: ")
                 if item_to_use.lower() == '1' or item_to_use.lower() == 'hp potion':
-                    character["Stat"]["Current HP"] += character["Stat"]["HP"] - character["Stat"]["Current HP"]
-                    print("Your HP is full now.")
+                    character["Stat"]["Current HP"] = character["Stat"]["HP"]
+                    print(f"Your HP is full now. (HP: {character['Stat']['Current HP']}/{character['Stat']['HP']})")
+                    character['Inventory']['HP Potion'] -= 1
                     continue
-
                 elif item_to_use.lower() == '2' or item_to_use.lower() == 'kibble':
                     character["Stat"]["Hunger"] += 1
-                    print("Hunger increased by 1.")
+                    print(f"Hunger increased by 1. (Hunger: {character['Stat']['Current HP']}/{character['Stat']['HP']})")
+                    character['Inventory']['Hunger'] -= 1
                     continue
             else:
-                print("Invalid input")
+                print("Invalid input. Please try again.")
                 continue
 
             if enemy_copy["HP"] > 0:
@@ -114,17 +110,13 @@ def battle(character):
                 enemy_skill = random.choice(list(enemy_copy['Attack'].items()))
                 character["Stat"]["Current HP"] -= enemy_skill[1]
                 print(f"Ouch! {enemy["Name"]} attacked you!")
-                if character["Stat"]["Current HP"] < 0:
-                    character["Stat"]["Current HP"] = 0
-                    print(f'*** 🩸 Your HP is now {character["Stat"]["Current HP"]}/{character['Stat']['HP']} ***')
-                    break
-                else:
-                    print(f'*** 🩸 Your HP is now {character["Stat"]["Current HP"]}/{character['Stat']['HP']} ***')
 
+                have_break = show_current_hp(character["Stat"]["Current HP"], character['Stat']['HP'], 'Your')
+                if have_break:
+                    break
     if not is_alive(character):
         print("I collapsed on the floor. The enemy stands victorious as my vision fades to darkness...")
-        print(f"You lost 1 Heart. You have {character['Stat']['Heart']} Heart(s) left.")
-        character["Stat"]["Heart"] -= 1
+        lose_heart(character)
         has_won = False
     elif enemy_copy["HP"] < 0:
         print("Woo hoo! You won against a ruff battle. Time for a treat!")
