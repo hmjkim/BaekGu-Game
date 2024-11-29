@@ -201,12 +201,42 @@ def reward(character, check_probability):
     return character
 
 
+def introduce_game(user_name):
+    print("Welcome to Baekgu, %s! You are a loyal white jindo dog named Baekgu living with a happy family. Your owner's little son, Haru, has suddenly disappeared for a couple hours" % user_name)
+    print("explain game story")
+
+
+def check_user(user_name):
+    # try except when file doesn't exist
+    try:
+        with open("players.txt") as players:
+            player_list = players.readlines()
+    except FileNotFoundError:
+        # print(player_list)
+        with open("players.txt", "w") as players:
+            players.write(f'{user_name}')
+            print("New user is created!")
+            return False
+    else:
+        if f'{user_name}\n' in player_list or user_name in player_list:
+            print("You're already a player! Welcome back")
+            return True
+        else:
+            print("New user is created!")
+            with open("players.txt", "a") as players:
+                players.write(f'\n{user_name}')
+                return False
+
+
 def game():
     """
     Drive the game.
     """
     grid = make_board_lv1()
     user_name = input("Hi, there! What's your name? : ")
+
+    if check_user(user_name):
+        introduce_game(user_name)
 
     first_location, prev_cell_content = make_character_location(grid)
     character = make_character()
