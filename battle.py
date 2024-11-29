@@ -35,6 +35,14 @@ from game import is_alive
 #     return character["Stat"]["Current HP"] > 0
 
 
+# def show_current_hp(hp, original_hp, name):
+#     if hp < 0:
+#         hp = 0
+#         print(f'*** 🩸 {name} HP is now {hp}/{original_hp} ***')
+#         break
+#     else:
+#         print(f'*** 🩸 {name} HP is now {hp}/{original_hp} ***')
+
 def display_attack_description(enemy):
     attack_descriptions = [
         "You strike fiercely, leaving a mark on the enemy!",
@@ -88,6 +96,7 @@ def make_enemies(name, icon, description, level, hp_range, basic_attack, skill_d
                     "Basic Attack": random.randint(*basic_attack)
                 }
             }
+
 
 def choose_enemy_based_on_level(character, enemy_stat):
     # Create enemies
@@ -154,7 +163,7 @@ def choose_enemy_based_on_level(character, enemy_stat):
                              enemy_stat["Skill Damage"]["Level 4"],
                              'Chill Touch')
         enemy = random.choice([giant_moth, ghost])
-    return enemy.copy()
+    return enemy, enemy.copy()
 
 
 def display_skill_uses(current_skill_usage, skill_usage_limit):
@@ -165,16 +174,16 @@ def display_skill_uses(current_skill_usage, skill_usage_limit):
 
 def battle(character):
     enemy_stat = configure_enemy_stat()
-    enemy_copy = choose_enemy_based_on_level(character, enemy_stat)
+    enemy, enemy_copy = choose_enemy_based_on_level(character, enemy_stat)
 
     # Display enemy information
     print("--------------------------------------------\n"
           "‼️‼️ ENEMY ENCOUNTERED ‼️‼️\n"
           "--------------------------------------------\n"
-          f"{enemy_copy['Icon']} {enemy_copy['Name']}\n"
-          f"{enemy_copy['Description']}\n"
-          f"Level: {enemy_copy['Level']}\n"
-          f"HP: {enemy_copy['HP']}/{enemy_copy['HP']}\n"
+          f"{enemy['Icon']} {enemy['Name']}\n"
+          f"{enemy['Description']}\n"
+          f"Level: {enemy['Level']}\n"
+          f"HP: {enemy_copy['HP']}/{enemy['HP']}\n"
           "--------------------------------------------")
 
     # Get user choice
@@ -219,7 +228,6 @@ def battle(character):
                         enemy_copy['HP'] = 0
                         print(f'*** 🩸 {enemy_copy['Name']} HP is now {enemy_copy['HP']}/{enemy['HP']} ***')
                         break
-
                     else:
                         print(f'*** 🩸 {enemy_copy['Name']} HP is now {enemy_copy['HP']}/{enemy['HP']} ***')
                     skill_usage_limit -= 1
@@ -258,10 +266,8 @@ def battle(character):
             else:
                 print("Invalid input")
                 continue
-            #
-            # if user_choice.lower() == "flee":
-            #     break
-            if user_choice.lower() != "flee" and enemy_copy["HP"] > 0:
+
+            if enemy_copy["HP"] > 0:
                 time.sleep(1.5)
                 enemy_skill = random.choice(list(enemy_copy['Attack'].items()))
                 character["Stat"]["Current HP"] -= enemy_skill[1]
@@ -275,6 +281,9 @@ def battle(character):
 
     if not is_alive(character):
         print("I collapsed on the floor. The enemy stands victorious as my vision fades to darkness...")
+        print(f"You lost 1 heart. You have {character['Stat']['Heart']} heart(s) left.")
+        character["Stat"]["Heart"] -= 1
+        has_won = False
     elif enemy_copy["HP"] < 0:
         print("Woo hoo! You won against a ruff battle. Time for a treat!")
         has_won = True
