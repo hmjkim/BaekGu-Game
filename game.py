@@ -94,6 +94,7 @@ def move_character_valid_move(grid, position, direction, prev_cell_content, char
     row, col = position
     new_row, new_col = row, col
     new_row, new_col = row, col
+    vaild_checking = True
 
     if direction == 'w':
         new_row -= 1
@@ -111,10 +112,11 @@ def move_character_valid_move(grid, position, direction, prev_cell_content, char
         new_prev_cell_content = grid[new_row][new_col]
         grid[new_row][new_col] = '🐶'
         character["Stat"]["Hunger"] -= 1
-        return (new_row, new_col), new_prev_cell_content, character
+        return (new_row, new_col), new_prev_cell_content, character, vaild_checking
     else:
         print("can't move this way")
-        return (row, col), prev_cell_content, character
+        vaild_checking = False
+        return (row, col), prev_cell_content, character, vaild_checking
 
 
 def check_character_hunger(character):
@@ -248,8 +250,10 @@ def game():
             print('alert!!!!!!!!!!!!!!!!!!!! your hunger is now 1! u must sleep now')
 
         direction, character = get_user_choice(character)
-        (new_row, new_col), prev_cell_content, character = move_character_valid_move(grid, first_location, direction, prev_cell_content, character)
+        (new_row, new_col), prev_cell_content, character, valid_checking = move_character_valid_move(grid, first_location, direction, prev_cell_content, character)
         first_location = (new_row, new_col)
+        if not valid_checking:
+            continue
         check_character_hunger(character)
         there_is_a_challenger = check_probability(0.8)
         if there_is_a_challenger:
