@@ -1,10 +1,11 @@
 import random
 import time
 from battle import *
-from game import make_character, is_alive
+
+# from game import make_character, is_alive
 
 
-def battle(character):
+def boss_battle(character):
     enemy_stat = configure_enemy_stat()
     # BOSS
     enemy = make_enemies('Majestic Fluffy BunBun',
@@ -124,12 +125,12 @@ def battle(character):
 
     return character, has_won
 
-
-def main():
-    character = make_character()
-    battle(character)
-
-
-if __name__ == '__main__':
-    main()
+#
+# def main():
+#     character = make_character()
+#     battle(character)
+#
+#
+# if __name__ == '__main__':
+#     main()
 

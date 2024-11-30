@@ -1,10 +1,10 @@
+# from game import make_character, is_alive
 import random
-from pprint import pprint
 import time
 import warnings
+from game import is_alive
 warnings.filterwarnings("ignore")
 
-from game import make_character, is_alive
 
 #
 # def defeat_message():
@@ -289,11 +289,11 @@ def battle(character):
     return character, has_won
 
 
-def main():
-    character = make_character()
-    battle(character)
-
-
-if __name__ == '__main__':
-    main()
+# def main():
+#     character = make_character()
+#     battle(character)
+#
+#
+# if __name__ == '__main__':
+#     main()
 

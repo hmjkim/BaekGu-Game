@@ -89,13 +89,13 @@ def hangman(word_list, stages, character):
     return end_of_game, character
 
 
-def main():
-    character = {'Stat': {'Level': 1, 'Heart': 1}}
-    list = check_character_level_hangman(character)
-    i, j = hangman(list, stages, character)
-    print(i,j)
-
-
-
-if __name__ == "__main__":
-    main()
+# def main():
+#     character = {'Stat': {'Level': 1, 'Heart': 1}}
+#     list = check_character_level_hangman(character)
+#     i, j = hangman(list, stages, character)
+#     print(i,j)
+#
+#
+#
+# if __name__ == "__main__":
+#     main()
