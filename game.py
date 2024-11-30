@@ -3,6 +3,9 @@ from make_board_each_level import *
 import time
 from hangman import *
 from hangman_art import stages
+from battle import *
+from matching_direction_game import *
+from boss_battle import *
 
 
 def make_character():
@@ -25,7 +28,7 @@ def make_character():
                 "Bite": random.randint(20, 50),
             }
         },
-        "Inventory": {"Kibble": 2, "HP potion": 4}
+        "Inventory": {}
     }
 
 
@@ -44,9 +47,9 @@ def get_user_choice(character):
             print(character['Inventory'])
             while True:
                 use = input("which do you want to use? %s, q:quit" % character['Inventory'].keys())
-                if use not in character['Inventory'].keys():
-                    print("invalid input, try again")
-                    continue
+                # if use not in character['Inventory'].keys():
+                #     print("invalid input, try again")
+                #     continue
                 if use == 'Kibble':
                     character['Inventory']['Kibble'] -= 1
                     character['Stat']['Hunger'] += 1
@@ -74,14 +77,14 @@ def get_user_choice(character):
                 time.sleep(1)
                 print("%d sec" % i)
             character['Stat']['Hunger'] = 10
-            character['Stat']['HP'] = 100
+            character['Stat']['Current HP'] = character['Stat']['HP']
             user_wanted_input = input("which do you want to do again? ['1: Direction','2: Inventory','3: Stat','4: Sleep']")
         if user_wanted_input not in types_input:
             print("invalid input")
             user_wanted_input = input("which do you want to do again? ['1: Direction','2: Inventory','3: Stat','4: Sleep']")
     if user_wanted_input == '1':
-        direction = ['w', 'a', 's', 'd', 'q']
-        full_direction = ['North', 'West', 'South', 'East', 'Quit']
+        direction = ['w', 'a', 's', 'd']
+        full_direction = ['North', 'West', 'South', 'East']
         for count, element in enumerate(direction):
             print("%s : %s." % (full_direction[count], element), end=' ')
         direction_input = input("\nenter the direction they wish to travel\n").lower()
@@ -93,6 +96,7 @@ def get_user_choice(character):
 
 def move_character_valid_move(grid, position, direction, prev_cell_content, character):
     row, col = position
+    new_row, new_col = row, col
     new_row, new_col = row, col
 
     if direction == 'w':
@@ -143,9 +147,13 @@ def check_character_2_level_location_exp(first_location, character):
 def check_character_3_level_location_for_final(first_location, character):
     if first_location == (4, 4) and character['Stat']['Level'] == 3:
         print('마지막 보스를 만나러 갑니다 화이팅!')
-        print("bosee")
-        #보스만나고 이기면 true, 지면 False로 return
-        return True
+        i, j = boss_battle(character)
+        if j:
+            print("you win")
+            return True
+        else:
+            print("you lose")
+            return False
 
 
 def is_alive(character):
@@ -160,7 +168,9 @@ def check_probability(rate):
 
 
 def reward(character, check_probability):
-    character['Stat']['Exp'] += random.randint(100,300)
+    exp = random.randint(100,300)
+    character['Stat']['Exp'] += exp
+    print("Exp +=", exp)
     if check_probability(0.3):
         print("reward!")
         print(" you get 'bone'")
@@ -183,6 +193,7 @@ def reward(character, check_probability):
         print('reward!3')
         print("you get 'Bowl collar'")
         print(' increase hunger +1 permanent')
+        #permanet로 채우는거 해줘
         character['Stat']['Hunger'] += 1
     if check_probability(0.3):
         print('reward!4')
@@ -241,9 +252,6 @@ def game():
             print('alert!!!!!!!!!!!!!!!!!!!! your hunger is now 1! u must sleep now')
 
         direction, character = get_user_choice(character)
-        if direction == 'q':
-            print("end")
-            achieved_goal_lv1 = True
         (new_row, new_col), prev_cell_content, character = move_character_valid_move(grid, first_location, direction, prev_cell_content, character)
         first_location = (new_row, new_col)
         check_character_hunger(character)
@@ -253,9 +261,17 @@ def game():
             a = random.choice(gamelist)
             if a == 'battle':
                 print("play battle")
+                character, i = battle(character)
+                print(i, character)
+                if i:
+                    print("you win")
+                    print("get reward")
+                    reward(character, check_probability)
+                else:
+                    print("continue game")
             elif a == 'hangman':
                 print("play hangman")
-                level = check_character_level(character)
+                level = check_character_level_hangman(character)
                 i, j = hangman(level, stages, character)
                 print(i, j)
                 if i:
@@ -264,7 +280,17 @@ def game():
                     reward(character, check_probability)
                 else:
                     print("continue game")
-            # gamelist에 게임함수들 불러와서 넣고 게임 이기면 보상받고 아님 말고
+            elif a == 'memory game':
+                print("play memory game")
+                level_matching_game = check_character_level_matching_game(character)
+                check, character = play_game(level_matching_game, character)
+                print(check, character)
+                if check:
+                    print("you win")
+                    print("get reward")
+                    reward(character, check_probability)
+                else:
+                    print("continue game")
 
         goal_lv1 = check_character_1_level_location_exp(first_location, character)
         if goal_lv1:
@@ -305,6 +331,8 @@ def game():
             achieved_goal_lv1 = True
         elif final_goal is False:
             print('안녕 태초마을이야')
+            grid = make_board_lv3()
+            first_location, prev_cell_content = make_character_location(grid)
 
     if achieved_goal_lv1:
         print('Congratulations! You have reached the goal.')
