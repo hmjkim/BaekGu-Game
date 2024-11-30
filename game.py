@@ -26,6 +26,8 @@ def make_character():
         },
         "Inventory": {
             "key": 0,
+            "HP Potion": 0,
+            "Kibble": 0
         }
     }
 
