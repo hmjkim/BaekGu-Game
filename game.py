@@ -11,8 +11,8 @@ from boss_battle import *
 def make_character():
     return {
         "Stat": {
-            "HP": 500,
-            "Current HP": 500,
+            "HP": 250,
+            "Current HP": 250,
             "Level": 1,
             "Exp": 0,
             "Heart": 10,
@@ -24,7 +24,9 @@ def make_character():
                 "Bark": random.randint(20, 50)
             }
         },
-        "Inventory": {}
+        "Inventory": {
+            "key": 0,
+        }
     }
 
 
@@ -136,7 +138,7 @@ def check_character_1_level_location_exp(first_location, character):
 
 
 def check_character_2_level_location_exp(first_location, character):
-    if first_location == (4, 8) and character['Inventory']['key'] >= 1 and character['Stat']['Level'] == 2 and character['Stat']['Exp'] >= 1500 :
+    if first_location == (4, 8) and character['Inventory']['key'] >= 1 and character['Stat']['Level'] == 2 and character['Stat']['Exp'] >= 1300 :
         print('2렙 claer! 1렙 up 다음 3렙 맵으로 move')
         return True
 
@@ -165,7 +167,7 @@ def check_probability(rate):
 
 
 def reward(character, check_probability):
-    exp = random.randint(100,300)
+    exp = random.randint(200,400)
     character['Stat']['Exp'] += exp
     print("Exp +=", exp)
     if check_probability(0.1):
@@ -173,6 +175,14 @@ def reward(character, check_probability):
         print(" you get 'bone'")
         print(" it Increase basic attack damage  permanet +30")
         character['Skill']['Basic Attack'] += 30
+    if check_probability(0.3):
+        print("reward!")
+        print(" you get 'HP Potion'")
+        print("full hp when you use it")
+        try:
+            character['Inventory']['HP potion'] += 1
+        except KeyError:
+            character['Inventory']['HP potion'] = 1
     if check_probability(0.3):
         print('reward!1')
         print("you get 'Paw boots'")
@@ -203,8 +213,37 @@ def reward(character, check_probability):
 
 
 def introduce_game(user_name):
-    print("Welcome to Baekgu, %s! You are a loyal white jindo dog named Baekgu living with a happy family. Your owner's little son, Haru, has suddenly disappeared for a couple hours" % user_name)
-    print("explain game story")
+    print("Welcome to Baekgu, %s!" % user_name)
+    time.sleep(1)
+    print("You are Baekgu, a loyal white Jindo dog with a brave heart and a strong bond with your family. Life has always been happy, full of love and play, until today—something is terribly wrong.")
+    time.sleep(4)
+    print("Using your extraordinary sense of smell and intuition, you've realized that your family's little boy, Haru, has suddenly gone missing.")
+    time.sleep(3)
+    print("Your mission is clear - Find Haru and bring him back home safely before it's too late.\n")
+    time.sleep(3)
+    print("How to Play:")
+    time.sleep(2)
+    print("- There are 3 maps you need to explore to reach the final goal. Your journey will take you through different levels, each more challenging than the last one.")
+    time.sleep(3)
+    print("- You need to reach Level 3 and make your way to the door marked with a '!'s on the map.")
+    time.sleep(3)
+    print("- To level up, you'll need:")
+    time.sleep(2)
+    print("  - To stand in front of the door (!).")
+    time.sleep(2)
+    print("  - A key in your inventory to unlock the way.")
+    time.sleep(2)
+    print("  - Full Exp level, which will vary depending on your current level.\n")
+    time.sleep(3)
+    print("Your ultimate objective:")
+    time.sleep(2)
+    print("Defeat the boss who is holding Haru captive and bring him back home to your loving family!!!!!")
+    time.sleep(3)
+    print("Your journey may be filled with dangers, but with your sharp senses and loyalty, you are Haru's only hope.")
+    time.sleep(3)
+    print("Without further ado, let the rescue begin!")
+    time.sleep(2)
+    print("Time to save Haru, Baekgu!")
 
 
 def check_user(user_name):
@@ -215,14 +254,14 @@ def check_user(user_name):
     except FileNotFoundError:
         with open("players.txt", "w") as players:
             players.write(f'{user_name}')
-            print("New user is created!")
+            print("✅New user is created!")
             return False
     else:
         if f'{user_name}\n' in player_list or user_name in player_list:
             print("You're already a player! Welcome back, %s!" % user_name)
             return True
         else:
-            print("New user is created!")
+            print("✅New user is created!")
             with open("players.txt", "a") as players:
                 players.write(f'\n{user_name}')
                 return False
@@ -295,7 +334,7 @@ def game():
         if goal_lv1:
             grid = make_board_lv2()
             first_location, prev_cell_content = make_character_location(grid)
-            character['Stat']['HP'] += 200
+            character['Stat']['HP'] += 250
             character['Stat']['Current HP'] = character['Stat']['HP']
             character['Stat']['Level'] = 2
             character['Stat']['Exp'] = 0
@@ -312,7 +351,7 @@ def game():
         if goal_lv2:
             grid = make_board_lv3()
             first_location, prev_cell_content = make_character_location(grid)
-            character['Stat']['HP'] += 200
+            character['Stat']['HP'] += 250
             character['Stat']['Current HP'] = character['Stat']['HP']
             character['Stat']['Level'] = 3
             character['Stat']['Exp'] = 0
