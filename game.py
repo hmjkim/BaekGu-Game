@@ -3,9 +3,9 @@ from make_board_each_level import *
 import time
 from hangman import *
 from hangman_art import stages
-from battle import *
+from battle import battle
 from matching_direction_game import *
-from boss_battle import *
+from boss_battle import boss_battle
 
 
 def make_character():
@@ -72,7 +72,7 @@ def get_user_choice(character):
             print("skills = ", character['Skill'])
             user_wanted_input = input("which do you want to do again? ['1: Direction','2: Inventory','3: Stat','4: Sleep']")
         if user_wanted_input == '4':
-            print("go to sleep for 15sec")
+            print("go to sleep for 10sec")
             for i in range(1,11):
                 time.sleep(1)
                 print("%d sec" % i)
@@ -124,7 +124,7 @@ def move_character_valid_move(grid, position, direction, prev_cell_content, char
 
 def check_character_hunger(character):
     if character["Stat"]['Hunger'] == 0:
-        print("force to sleep for 30sec")
+        print("force to sleep for 20sec")
         for i in range(1, 21):
             time.sleep(1)
             print("%d sec" % i)
