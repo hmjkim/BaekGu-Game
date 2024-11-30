@@ -69,7 +69,7 @@ def get_user_choice(character):
             user_wanted_input = input("which do you want to do again? ['1: Direction','2: Inventory','3: Stat','4: Sleep']")
         if user_wanted_input == '4':
             print("go to sleep for 15sec")
-            for i in range(15):
+            for i in range(1,11):
                 time.sleep(1)
                 print("%d sec" % i)
             character['Stat']['Hunger'] = 10
@@ -92,7 +92,6 @@ def get_user_choice(character):
 
 def move_character_valid_move(grid, position, direction, prev_cell_content, character):
     row, col = position
-    new_row, new_col = row, col
     new_row, new_col = row, col
     vaild_checking = True
 
@@ -122,7 +121,7 @@ def move_character_valid_move(grid, position, direction, prev_cell_content, char
 def check_character_hunger(character):
     if character["Stat"]['Hunger'] == 0:
         print("force to sleep for 30sec")
-        for i in range(1, 31):
+        for i in range(1, 21):
             time.sleep(1)
             print("%d sec" % i)
         character["Stat"]["Hunger"] = 10
@@ -131,13 +130,13 @@ def check_character_hunger(character):
 
 
 def check_character_1_level_location_exp(first_location, character):
-    if first_location == (7, 1) and character['Inventory']['key'] > 1 and character['Stat']['Level'] == 1 and character['Stat']['Exp'] >= 1000 :
+    if first_location == (7, 1) and character['Inventory']['key'] >= 1 and character['Stat']['Level'] == 1 and character['Stat']['Exp'] >= 1000 :
         print('1렙 claer! 1렙 up 다음 2렙 맵으로 move')
         return True
 
 
 def check_character_2_level_location_exp(first_location, character):
-    if first_location == (4, 8) and character['Inventory']['key'] > 1 and character['Stat']['Level'] == 2 and character['Stat']['Exp'] >= 1500 :
+    if first_location == (4, 8) and character['Inventory']['key'] >= 1 and character['Stat']['Level'] == 2 and character['Stat']['Exp'] >= 1500 :
         print('2렙 claer! 1렙 up 다음 3렙 맵으로 move')
         return True
 
@@ -169,7 +168,7 @@ def reward(character, check_probability):
     exp = random.randint(100,300)
     character['Stat']['Exp'] += exp
     print("Exp +=", exp)
-    if check_probability(0.3):
+    if check_probability(0.1):
         print("reward!")
         print(" you get 'bone'")
         print(" it Increase basic attack damage  permanet +30")
@@ -190,10 +189,10 @@ def reward(character, check_probability):
     if check_probability(0.3):
         print('reward!3')
         print("you get 'Bowl collar'")
-        print(' increase hunger +1 permanent')
+        print(' increase hunger +1 now')
         #permanet로 채우는거 해줘
         character['Stat']['Hunger'] += 1
-    if check_probability(0.3):
+    if check_probability(0.5):
         print('reward!4')
         print("you get 'key'")
         try:
@@ -255,7 +254,7 @@ def game():
         if not valid_checking:
             continue
         check_character_hunger(character)
-        there_is_a_challenger = check_probability(0.15)
+        there_is_a_challenger = check_probability(0.25)
         if there_is_a_challenger:
             gamelist = ['battle', 'hangman', 'memory game']
             a = random.choice(gamelist)
