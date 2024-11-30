@@ -21,11 +21,7 @@ def make_character():
         "Skill": {
             "Basic Attack": random.randint(10, 30),
             "Current Skills": {
-                "Bark": random.randint(20, 50),
-                "Scratch": random.randint(20, 50),
-                "Digging": random.randint(20, 50),
-                "Tail Whip": random.randint(20, 50),
-                "Bite": random.randint(20, 50),
+                "Bark": random.randint(20, 50)
             }
         },
         "Inventory": {}
@@ -299,15 +295,16 @@ def game():
             character['Stat']['HP'] += 200
             character['Stat']['Current HP'] = character['Stat']['HP']
             character['Stat']['Level'] = 2
-            character['Stat']['Exp'] = 1500
-            # 나중에 Exp = 0으로
-            character['Stat']['Hunger'] = 100
-            character['Skill'] = {"Basic Attack": random.randint(10, 30),
-                                  "Level1": {"Bark": random.randint(20, 50)},
-                                  "Level2": {
-                                      "Scratch": random.randint(20, 50),
-                                      "Digging": random.randint(20, 50),
-                                  }}
+            character['Stat']['Exp'] = 0
+            character['Stat']['Hunger'] = 10
+            character['Skill'] = {
+                "Basic Attack": random.randint(10, 30),
+                "Current Skills": {
+                        "Bark": random.randint(20, 50),
+                        "Scratch": random.randint(20, 50),
+                        "Digging": random.randint(20, 50)}}
+            print("당신의 hp 200상승, level up, skill을 얻으셧습니다(scratch, digging)")
+
         goal_lv2 = check_character_2_level_location_exp(first_location, character)
         if goal_lv2:
             grid = make_board_lv3()
@@ -316,15 +313,16 @@ def game():
             character['Stat']['Current HP'] = character['Stat']['HP']
             character['Stat']['Level'] = 3
             character['Stat']['Exp'] = 0
-            character['Stat']['Hunger'] = 100
-            character['Skill'] = {"Basic Attack": random.randint(10, 30),
-                                  "Level1": {"Bark": random.randint(20, 50)},
-                                  "Level2": {
-                                      "Scratch": random.randint(20, 50),
-                                      "Digging": random.randint(20, 50),
-                                  },
-                                  "Level 3": {"Tail Whip": random.randint(20, 50),
-                                              "Bite": random.randint(20, 50)}}
+            character['Stat']['Hunger'] = 10
+            character['Skill'] = {
+                "Basic Attack": random.randint(10, 30),
+                "Current Skills": {
+                    "Bark": random.randint(20, 50),
+                    "Scratch": random.randint(20, 50),
+                    "Digging": random.randint(20, 50),
+                    "Tail Whip": random.randint(20, 50),
+                    "Bite": random.randint(20, 50)}}
+            print("당신의 hp 200상승, level up, skill을 얻으셧습니다(Tail whip, bite)")
         final_goal = check_character_3_level_location_for_final(first_location, character)
         if final_goal:
             print("game clear! good job!")
