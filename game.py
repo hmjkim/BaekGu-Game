@@ -156,7 +156,7 @@ def get_user_choice(character):
 def move_character_valid_move(grid, position, direction, prev_cell_content, character):
     row, col = position
     new_row, new_col = row, col
-    vaild_checking = True
+    valid_check = True
 
     if direction == 'w':
         new_row -= 1
@@ -174,11 +174,11 @@ def move_character_valid_move(grid, position, direction, prev_cell_content, char
         new_prev_cell_content = grid[new_row][new_col]
         grid[new_row][new_col] = '🐶'
         character["Stat"]["Hunger"] -= 1
-        return (new_row, new_col), new_prev_cell_content, character, vaild_checking
+        return (new_row, new_col), new_prev_cell_content, character, valid_check
     else:
         print("can't move this way")
-        vaild_checking = False
-        return (row, col), prev_cell_content, character, vaild_checking
+        valid_check = False
+        return (row, col), prev_cell_content, character, valid_check
 
 
 def check_character_hunger(character):
