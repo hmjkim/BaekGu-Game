@@ -5,7 +5,7 @@ from hangman import *
 from hangman_art import stages
 from battle import battle
 from matching_direction_game import *
-from boss_battle import boss_battle
+from helpers import is_alive
 
 
 def make_character():
@@ -148,7 +148,7 @@ def check_character_2_level_location_exp(first_location, character):
 def check_character_3_level_location_for_final(first_location, character):
     if first_location == (4, 4) and character['Stat']['Level'] == 3:
         print('마지막 보스를 만나러 갑니다 화이팅!')
-        i, j = boss_battle(character)
+        i, j = battle(character, True)
         if j:
             print("you win")
             return True
@@ -157,11 +157,7 @@ def check_character_3_level_location_for_final(first_location, character):
             return False
 
 
-def is_alive(character):
-    alive = True
-    if character['Stat']['Heart'] == 0:
-        alive = False
-    return alive
+
 
 
 def check_probability(rate):
@@ -217,17 +213,24 @@ def reward(character, check_probability):
 def introduce_game(user_name):
     print("Welcome to Baekgu, %s!" % user_name)
     time.sleep(1)
-    print("You are Baekgu, a loyal white Jindo dog with a brave heart and a strong bond with your family. Life has always been happy, full of love and play, until today—something is terribly wrong.")
+    print("You are Baekgu, a loyal white Jindo dog with a brave heart and a strong bond with your family."
+          "Life has always been happy, full of love and play, until today—something is terribly wrong.")
     time.sleep(4)
-    print("Using your extraordinary sense of smell and intuition, you've realized that your family's little boy, Haru, has suddenly gone missing.")
+    print("Using your extraordinary sense of smell and intuition, you've realized that your family's little boy, Haru, "
+          "has suddenly gone missing.")
     time.sleep(3)
     print("Your mission is clear - Find Haru and bring him back home safely before it's too late.\n")
     time.sleep(3)
-    print("How to Play:")
+    print("Important Rules:")
     time.sleep(2)
-    print("- There are 3 maps you need to explore to reach the final goal. Your journey will take you through different levels, each more challenging than the last one.")
+    print('- Keep an eye on "Hunger" level. On every move, you will lose 1 Hunger and '
+          'need to “Sleep” to recharge your stamina before it runs out.')
     time.sleep(3)
-    print("- You need to reach Level 3 and make your way to the door marked with a '!'s on the map.")
+    print('- You have 10 Hearts to start with.')
+    time.sleep(2)
+    print("- There are 3 maps to explore to reach your goal.")
+    time.sleep(3)
+    print('- You need to reach Level 3 and find the door marked with a "!" on the map.')
     time.sleep(3)
     print("- To level up, you'll need:")
     time.sleep(2)
@@ -235,7 +238,7 @@ def introduce_game(user_name):
     time.sleep(2)
     print("  - A key in your inventory to unlock the way.")
     time.sleep(2)
-    print("  - Full Exp level, which will vary depending on your current level.\n")
+    print("  - Full Exp level (varies by level).\n")
     time.sleep(3)
     print("Your ultimate objective:")
     time.sleep(2)
@@ -245,7 +248,7 @@ def introduce_game(user_name):
     time.sleep(3)
     print("Without further ado, let the rescue begin!")
     time.sleep(2)
-    print("Time to save Haru, Baekgu!")
+    print("Time to save Haru, Baekgu!\n")
 
 
 def check_user(user_name):
@@ -287,7 +290,7 @@ def game():
         display_grid(grid)
 
         if character["Stat"]['Hunger'] == 1:
-            print('alert!!!!!!!!!!!!!!!!!!!! your hunger is now 1! u must sleep now')
+            print('🚨🚨🚨You only have 1 Hunger! You must sleep now.🚨🚨🚨')
 
         direction, character = get_user_choice(character)
         (new_row, new_col), prev_cell_content, character, valid_checking = move_character_valid_move(grid, first_location, direction, prev_cell_content, character)
