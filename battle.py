@@ -1,37 +1,8 @@
-# from game import make_character, is_alive
 import random
 import time
+from helpers import is_alive
 import warnings
-from game import is_alive
 warnings.filterwarnings("ignore")
-
-
-#
-# def defeat_message():
-#     if enemy_copy['HP'] < 0:
-#         enemy_copy['HP'] = 0
-#         print(f'*** 🩸 {enemy_copy['Name']} HP is now {enemy_copy['HP']}/{enemy['HP']} ***')
-#
-#     else:
-#         print(f'*** 🩸 {enemy_copy['Name']} HP is now {enemy_copy['HP']}/{enemy['HP']} ***')
-
-# def is_alive(character):
-#     """
-#     Check if the character is alive.
-#
-#     :param character: a character as a dictionary containing current HP
-#     :precondition: character must have current HP greater than or equal to 0
-#     :postcondition: determine if character has enough health to continue playing
-#     :return: True if character's HP is greater than 0, False otherwise (Boolean)
-#
-#     >>> player = {"X-coordinate": 0, "Y-coordinate": 0, "Current HP": 5}
-#     >>> is_alive(player)
-#     True
-#     >>> player = {"X-coordinate": 0, "Y-coordinate": 0, "Current HP": 0}
-#     >>> is_alive(player)
-#     False
-#     """
-#     return character["Stat"]["Current HP"] > 0
 
 
 def show_current_hp(hp, original_hp, name):
@@ -96,7 +67,6 @@ def make_enemies(name, icon, description, level, hp_range, basic_attack, skill_d
             "Description": description,
             "Level": level,
             "HP": random.randint(*hp_range),
-            # "MP": 50,
             "Attack":
                 {
                     f"{skill_name}": random.randint(*skill_damage),
@@ -105,7 +75,7 @@ def make_enemies(name, icon, description, level, hp_range, basic_attack, skill_d
             }
 
 
-def choose_enemy_based_on_level(character, enemy_stat):
+def choose_enemy_based_on_level(character, enemy_stat, boss_fight):
     # Create enemies
     if character["Stat"]["Level"] == 1:
         # Low Level Mobs (Underground)
@@ -129,7 +99,6 @@ def choose_enemy_based_on_level(character, enemy_stat):
                               'Web Trap')
 
         enemy = random.choice([mouse, spider])
-        enemy_copy = enemy.copy()
     elif character["Stat"]["Level"] == 2:
         # Mid-Level Mobs (Ground Level)
         robotic_vacuum = make_enemies('Robotic Vacuum',
@@ -150,8 +119,7 @@ def choose_enemy_based_on_level(character, enemy_stat):
                                  'Hiss')
 
         enemy = random.choice([robotic_vacuum, guard_cat])
-        enemy_copy = enemy.copy()
-    else:
+    elif character["Stat"]["Level"] == 3:
         # High Level Mobs (Upper Level - Attic)
         giant_moth = make_enemies('Giant Moth',
                                   '🪰',
@@ -170,6 +138,16 @@ def choose_enemy_based_on_level(character, enemy_stat):
                              enemy_stat["Skill Damage"]["Level 4"],
                              'Chill Touch')
         enemy = random.choice([giant_moth, ghost])
+    elif boss_fight:
+        enemy = make_enemies('Majestic Fluffy BunBun',
+                             '🐰',
+                             'An old and tattered bunny plushie, once loved but now abandoned in the attic. '
+                             'Majestic Fluffy BunBun believes he is the noble protector of all the forgotten treasures here. You must fight to get the ',
+                             '10',
+                             enemy_stat["HP Range"]["Boss"],
+                             enemy_stat["Basic Attack"]["Boss"],
+                             enemy_stat["Skill Damage"]["Boss"],
+                             'Cuddle Crush')
     return enemy, enemy.copy()
 
 
@@ -179,9 +157,9 @@ def display_skill_uses(current_skill_usage, skill_usage_limit):
     print(f"SKILL USES LEFT: {skill_used * current_skill_usage}{skill_not_used * skill_usage_limit}")
 
 
-def battle(character):
+def battle(character, boss_fight=False):
     enemy_stat = configure_enemy_stat()
-    enemy, enemy_copy = choose_enemy_based_on_level(character, enemy_stat)
+    enemy, enemy_copy = choose_enemy_based_on_level(character, enemy_stat, boss_fight)
 
     # Display enemy information
     print("--------------------------------------------\n"
@@ -224,7 +202,6 @@ def battle(character):
                                          f"{formatted_skill}\n"
                                          "--------------------------------------------\n"
                                          "Choose skill you would like to use:")
-
                     display_attack_description(enemy["Name"])
                     selected_skill_damage = current_skills[skill_choice.title()]
                     enemy_copy['HP'] -= selected_skill_damage
