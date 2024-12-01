@@ -78,17 +78,37 @@ def word_strike(text):
     return ' '.join([u'\u0336{}'.format(c) for c in text])
 
 
+def handle_incorrect_guess(guess, incorrect_guesses, remaining_lives):
+    """
+    Print the wrong guess and remaining lives and update incorrect guess
+    
+    :param guess: a string
+    :param incorrect_guesses: a list that holds all the incorrect guesses
+    :param remaining_lives: the player's remaining lives
+    :precondition: guess must be a string
+    :precondition: incorrect_guesses must be a list
+    :precondition: remaining_lives must be an integer
+    :postcondition: print remaining lives and the incorrect guess with word strike effect
+    :postcondition: update incorrect_guesses by appending the guess
+    """
+    print("-1 life")
+    print(f"Current lives: {remaining_lives}")
+    print(f"You guessed '{guess}', that's not in the word. You lose a life.")
+    incorrect_guesses.append(guess)
+    print("Incorrect answers: " + word_strike(incorrect_guesses))
+
+
 def hangman(word_list, character):
+    """
+    Drive the hangman game.
+    """
     chosen_word = random.choice(word_list)
     word_length = len(chosen_word)
     lives = 8
     display = []
-    for _ in range(word_length):
-        display += "_"
-
+    [display.append("_") for _ in range(word_length)]
     print("Current lives: %d" % lives)
     empty_incorrect = []
-
     end_of_game = False
     while not end_of_game:
         guess = input("Guess a letter: ").lower()
@@ -104,11 +124,7 @@ def hangman(word_list, character):
 
         if not correct_guess:
             lives -= 1
-            print("-1 life")
-            print("Current lives: %d" % lives)
-            print(f"You guessed '{guess}', that's not in the word. You lose a life.")
-            empty_incorrect.append(guess)
-            print("Incorrect answers: %s" % word_strike(empty_incorrect))
+            handle_incorrect_guess(guess, empty_incorrect, lives)
             if lives == 0:
                 print("You lose.")
                 print(f"The word was: '{chosen_word}'")
