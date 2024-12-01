@@ -29,11 +29,9 @@ def display_stats(character):
 
 
 def display_skills(character):
-    print(character['Skill']['Current Skills'])
     print("\n⚔️ Your Skills")
     print("--------------------------------------------------------")
     for skill, details in character['Skill']['Current Skills'].items():
         # Adjust the spacing to align the skill names and details better
         print(f"{skill:<12}: Damage: {details['Damage']}, {details['Description']}")
     print("--------------------------------------------------------")
-
