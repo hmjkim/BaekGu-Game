@@ -29,8 +29,7 @@ def display_attack_description(enemy):
         "Your powerful attack stunned the enemy.",
         "Your strike pierced through the enemy with precision."
     ]
-    description = random.choice(attack_descriptions)
-    print(description.replace("enemy", enemy))
+    print(random.choice(attack_descriptions).replace("enemy", enemy))
 
 
 def configure_enemy_stat():
@@ -187,8 +186,7 @@ def battle(character, boss_fight=False):
     while is_alive(character) and enemy_copy["HP"] > 0 and in_battle:
         options = ['Attack', 'Skill', 'Flee', 'Stat', 'Inventory']
         while True:
-            user_choice = input(f'Enter battle options ("%s", "%s", "%s" to run away, "%s" to see your current condition, or "%s" to use items):' % (options[0], options[1], options[2], options[3], options[4]))
-
+            user_choice = input(f'Enter battle options ("{options[0]}", "{options[1]}", "{options[2]}" to run away, "{options[3]}" to see your current condition, or "{options[4]}" to use items):')
             if user_choice.lower() == "attack":
                 display_attack_description(enemy["Name"])
                 enemy_copy['HP'] -= character["Skill"]['Basic Attack']
@@ -237,13 +235,13 @@ def battle(character, boss_fight=False):
                          f"1. HP Potion : {character['Inventory']['HP Potion']}\n"
                          f"2. Kibble : {character['Inventory']['Kibble']}\n"
                          "--------------------------------------------\n")
-                item_to_use = input("Enter item to use: ")
-                if item_to_use.lower() == '1' or item_to_use.lower() == 'hp potion':
+                item_to_use = input("Enter item to use: ").lower()
+                if item_to_use == '1' or item_to_use == 'hp potion':
                     character["Stat"]["Current HP"] = character["Stat"]["HP"]
                     print(f"Your HP is full now. (HP: {character['Stat']['Current HP']}/{character['Stat']['HP']})")
                     character['Inventory']['HP Potion'] -= 1
                     continue
-                elif item_to_use.lower() == '2' or item_to_use.lower() == 'kibble':
+                elif item_to_use == '2' or item_to_use == 'kibble':
                     character["Stat"]["Hunger"] += 1
                     print(f"Hunger increased by 1. (Hunger: {character['Stat']['Current HP']}/{character['Stat']['HP']})")
                     character['Inventory']['Hunger'] -= 1
