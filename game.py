@@ -5,32 +5,71 @@ from hangman import *
 from hangman_art import stages
 from battle import battle
 from matching_direction_game import *
-from helpers import is_alive
+from helpers import is_alive, display_skills, display_inventory, display_stats
+from test import skill_set
 
 
-def make_character():
+def configure_skills():
+    return {
+        "Level 1": {
+            "Bark": {
+                "Damage": random.randint(20, 30),
+                "Description": "A loud bark that stuns the enemy"
+            }
+        },
+        "Level 2": {
+            "Scratch": {
+                "Damage": random.randint(40, 50),
+                "Description": "A swift paw swipe leaving deep marks"
+            },
+            "Digging": {
+                "Damage": random.randint(40, 50),
+                "Description": "Kick up dirt to blind the enemy"
+            },
+        },
+        "Level 3": {
+            "Tail Whip": {
+                "Damage": random.randint(51, 60),
+                "Description": "A powerful tail swing that knocks the enemy off balance"
+            },
+            "Bite": {
+                "Damage": random.randint(51, 60),
+                "Description": "A strong bite with a headshake"
+            },
+        }
+    }
+
+
+def make_character(skill_set):
     return {
         "Stat": {
             "HP": 250,
             "Current HP": 250,
             "Level": 1,
             "Exp": 0,
+            "Max Exp": {
+                "Level 1": 1000,
+                "Level 2": 1300
+            },
             "Heart": 10,
-            "Hunger": 10
+            "Max Heart": 10,
+            "Hunger": 10,
+            "Max Hunger": 10
         },
         "Skill": {
             "Basic Attack": random.randint(10, 30),
             "Current Skills": {
-                "Bark": random.randint(20, 50)
+                **skill_set["Level 1"],
+                **skill_set["Level 2"],
+                **skill_set["Level 3"]
             }
         },
         "Inventory": {
-            "key": 0,
-            "HP Potion": 0,
+            "Key": 1,
+            "HP Potion": 3,
             "Kibble": 0
         }
     }
-
 
 def make_character_location(grid):
     first_location = (1, 1)
@@ -79,14 +118,16 @@ def get_user_choice(character):
                     if character["Inventory"]["HP Potion"] > 0:
                         character['Stat']['Current HP'] = character['Stat']['HP']
                         character['Inventory']['HP Potion'] -= 1
-                        print("You used 'HP Potion'. Your HP is fully restored now. (HP %s/%s) - Remaining quantity: %s" % (character['Stat']['Current HP'], character['Stat']['HP'], character['Inventory']['HP Potion']))
+                        print("You used 'HP Potion'. Your HP is fully restored now. (HP %s/%s) - Remaining quantity: %s"
+                              % (character['Stat']['Current HP'], character['Stat']['HP'], character['Inventory']['HP Potion']))
                     else:
                         print("❌ You don't have any HP Potion.")
                 elif item_use == "2" or item_use.lower() == 'kibble':
                     if character['Inventory']['Kibble'] > 0:
                         character['Inventory']['Kibble'] -= 1
                         character['Stat']['Hunger'] += 1
-                        print(f"You ate 'Kibble'. Hunger increased by +1. - Remaining quantity: %s" % character['Inventory']['Kibble'])
+                        print(f"You ate 'Kibble'. Hunger increased by +1. - Remaining quantity: %s"
+                              % character['Inventory']['Kibble'])
                     else:
                         print("❌ You don't have any Kibble.")
                 elif item_use == "3" or item_use.lower() == 'key':
@@ -297,7 +338,8 @@ def game():
         introduce_game(user_name)
 
     first_location, prev_cell_content = make_character_location(grid)
-    character = make_character()
+    skill_set = configure_skills()
+    character = make_character(skill_set)
 
     achieved_goal = False
     while is_alive(character) and not achieved_goal:
