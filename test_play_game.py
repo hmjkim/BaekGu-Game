@@ -39,7 +39,3 @@ class Test(TestCase):
         result, actual = play_game(level, character)
         expected = {'Stat': {'Heart': 2}}
         self.assertEqual(actual, expected)
-
-
-
-
