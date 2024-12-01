@@ -264,45 +264,66 @@ def reward(character):
     return character
 
 
+def load_texts(file):
+    try:
+        with open(file, 'r') as file:
+            texts = file.readlines()
+        return [text.strip() for text in texts]
+    except FileNotFoundError:
+        print(f"Error: The file {file} was not found.")
+        return []
+
+
 def introduce_game(user_name):
-    print("Welcome to Baekgu, %s!" % user_name)
+    file_path = "intro.txt"
+    texts = load_texts(file_path)
+    if not texts:
+        return
+    print(f"Welcome to Baekgu, {user_name}!")
     time.sleep(1)
-    print("You are Baekgu, a loyal white Jindo dog with a brave heart and a strong bond with your family."
-          "Life has always been happy, full of love and play, until today—something is terribly wrong.")
-    time.sleep(4)
-    print("Using your extraordinary sense of smell and intuition, you've realized that your family's little boy, Haru, "
-          "has suddenly gone missing.")
-    time.sleep(3)
-    print("Your mission is clear - Find Haru and bring him back home safely before it's too late.\n")
-    time.sleep(3)
-    print("Important Rules:")
-    time.sleep(2)
-    print('- Keep an eye on "Hunger" level. On every move, you will lose 1 Hunger and '
-          'need to “Sleep” to recharge your stamina before it runs out.')
-    time.sleep(3)
-    print('- You have 10 Hearts to start with.')
-    time.sleep(2)
-    print("- There are 3 maps to explore to reach your goal.")
-    time.sleep(3)
-    print('- You need to reach Level 3 and find the door marked with a "!" on the map.')
-    time.sleep(3)
-    print("- To level up, you'll need:")
-    time.sleep(2)
-    print("  - To stand in front of the door (!).")
-    time.sleep(2)
-    print("  - A key in your inventory to unlock the way.")
-    time.sleep(2)
-    print("  - Full Exp level (varies by level).\n")
-    time.sleep(3)
-    print("Your ultimate objective:")
-    time.sleep(2)
-    print("Defeat the boss who is holding Haru captive and bring him back home to your loving family!!!!!")
-    time.sleep(3)
-    print("Your journey may be filled with dangers, but with your sharp senses and loyalty, you are Haru's only hope.")
-    time.sleep(3)
-    print("Without further ado, let the rescue begin!")
-    time.sleep(2)
-    print("Time to save Haru, Baekgu!\n")
+    for line in texts:
+        print(line)
+        time.sleep(3)
+
+# def introduce_game(user_name):
+#     print("Welcome to Baekgu, %s!" % user_name)
+#     time.sleep(1)
+#     print("You are Baekgu, a loyal white Jindo dog with a brave heart and a strong bond with your family."
+#           "Life has always been happy, full of love and play, until today—something is terribly wrong.")
+#     time.sleep(4)
+#     print("Using your extraordinary sense of smell and intuition, you've realized that your family's little boy, Haru, "
+#           "has suddenly gone missing.")
+#     time.sleep(3)
+#     print("Your mission is clear - Find Haru and bring him back home safely before it's too late.\n")
+#     time.sleep(3)
+#     print("Important Rules:")
+#     time.sleep(2)
+#     print('- Keep an eye on "Hunger" level. On every move, you will lose 1 Hunger and '
+#           'need to “Sleep” to recharge your stamina before it runs out.')
+#     time.sleep(3)
+#     print('- You have 10 Hearts to start with.')
+#     time.sleep(2)
+#     print("- There are 3 maps to explore to reach your goal.")
+#     time.sleep(3)
+#     print('- You need to reach Level 3 and find the door marked with a "!" on the map.')
+#     time.sleep(3)
+#     print("- To level up, you'll need:")
+#     time.sleep(2)
+#     print("  - To stand in front of the door (!).")
+#     time.sleep(2)
+#     print("  - A key in your inventory to unlock the way.")
+#     time.sleep(2)
+#     print("  - Full Exp level (varies by level).\n")
+#     time.sleep(3)
+#     print("Your ultimate objective:")
+#     time.sleep(2)
+#     print("Defeat the boss who is holding Haru captive and bring him back home to your loving family!!!!!")
+#     time.sleep(3)
+#     print("Your journey may be filled with dangers, but with your sharp senses and loyalty, you are Haru's only hope.")
+#     time.sleep(3)
+#     print("Without further ado, let the rescue begin!")
+#     time.sleep(2)
+#     print("Time to save Haru, Baekgu!\n")
 
 
 def check_user(user_name):
@@ -334,6 +355,7 @@ def game():
     user_name = input("Hi, there! What's your name? : ")
 
     if not check_user(user_name):
+
         introduce_game(user_name)
 
     first_location, prev_cell_content = make_character_location(grid)
