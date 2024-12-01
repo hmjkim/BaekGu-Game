@@ -2,7 +2,6 @@
 import random
 import time
 import warnings
-from game import is_alive
 warnings.filterwarnings("ignore")
 
 
@@ -15,23 +14,20 @@ warnings.filterwarnings("ignore")
 #     else:
 #         print(f'*** 🩸 {enemy_copy['Name']} HP is now {enemy_copy['HP']}/{enemy['HP']} ***')
 
-# def is_alive(character):
-#     """
-#     Check if the character is alive.
-#
-#     :param character: a character as a dictionary containing current HP
-#     :precondition: character must have current HP greater than or equal to 0
-#     :postcondition: determine if character has enough health to continue playing
-#     :return: True if character's HP is greater than 0, False otherwise (Boolean)
-#
-#     >>> player = {"X-coordinate": 0, "Y-coordinate": 0, "Current HP": 5}
-#     >>> is_alive(player)
-#     True
-#     >>> player = {"X-coordinate": 0, "Y-coordinate": 0, "Current HP": 0}
-#     >>> is_alive(player)
-#     False
-#     """
-#     return character["Stat"]["Current HP"] > 0
+def is_alive(character):
+    """
+    Check if the character is alive.
+
+    :param character: a character as a dictionary containing current HP
+    :precondition: character must have current HP greater than or equal to 0
+    :postcondition: determine if character has enough health to continue playing
+    :return: True if character's HP is greater than 0, False otherwise (Boolean)
+
+
+    """
+    return character["Stat"]["Current HP"] > 0
+
+
 
 
 def show_current_hp(hp, original_hp, name):
@@ -42,11 +38,6 @@ def show_current_hp(hp, original_hp, name):
     else:
         print(f'*** 🩸 {name} HP is now {hp}/{original_hp} ***')
         return False
-
-
-def lose_heart(character):
-    character["Stat"]["Heart"] -= 1
-    print(f"You lost 1 Heart. You have {character['Stat']['Heart']} Heart(s) left.")
 
 
 def display_attack_description(enemy):
@@ -128,8 +119,9 @@ def choose_enemy_based_on_level(character, enemy_stat):
                               enemy_stat["Skill Damage"]["Level 2"],
                               'Web Trap')
 
-        enemy = random.choice([mouse, spider])
-        enemy_copy = enemy.copy()
+        enemies = [mouse, spider]
+        # enemy = random.choice([mouse, spider])
+        # enemy_copy = enemy.copy()
     elif character["Stat"]["Level"] == 2:
         # Mid-Level Mobs (Ground Level)
         robotic_vacuum = make_enemies('Robotic Vacuum',
@@ -149,8 +141,9 @@ def choose_enemy_based_on_level(character, enemy_stat):
                                  enemy_stat["Skill Damage"]["Level 3"],
                                  'Hiss')
 
-        enemy = random.choice([robotic_vacuum, guard_cat])
-        enemy_copy = enemy.copy()
+        enemies = [robotic_vacuum, guard_cat]
+        # enemy = random.choice([robotic_vacuum, guard_cat])
+        # enemy_copy = enemy.copy()
     else:
         # High Level Mobs (Upper Level - Attic)
         giant_moth = make_enemies('Giant Moth',
@@ -169,7 +162,9 @@ def choose_enemy_based_on_level(character, enemy_stat):
                              enemy_stat["Basic Attack"]["Level 4"],
                              enemy_stat["Skill Damage"]["Level 4"],
                              'Chill Touch')
-        enemy = random.choice([giant_moth, ghost])
+        enemies = [giant_moth, ghost]
+        # enemy = random.choice([giant_moth, ghost])
+    enemy = random.choice(enemies)
     return enemy, enemy.copy()
 
 
@@ -177,6 +172,11 @@ def display_skill_uses(current_skill_usage, skill_usage_limit):
     skill_used = "🔳"
     skill_not_used = "⬜️"
     print(f"SKILL USES LEFT: {skill_used * current_skill_usage}{skill_not_used * skill_usage_limit}")
+
+
+def lose_heart(character):
+    character["Stat"]["Heart"] -= 1
+    print(f"You lost 1 Heart. You have {character['Stat']['Heart']} Heart(s) left.")
 
 
 def battle(character):
@@ -289,11 +289,11 @@ def battle(character):
     return character, has_won
 
 
-# def main():
-#     character = make_character()
-#     battle(character)
-#
-#
-# if __name__ == '__main__':
-#     main()
+def main():
+    character = {'Stat': {'Level': 1, 'Heart': 5, 'Current HP': 500, 'HP': 500}}
+    battle(character)
+
+
+if __name__ == '__main__':
+    main()
 
