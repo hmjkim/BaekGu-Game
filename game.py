@@ -192,13 +192,13 @@ def check_character_hunger(character):
 
 
 def check_character_1_level_location_exp(first_location, character):
-    if first_location == (7, 1) and character['Inventory']['key'] >= 1 and character['Stat']['Level'] == 1 and character['Stat']['Exp'] >= 1000 :
+    if first_location == (7, 1) and character['Inventory']['Key'] >= 1 and character['Stat']['Level'] == 1 and character['Stat']['Exp'] >= 1000 :
         print('1렙 claer! 1렙 up 다음 2렙 맵으로 move')
         return True
 
 
 def check_character_2_level_location_exp(first_location, character):
-    if first_location == (4, 8) and character['Inventory']['key'] >= 1 and character['Stat']['Level'] == 2 and character['Stat']['Exp'] >= 1300 :
+    if first_location == (4, 8) and character['Inventory']['Key'] >= 1 and character['Stat']['Level'] == 2 and character['Stat']['Exp'] >= 1300 :
         print('2렙 claer! 1렙 up 다음 3렙 맵으로 move')
         return True
 
