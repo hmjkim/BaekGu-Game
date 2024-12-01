@@ -50,17 +50,17 @@ def get_user_choice(character):
                 # if use not in character['Inventory'].keys():
                 #     print("invalid input, try again")
                 #     continue
-                if use == 'Kibble':
+                if use.lower() == 'kibble':
                     character['Inventory']['Kibble'] -= 1
                     character['Stat']['Hunger'] += 1
                     print("you eat 'Kibble' and your hunger +1")
                     continue
-                if use == "HP Potion":
+                if use.lower() == "hp potion":
                     character['Stat']['Current HP'] += character['Stat']['HP'] - character['Stat']['Current HP']
                     character['Stat']['HP'] = character['Stat']['Current HP']
                     print("you use 'HP Potion' and your HP +%d" % (character['Stat']['HP'] - character['Stat']['Current HP']))
                     continue
-                if use == "q":
+                if use.lower() == "q":
                     break
                 else:
                     print("invalid input, try again")
@@ -73,7 +73,7 @@ def get_user_choice(character):
             user_wanted_input = input("which do you want to do again? ['1: Direction','2: Inventory','3: Stat','4: Sleep']")
         if user_wanted_input == '4':
             print("go to sleep for 10sec")
-            for i in range(1,11):
+            for i in range(1, 11):
                 time.sleep(1)
                 print("%d sec" % i)
             character['Stat']['Hunger'] = 10
@@ -129,7 +129,7 @@ def check_character_hunger(character):
             time.sleep(1)
             print("%d sec" % i)
         character["Stat"]["Hunger"] = 10
-        character["Stat"]["HP"] = 100
+        character["Stat"]["Current HP"] = character["Stat"]["HP"]
         return character
 
 
@@ -148,8 +148,8 @@ def check_character_2_level_location_exp(first_location, character):
 def check_character_3_level_location_for_final(first_location, character):
     if first_location == (4, 4) and character['Stat']['Level'] == 3:
         print('마지막 보스를 만나러 갑니다 화이팅!')
-        i, j = battle(character, True)
-        if j:
+        i, check = battle(character, True)
+        if check:
             print("you win")
             return True
         else:
@@ -157,15 +157,12 @@ def check_character_3_level_location_for_final(first_location, character):
             return False
 
 
-
-
-
 def check_probability(rate):
     return random.random() <= rate
 
 
-def reward(character, check_probability):
-    exp = random.randint(200,400)
+def reward(character):
+    exp = random.randint(200, 400)
     character['Stat']['Exp'] += exp
     print("Exp +=", exp)
     if check_probability(0.1):
@@ -198,7 +195,6 @@ def reward(character, check_probability):
         print('reward!3')
         print("you get 'Bowl collar'")
         print(' increase hunger +1 now')
-        #permanet로 채우는거 해줘
         character['Stat']['Hunger'] += 1
     if check_probability(0.5):
         print('reward!4')
@@ -285,8 +281,8 @@ def game():
     first_location, prev_cell_content = make_character_location(grid)
     character = make_character()
 
-    achieved_goal_lv1 = False
-    while is_alive(character) and not achieved_goal_lv1:
+    achieved_goal = False
+    while is_alive(character) and not achieved_goal:
         display_grid(grid)
 
         if character["Stat"]['Hunger'] == 1:
@@ -309,18 +305,18 @@ def game():
                 if i:
                     print("you win")
                     print("get reward")
-                    reward(character, check_probability)
+                    reward(character)
                 else:
                     print("continue game")
             elif a == 'hangman':
                 print("play hangman")
                 level = check_character_level_hangman(character)
-                i, j = hangman(level, stages, character)
+                i, j = hangman(level, character)
                 print(i, j)
                 if i:
                     print("you win")
                     print("get reward")
-                    reward(character, check_probability)
+                    reward(character)
                 else:
                     print("continue game")
             elif a == 'memory game':
@@ -331,7 +327,7 @@ def game():
                 if check:
                     print("you win")
                     print("get reward")
-                    reward(character, check_probability)
+                    reward(character)
                 else:
                     print("continue game")
 
@@ -351,6 +347,7 @@ def game():
                         "Scratch": random.randint(20, 50),
                         "Digging": random.randint(20, 50)}}
             print("당신의 hp 200상승, level up, skill을 얻으셧습니다(scratch, digging)")
+
 
         goal_lv2 = check_character_2_level_location_exp(first_location, character)
         if goal_lv2:
@@ -373,13 +370,13 @@ def game():
         final_goal = check_character_3_level_location_for_final(first_location, character)
         if final_goal:
             print("game clear! good job!")
-            achieved_goal_lv1 = True
+            achieved_goal = True
         elif final_goal is False:
             print('안녕 태초마을이야')
             grid = make_board_lv3()
             first_location, prev_cell_content = make_character_location(grid)
 
-    if achieved_goal_lv1:
+    if achieved_goal:
         print('Congratulations! You have reached the goal.')
     else:
         print('Game over! You have lost all your HP.')
