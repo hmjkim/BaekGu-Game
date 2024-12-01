@@ -3,8 +3,8 @@ from make_board_each_level import *
 import time
 from hangman import *
 from hangman_art import stages
-from battle import battle
 from matching_direction_game import *
+from battle import battle
 from helpers import is_alive, display_skills, display_inventory, display_stats
 
 
@@ -37,6 +37,16 @@ def configure_skills():
             },
         }
     }
+
+
+def go_to_sleep(character, total_time):
+    print(f"\n💤 You are going to sleep for %d seconds to regain energy." % total_time)
+    for count in range(1, total_time + 1):
+        time.sleep(1)
+        print("%d sec" % count)
+    character['Stat']['Hunger'] = 10
+    character['Stat']['Current HP'] = character['Stat']['HP']
+    print("You feel well-rested! Your Hunger and HP have been fully restored.")
 
 
 def make_character(skill_set):
@@ -140,13 +150,7 @@ def get_user_choice(character):
         elif user_choice == '4':
             display_skills(character)
         elif user_choice == '5':
-            print("\n💤 You are going to sleep for 10 seconds to regain energy")
-            for count in range(1, 11):
-                time.sleep(1)
-                print("%d sec" % count)
-            character['Stat']['Hunger'] = 10
-            character['Stat']['Current HP'] = character['Stat']['HP']
-            print("You feel well-rested! Your Hunger and HP have been fully restored.")
+            go_to_sleep(character, 10)
 
         elif user_choice not in types_input:
             print("\n❌ Invalid input. Please enter a valid choice (1-4).")
@@ -182,13 +186,9 @@ def move_character_valid_move(grid, position, direction, prev_cell_content, char
 
 def check_character_hunger(character):
     if character["Stat"]['Hunger'] == 0:
-        print("force to sleep for 20sec")
-        for i in range(1, 21):
-            time.sleep(1)
-            print("%d sec" % i)
-        character["Stat"]["Hunger"] = 10
-        character["Stat"]["Current HP"] = character["Stat"]["HP"]
-        return character
+        print("⚠️⚠️⚠️ Oops! You have run out of energy. It's a nap time, Baekgu ⚠️⚠️⚠️")
+        go_to_sleep(character, 20)
+    return character
 
 
 def check_character_1_level_location_exp(first_location, character):
@@ -399,13 +399,14 @@ def game():
             character['Stat']['Level'] = 2
             character['Stat']['Exp'] = 0
             character['Stat']['Hunger'] = 10
-            character['Skill'] = {
-                "Basic Attack": random.randint(10, 30),
-                "Current Skills": {
-                        "Bark": random.randint(20, 50),
-                        "Scratch": random.randint(20, 50),
-                        "Digging": random.randint(20, 50)}}
-            print("당신의 hp 200상승, level up, skill을 얻으셧습니다(scratch, digging)")
+            character['Skill']['Current Skills'].update(skill_set['Level 2'])
+            # character['Skill'] = {
+            #     "Basic Attack": random.randint(10, 30),
+            #     "Current Skills": {
+            #             "Bark": random.randint(20, 50),
+            #             "Scratch": random.randint(20, 50),
+            #             "Digging": random.randint(20, 50)}}
+            print(f"Your maximum HP has been increased by 200. You earned two new skills({','.join(skill_set['Level 2'].keys())}). (max HP +200)")
 
 
         goal_lv2 = check_character_2_level_location_exp(first_location, character)
@@ -417,14 +418,15 @@ def game():
             character['Stat']['Level'] = 3
             character['Stat']['Exp'] = 0
             character['Stat']['Hunger'] = 10
-            character['Skill'] = {
-                "Basic Attack": random.randint(10, 30),
-                "Current Skills": {
-                    "Bark": random.randint(20, 50),
-                    "Scratch": random.randint(20, 50),
-                    "Digging": random.randint(20, 50),
-                    "Tail Whip": random.randint(20, 50),
-                    "Bite": random.randint(20, 50)}}
+            character['Skill']['Current Skills'].update(skill_set['Level 3'])
+            # character['Skill'] = {
+            #     "Basic Attack": random.randint(10, 30),
+            #     "Current Skills": {
+            #         "Bark": random.randint(20, 50),
+            #         "Scratch": random.randint(20, 50),
+            #         "Digging": random.randint(20, 50),
+            #         "Tail Whip": random.randint(20, 50),
+            #         "Bite": random.randint(20, 50)}}
             print("당신의 hp 200상승, level up, skill을 얻으셧습니다(Tail whip, bite)")
         final_goal = check_character_3_level_location_for_final(first_location, character)
         if final_goal:
