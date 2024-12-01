@@ -40,7 +40,7 @@ def word_strike(text):
     return ' '.join([u'\u0336{}'.format(c) for c in text])
 
 
-def hangman(word_list, stages, character):
+def hangman(word_list, character):
     chosen_word = random.choice(word_list)
     word_length = len(chosen_word)
     lives = 8
@@ -59,11 +59,9 @@ def hangman(word_list, stages, character):
             continue
 
         correct_guess = False
-        for position in range(word_length):
-            letter = chosen_word[position]
+        for position, letter in enumerate(chosen_word):
             if letter == guess:
                 display[position] = letter
-                print("Current lives: %d" % lives)
                 correct_guess = True
 
         if not correct_guess:
@@ -89,13 +87,13 @@ def hangman(word_list, stages, character):
     return end_of_game, character
 
 
-# def main():
-#     character = {'Stat': {'Level': 1, 'Heart': 1}}
-#     list = check_character_level_hangman(character)
-#     i, j = hangman(list, stages, character)
-#     print(i,j)
-#
-#
-#
-# if __name__ == "__main__":
-#     main()
+def main():
+    character = {'Stat': {'Level': 1, 'Heart': 1}}
+    list = check_character_level_hangman(character)
+    i, j = hangman(list, character)
+    print(i,j)
+
+
+
+if __name__ == "__main__":
+    main()
