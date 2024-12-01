@@ -1,3 +1,4 @@
+# from game import make_character, is_alive
 import random
 import time
 from helpers import is_alive
@@ -98,7 +99,7 @@ def choose_enemy_based_on_level(character, enemy_stat, boss_fight):
                               enemy_stat["Skill Damage"]["Level 2"],
                               'Web Trap')
 
-        enemy = random.choice([mouse, spider])
+        enemies = [mouse, spider]
     elif character["Stat"]["Level"] == 2:
         # Mid-Level Mobs (Ground Level)
         robotic_vacuum = make_enemies('Robotic Vacuum',
@@ -118,7 +119,18 @@ def choose_enemy_based_on_level(character, enemy_stat, boss_fight):
                                  enemy_stat["Skill Damage"]["Level 3"],
                                  'Hiss')
 
-        enemy = random.choice([robotic_vacuum, guard_cat])
+        enemies = [robotic_vacuum, guard_cat]
+    elif boss_fight:
+        boss = make_enemies('Majestic Fluffy BunBun',
+                         '🐰',
+                         'An old and tattered bunny plushie, once loved but now abandoned in the attic. '
+                         'Majestic Fluffy BunBun believes he is the noble protector of all the forgotten treasures here. You must fight to get the ',
+                         '10',
+                         enemy_stat["HP Range"]["Boss"],
+                         enemy_stat["Basic Attack"]["Boss"],
+                         enemy_stat["Skill Damage"]["Boss"],
+                         'Cuddle Crush')
+        enemies = [boss]
     elif character["Stat"]["Level"] == 3:
         # High Level Mobs (Upper Level - Attic)
         giant_moth = make_enemies('Giant Moth',
@@ -137,17 +149,8 @@ def choose_enemy_based_on_level(character, enemy_stat, boss_fight):
                              enemy_stat["Basic Attack"]["Level 4"],
                              enemy_stat["Skill Damage"]["Level 4"],
                              'Chill Touch')
-        enemy = random.choice([giant_moth, ghost])
-    elif boss_fight:
-        enemy = make_enemies('Majestic Fluffy BunBun',
-                             '🐰',
-                             'An old and tattered bunny plushie, once loved but now abandoned in the attic. '
-                             'Majestic Fluffy BunBun believes he is the noble protector of all the forgotten treasures here. You must fight to get the ',
-                             '10',
-                             enemy_stat["HP Range"]["Boss"],
-                             enemy_stat["Basic Attack"]["Boss"],
-                             enemy_stat["Skill Damage"]["Boss"],
-                             'Cuddle Crush')
+        enemies = [giant_moth, ghost]
+    enemy = random.choice(enemies)
     return enemy, enemy.copy()
 
 
@@ -202,6 +205,7 @@ def battle(character, boss_fight=False):
                                          f"{formatted_skill}\n"
                                          "--------------------------------------------\n"
                                          "Choose skill you would like to use:")
+
                     display_attack_description(enemy["Name"])
                     selected_skill_damage = current_skills[skill_choice.title()]
                     enemy_copy['HP'] -= selected_skill_damage
@@ -266,11 +270,11 @@ def battle(character, boss_fight=False):
     return character, has_won
 
 
-# def main():
-#     character = make_character()
-#     battle(character)
-#
-#
-# if __name__ == '__main__':
-#     main()
+def main():
+    character = {'Stat': {'Level': 1, 'Heart': 5, 'Current HP': 500, 'HP': 500}}
+    battle(character)
+
+
+if __name__ == '__main__':
+    main()
 
