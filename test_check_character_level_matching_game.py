@@ -8,6 +8,7 @@ class Test(TestCase):
         actual = check_character_level_matching_game(character)
         expected = 5
         self.assertEqual(actual, expected)
+
     def test_check_character_level_matching_game_level2(self):
         character = {'Stat': {'Level': 2}}
         actual = check_character_level_matching_game(character)
