@@ -41,57 +41,75 @@ def make_character_location(grid):
 
 def get_user_choice(character):
     types_input = ['1', '2', '3', '4']
-    user_wanted_input = input("which do you want to do? ['1: Direction','2: Inventory','3: Stat','4: Sleep']")
-    while user_wanted_input != '1':
-        if user_wanted_input == '2':
-            print(character['Inventory'])
+
+    # Main game loop to handle user choices
+    while True:
+        user_choice = input(
+            "\nWhat would you like to do?\n"
+            "--------------------------------------------------------\n"
+            " 1: 🐕 Directions  - Move around\n"
+            " 2: 🎒 Inventory   - Check your inventory\n"
+            " 3: 📊 Stats       - View your current stats\n"
+            " 4: ⚔️ Skills      - View your skills you have\n"
+            " 5: 💤 Sleep       - Rest to regain energy\n"
+            "--------------------------------------------------------\n"
+            "Enter the number of your choice: "
+        )
+
+        if user_choice == '1':
+            movement_keys = ['w', 'a', 's', 'd']
+            movement_directions = ['North', 'West', 'South', 'East']
+            print("\n🐕 Directions Available:")
+            for count, element in enumerate(movement_keys):
+                print(f"{element.upper()} : {movement_directions[count]}.")
+
             while True:
-                use = input("which do you want to use? %s, q:quit" % character['Inventory'].keys())
-                # if use not in character['Inventory'].keys():
-                #     print("invalid input, try again")
-                #     continue
-                if use.lower() == 'kibble':
-                    character['Inventory']['Kibble'] -= 1
-                    character['Stat']['Hunger'] += 1
-                    print("you eat 'Kibble' and your hunger +1")
-                    continue
-                if use.lower() == "hp potion":
-                    character['Stat']['Current HP'] += character['Stat']['HP'] - character['Stat']['Current HP']
-                    character['Stat']['HP'] = character['Stat']['Current HP']
-                    print("you use 'HP Potion' and your HP +%d" % (character['Stat']['HP'] - character['Stat']['Current HP']))
-                    continue
-                if use.lower() == "q":
+                direction_input = input("\nEnter the direction you wish to travel "
+                                        f"({'/'.join(movement_keys).upper()}): ").lower()
+                if direction_input not in movement_keys:
+                    print("❌ Invalid direction.")
+                return direction_input, character
+
+        elif user_choice == '2':
+            while True:
+                display_inventory(character)
+                item_use = input("Which item would you like to use? (Enter the item number or type 'q' to quit): ")
+
+                if item_use == '1' or item_use.lower() == 'hp potion':
+                    if character["Inventory"]["HP Potion"] > 0:
+                        character['Stat']['Current HP'] = character['Stat']['HP']
+                        character['Inventory']['HP Potion'] -= 1
+                        print("You used 'HP Potion'. Your HP is fully restored now. (HP %s/%s) - Remaining quantity: %s" % (character['Stat']['Current HP'], character['Stat']['HP'], character['Inventory']['HP Potion']))
+                    else:
+                        print("❌ You don't have any HP Potion.")
+                elif item_use == "2" or item_use.lower() == 'kibble':
+                    if character['Inventory']['Kibble'] > 0:
+                        character['Inventory']['Kibble'] -= 1
+                        character['Stat']['Hunger'] += 1
+                        print(f"You ate 'Kibble'. Hunger increased by +1. - Remaining quantity: %s" % character['Inventory']['Kibble'])
+                    else:
+                        print("❌ You don't have any Kibble.")
+                elif item_use == "3" or item_use.lower() == 'key':
+                    print("❌ You cannot directly use the key. The key will be automatically used at the door.")
+                elif item_use == "q":
                     break
                 else:
-                    print("invalid input, try again")
-                    use = input("which do you want to use again? %s" % character['Inventory'].keys())
-                    continue
-            user_wanted_input = input("which do you want to do again? ['1: Direction','2: Inventory','3: Stat','4: Sleep']")
-        if user_wanted_input == '3':
-            print("stats = ", character['Stat'])
-            print("skills = ", character['Skill'])
-            user_wanted_input = input("which do you want to do again? ['1: Direction','2: Inventory','3: Stat','4: Sleep']")
-        if user_wanted_input == '4':
-            print("go to sleep for 10sec")
-            for i in range(1, 11):
+                    print("❌ Invalid input. Please enter a correct option from the list.")
+        elif user_choice == '3':
+            display_stats(character)
+        elif user_choice == '4':
+            display_skills(character)
+        elif user_choice == '5':
+            print("\n💤 You are going to sleep for 10 seconds to regain energy")
+            for count in range(1, 11):
                 time.sleep(1)
-                print("%d sec" % i)
+                print("%d sec" % count)
             character['Stat']['Hunger'] = 10
             character['Stat']['Current HP'] = character['Stat']['HP']
-            user_wanted_input = input("which do you want to do again? ['1: Direction','2: Inventory','3: Stat','4: Sleep']")
-        if user_wanted_input not in types_input:
-            print("invalid input")
-            user_wanted_input = input("which do you want to do again? ['1: Direction','2: Inventory','3: Stat','4: Sleep']")
-    if user_wanted_input == '1':
-        direction = ['w', 'a', 's', 'd']
-        full_direction = ['North', 'West', 'South', 'East']
-        for count, element in enumerate(direction):
-            print("%s : %s." % (full_direction[count], element), end=' ')
-        direction_input = input("\nenter the direction they wish to travel\n").lower()
-        while direction_input not in direction:
-            print('again1')
-            direction_input = input("\nenter the direction they wish to travel\n").lower()
-        return direction_input, character
+            print("You feel well-rested! Your Hunger and HP have been fully restored.")
+
+        elif user_choice not in types_input:
+            print("\n❌ Invalid input. Please enter a valid choice (1-4).")
 
 
 def move_character_valid_move(grid, position, direction, prev_cell_content, character):
