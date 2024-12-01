@@ -6,6 +6,12 @@ warnings.filterwarnings("ignore")
 
 
 def lists_of_words():
+    """
+    Generate three lists of words categorized by their lengths.
+
+    :postconditions: return three lists based on the number of words
+    :return: three lists of words
+    """
     word_4_list = [
         "book", "tree", "blue", "love", "care", "hope", "door", "jump",
         "play", "work", "fish", "swim", "ball", "hand", "cake", "sing",
@@ -28,6 +34,23 @@ def lists_of_words():
 
 
 def check_character_level_hangman(character, lists=lists_of_words()):
+    """
+    Determine the appropriate word list based on the character's level.
+
+    :param character: a dictionary including character stats including level
+    :param lists: a list of word lists
+    :precondition: character must be a dictionary with a 'Stat' key that contains a 'Level' key
+    :postcondition: return a list of words appropriate for the character's level
+    :return: A list of words
+
+    >>> character1 = {'Stat': {'Level': 1}}
+    >>> words = lists_of_words()
+    >>> check_character_level_hangman(character1, words)
+    ['garden', 'silver', 'branch', 'butter', 'turtle', 'bridge', 'rabbit', 'pebble', 'button', 'stream', 'travel', 'bottle', 'winter', 'flower', 'basket', 'orange', 'desert', 'magnet', 'planet', 'frozen', 'safety', 'forest', 'guitar', 'friend', 'yellow', 'ticket', 'pencil', 'bridge', 'jungle', 'school']
+    >>> character2 = {'Stat': {'Level': 3}}
+    >>> check_character_level_hangman(character2, words)
+    ['book', 'tree', 'blue', 'love', 'care', 'hope', 'door', 'jump', 'play', 'work', 'fish', 'swim', 'ball', 'hand', 'cake', 'sing', 'walk', 'rain', 'star', 'wind', 'read', 'rock', 'band', 'ship', 'moon', 'face', 'line', 'ride', 'time', 'life']
+    """
     if character['Stat']['Level'] == 1:
         return lists[2]
     if character['Stat']['Level'] == 2:
@@ -37,6 +60,21 @@ def check_character_level_hangman(character, lists=lists_of_words()):
 
 
 def word_strike(text):
+    """
+    Applies a strikethrough effect to each character in the strings.
+
+    :param text: a string
+    :precondition: text must be a string
+    :postcondition: return a string with strikethrough effects applied to each character
+    :return: strings with a strikethrough effect
+
+    >>> word_strike('hello')
+    '̶h ̶e ̶l ̶l ̶o'
+    >>> word_strike('')
+    ''
+    >>> word_strike('A')
+    '̶A'
+    """
     return ' '.join([u'\u0336{}'.format(c) for c in text])
 
 
@@ -89,10 +127,9 @@ def hangman(word_list, character):
 
 def main():
     character = {'Stat': {'Level': 1, 'Heart': 1}}
-    list = check_character_level_hangman(character)
-    i, j = hangman(list, character)
-    print(i,j)
-
+    words = check_character_level_hangman(character)
+    i, j = hangman(words, character)
+    print(i, j)
 
 
 if __name__ == "__main__":
