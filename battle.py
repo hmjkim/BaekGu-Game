@@ -78,6 +78,7 @@ def make_enemies(name, icon, description, level, hp_range, basic_attack, skill_d
 
 def choose_enemy_based_on_level(character, enemy_stat, boss_fight):
     # Create enemies
+    enemies = []
     if character["Stat"]["Level"] == 1:
         # Low Level Mobs (Underground)
         mouse = make_enemies('Mouse',
@@ -160,11 +161,7 @@ def display_skill_uses(current_skill_usage, skill_usage_limit):
     print(f"SKILL USES LEFT: {skill_used * current_skill_usage}{skill_not_used * skill_usage_limit}")
 
 
-def battle(character, boss_fight=False):
-    enemy_stat = configure_enemy_stat()
-    enemy, enemy_copy = choose_enemy_based_on_level(character, enemy_stat, boss_fight)
-
-    # Display enemy information
+def display_enemy_info(enemy, enemy_copy):
     print("--------------------------------------------\n"
           "‼️‼️ ENEMY ENCOUNTERED ‼️‼️\n"
           "--------------------------------------------\n"
@@ -174,13 +171,18 @@ def battle(character, boss_fight=False):
           f"HP: {enemy_copy['HP']}/{enemy['HP']}\n"
           "--------------------------------------------")
 
+
+def battle(character, boss_fight=False):
+    enemy_stat = configure_enemy_stat()
+    enemy, enemy_copy = choose_enemy_based_on_level(character, enemy_stat, boss_fight)
+
+    # Display enemy information
+    display_enemy_info(enemy, enemy_copy)
+
     # Get user choice
     # Skill usage
-    total_skill_use = 5
-    skill_usage_limit = 5
-    current_skill_usage = 0
-    in_battle = True
-    has_won = False
+    total_skill_use, skill_usage_limit, current_skill_usage = 5, 5, 0
+    in_battle, has_won = True, False
 
     while is_alive(character) and enemy_copy["HP"] > 0 and in_battle:
         options = ['Attack', 'Skill', 'Flee', 'Stat', 'Inventory']
