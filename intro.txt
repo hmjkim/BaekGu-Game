@@ -1,0 +1,21 @@
+You are Baekgu, a loyal white Jindo dog with a brave heart and a strong bond with your family.
+Life has always been happy, full of love and play, until today—something is terribly wrong.
+Using your extraordinary sense of smell and intuition, you've realized that your family's little boy, Haru, has suddenly gone missing.
+Your mission is clear - Find Haru and bring him back home safely before it's too late.
+
+Important Rules
+
+- Keep an eye on "Hunger" level. On every move, you will lose 1 Hunger and need to “Sleep” to recharge your stamina before it runs out.
+- You have 10 Hearts to start with.
+- There are 3 maps to explore to reach your goal.
+- You need to reach Level 3 and find the door marked with a "!" on the map.
+- To level up, you'll need:
+- To stand in front of the door (!).
+- A key in your inventory to unlock the way.
+- Full Exp level (varies by level).
+
+Your ultimate objective:
+Defeat the boss who is holding Haru captive and bring him back home to your loving family!!!!!
+Your journey may be filled with dangers, but with your sharp senses and loyalty, you are Haru's only hope.
+Without further ado, let the rescue begin!
+Time to save Haru, Baekgu!
