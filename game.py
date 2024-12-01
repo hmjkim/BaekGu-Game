@@ -236,7 +236,7 @@ def reward(character):
             character['Inventory']['HP potion'] += 1
         except KeyError:
             character['Inventory']['HP potion'] = 1
-    if check_probability(0.3):
+    if check_probability(0.1):
         print('reward!1')
         print("you get 'Paw boots'")
         print(' increase HP permanet +100')
