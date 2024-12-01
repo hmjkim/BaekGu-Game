@@ -122,14 +122,14 @@ def choose_enemy_based_on_level(character, enemy_stat, boss_fight):
         enemies = [robotic_vacuum, guard_cat]
     elif boss_fight:
         boss = make_enemies('Majestic Fluffy BunBun',
-                         '🐰',
-                         'An old and tattered bunny plushie, once loved but now abandoned in the attic. '
-                         'Majestic Fluffy BunBun believes he is the noble protector of all the forgotten treasures here. You must fight to get the ',
-                         '10',
-                         enemy_stat["HP Range"]["Boss"],
-                         enemy_stat["Basic Attack"]["Boss"],
-                         enemy_stat["Skill Damage"]["Boss"],
-                         'Cuddle Crush')
+                            '🐰',
+                            'An old and tattered bunny plushie, once loved but now abandoned in the attic. '
+                            'Majestic Fluffy BunBun believes he is the noble protector of all the forgotten treasures here. You must fight to get the ',
+                            '10',
+                            enemy_stat["HP Range"]["Boss"],
+                            enemy_stat["Basic Attack"]["Boss"],
+                            enemy_stat["Skill Damage"]["Boss"],
+                            'Cuddle Crush')
         enemies = [boss]
     elif character["Stat"]["Level"] == 3:
         # High Level Mobs (Upper Level - Attic)
