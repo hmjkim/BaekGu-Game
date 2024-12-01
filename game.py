@@ -6,7 +6,6 @@ from hangman_art import stages
 from battle import battle
 from matching_direction_game import *
 from helpers import is_alive, display_skills, display_inventory, display_stats
-from test import skill_set
 
 
 def configure_skills():
