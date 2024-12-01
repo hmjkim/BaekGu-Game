@@ -3,9 +3,9 @@ from make_board_each_level import *
 import time
 from hangman import *
 from hangman_art import stages
-from battle import battle
+# from battle import battle
 from matching_direction_game import *
-from boss_battle import boss_battle
+# from boss_battle import boss_battle
 
 
 def make_character():
@@ -217,17 +217,24 @@ def reward(character, check_probability):
 def introduce_game(user_name):
     print("Welcome to Baekgu, %s!" % user_name)
     time.sleep(1)
-    print("You are Baekgu, a loyal white Jindo dog with a brave heart and a strong bond with your family. Life has always been happy, full of love and play, until today—something is terribly wrong.")
+    print("You are Baekgu, a loyal white Jindo dog with a brave heart and a strong bond with your family."
+          "Life has always been happy, full of love and play, until today—something is terribly wrong.")
     time.sleep(4)
-    print("Using your extraordinary sense of smell and intuition, you've realized that your family's little boy, Haru, has suddenly gone missing.")
+    print("Using your extraordinary sense of smell and intuition, you've realized that your family's little boy, Haru, "
+          "has suddenly gone missing.")
     time.sleep(3)
     print("Your mission is clear - Find Haru and bring him back home safely before it's too late.\n")
     time.sleep(3)
-    print("How to Play:")
+    print("Important Rules:")
     time.sleep(2)
-    print("- There are 3 maps you need to explore to reach the final goal. Your journey will take you through different levels, each more challenging than the last one.")
+    print('- Keep an eye on "Hunger" level. On every move, you will lose 1 Hunger and '
+          'need to “Sleep” to recharge your stamina before it runs out.')
     time.sleep(3)
-    print("- You need to reach Level 3 and make your way to the door marked with a '!'s on the map.")
+    print('- You have 10 Hearts to start with.')
+    time.sleep(2)
+    print("- There are 3 maps to explore to reach your goal.")
+    time.sleep(3)
+    print('- You need to reach Level 3 and find the door marked with a "!" on the map.')
     time.sleep(3)
     print("- To level up, you'll need:")
     time.sleep(2)
@@ -235,7 +242,7 @@ def introduce_game(user_name):
     time.sleep(2)
     print("  - A key in your inventory to unlock the way.")
     time.sleep(2)
-    print("  - Full Exp level, which will vary depending on your current level.\n")
+    print("  - Full Exp level (varies by level).\n")
     time.sleep(3)
     print("Your ultimate objective:")
     time.sleep(2)
@@ -245,7 +252,7 @@ def introduce_game(user_name):
     time.sleep(3)
     print("Without further ado, let the rescue begin!")
     time.sleep(2)
-    print("Time to save Haru, Baekgu!")
+    print("Time to save Haru, Baekgu!\n")
 
 
 def check_user(user_name):
