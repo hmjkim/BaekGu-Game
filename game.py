@@ -3,9 +3,9 @@ from make_board_each_level import *
 import time
 from hangman import *
 from hangman_art import stages
-# from battle import battle
+from battle import battle
 from matching_direction_game import *
-# from boss_battle import boss_battle
+from helpers import is_alive
 
 
 def make_character():
@@ -148,7 +148,7 @@ def check_character_2_level_location_exp(first_location, character):
 def check_character_3_level_location_for_final(first_location, character):
     if first_location == (4, 4) and character['Stat']['Level'] == 3:
         print('마지막 보스를 만나러 갑니다 화이팅!')
-        i, j = boss_battle(character)
+        i, j = battle(character, True)
         if j:
             print("you win")
             return True
@@ -157,11 +157,7 @@ def check_character_3_level_location_for_final(first_location, character):
             return False
 
 
-def is_alive(character):
-    alive = True
-    if character['Stat']['Heart'] == 0:
-        alive = False
-    return alive
+
 
 
 def check_probability(rate):
@@ -294,7 +290,7 @@ def game():
         display_grid(grid)
 
         if character["Stat"]['Hunger'] == 1:
-            print('alert!!!!!!!!!!!!!!!!!!!! your hunger is now 1! u must sleep now')
+            print('🚨🚨🚨You only have 1 Hunger! You must sleep now.🚨🚨🚨')
 
         direction, character = get_user_choice(character)
         (new_row, new_col), prev_cell_content, character, valid_checking = move_character_valid_move(grid, first_location, direction, prev_cell_content, character)
