@@ -208,7 +208,7 @@ def battle(character, boss_fight=False):
 
                     display_attack_description(enemy["Name"])
                     selected_skill_damage = current_skills[skill_choice.title()]
-                    enemy_copy['HP'] -= selected_skill_damage
+                    enemy_copy['HP'] -= selected_skill_damage['Damage']
                     have_break = show_current_hp(enemy_copy['HP'], enemy['HP'], enemy_copy['Name'])
                     if have_break:
                         break
