@@ -375,7 +375,7 @@ def game():
         if not valid_checking:
             continue
         check_character_hunger(character)
-        there_is_a_challenger = check_probability(0.25)
+        there_is_a_challenger = check_probability(0.3)
         if there_is_a_challenger:
             gamelist = ['battle', 'hangman', 'memory game']
             a = random.choice(gamelist)
