@@ -90,11 +90,12 @@ def make_character_location(grid):
     return first_location, prev_cell_content
 
 
-def get_user_choice(character):
+def get_user_choice(character,grid):
     types_input = ['1', '2', '3', '4']
 
     # Main game loop to handle user choices
     while True:
+        display_grid(grid)
         user_choice = input(
             "\nWhat would you like to do?\n"
             "--------------------------------------------------------\n"
@@ -214,9 +215,9 @@ def get_reward(character):
     if check_probability(0.3):
         print(f"{' - HP Potion +1':<20} Fully restores current HP (saved to inventory)")
         try:
-            character['Inventory']['HP potion'] += 1
+            character['Inventory']['HP Potion'] += 1
         except KeyError:
-            character['Inventory']['HP potion'] = 1
+            character['Inventory']['HP Potion'] = 1
     if check_probability(0.1):
         print(f"{' - Paw Boots +1':<20} Permanently increases maximum HP by +100")
         character['Stat']['HP'] += 100
@@ -232,9 +233,9 @@ def get_reward(character):
     if check_probability(0.5):
         print(f"{' - Key +1':<20} Used to move to the next level (saved to inventory)")
         try:
-            character['Inventory']['key'] += 1
+            character['Inventory']['Key'] += 1
         except KeyError:
-            character['Inventory']['key'] = 1
+            character['Inventory']['Key'] = 1
     return character
 
 
@@ -309,12 +310,11 @@ def game():
     describe_map_based_on_level(character)
     achieved_goal = False
     while is_alive(character) and not achieved_goal:
-        display_grid(grid)
 
         if character["Stat"]['Hunger'] == 1:
             print('🚨🚨🚨You only have 1 Hunger! You must sleep now.🚨🚨🚨')
 
-        direction, character = get_user_choice(character)
+        direction, character = get_user_choice(character, grid)
         (new_row, new_col), prev_cell_content, character, valid_checking = move_character_valid_move(grid, first_location, direction, prev_cell_content, character)
         first_location = (new_row, new_col)
         if not valid_checking:
