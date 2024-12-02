@@ -114,9 +114,11 @@ def get_user_choice(character):
             while True:
                 direction_input = input("\nEnter the direction you wish to travel "
                                         f"({'/'.join(movement_keys).upper()}): ").lower()
-                if direction_input not in movement_keys:
+                if direction_input in movement_keys:
+                    return direction_input, character
+                else:
                     print("❌ Invalid direction.")
-                return direction_input, character
+
 
         elif user_choice == '2':
             while True:
@@ -355,7 +357,6 @@ def game():
     user_name = input("Hi, there! What's your name? : ")
 
     if not check_user(user_name):
-
         introduce_game(user_name)
 
     first_location, prev_cell_content = make_character_location(grid)
@@ -375,32 +376,29 @@ def game():
         if not valid_checking:
             continue
         check_character_hunger(character)
-        there_is_a_challenger = check_probability(0.3)
+        there_is_a_challenger = check_probability(1)
         if there_is_a_challenger:
-            gamelist = ['battle', 'hangman', 'memory game']
-            a = random.choice(gamelist)
-            if a == 'battle':
-                print("play battle")
-                character, i = battle(character)
-                print(i, character)
-                if i:
-                    print("you win")
-                    print("get reward")
+            # game_list = ['battle', 'hangman', 'memory game']
+            game_list = ['battle']
+            challenge = random.choice(game_list)
+            if challenge == 'battle':
+                print("You are going to battle! Prepare yourself.")
+                character, has_won = battle(character)
+                # print(has_won, character)
+                if has_won:
                     reward(character)
-                else:
-                    print("continue game")
-            elif a == 'hangman':
+            elif challenge == 'hangman':
                 print("play hangman")
                 level = check_character_level_hangman(character)
-                i, j = hangman(level, character)
-                print(i, j)
-                if i:
+                has_won, j = hangman(level, character)
+                print(has_won, j)
+                if has_won:
                     print("you win")
                     print("get reward")
                     reward(character)
                 else:
                     print("continue game")
-            elif a == 'memory game':
+            elif challenge == 'memory game':
                 print("play memory game")
                 level_matching_game = check_character_level_matching_game(character)
                 check, character = play_game(level_matching_game, character)

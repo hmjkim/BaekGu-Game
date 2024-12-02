@@ -1,33 +1,33 @@
 # from game import make_character, is_alive
 import random
 import time
-from helpers import is_alive
+from helpers import is_alive, display_stats, display_skills
 import warnings
 warnings.filterwarnings("ignore")
 
 
 def show_current_hp(hp, original_hp, name):
-    if hp < 0:
+    if hp <= 0:
         hp = 0
-        print(f'*** 🩸 {name} HP is now {hp}/{original_hp} ***')
+        print(f'*** 🩸 {name} HP: {hp}/{original_hp} ***\n')
         return True
     else:
-        print(f'*** 🩸 {name} HP is now {hp}/{original_hp} ***')
+        print(f'*** 🩸 {name} HP: {hp}/{original_hp} ***\n')
         return False
 
 
 def lose_heart(character):
     character["Stat"]["Heart"] -= 1
-    print(f"You lost 1 Heart. You have {character['Stat']['Heart']} Heart(s) left.")
+    print(f"💔 You lost 1 Heart. You have {character['Stat']['Heart']} Heart(s) left.")
 
 
 def display_attack_description(enemy):
     attack_descriptions = [
-        "You strike fiercely, leaving a mark on the enemy!",
-        "Your attack lands cleanly, leaving the enemy struggling to recover!",
-        "With a focused attack, you manage to break through the enemy's guard, causing visible pain!",
-        "Your powerful attack stunned the enemy.",
-        "Your strike pierced through the enemy with precision."
+        "🗡️ You strike fiercely, leaving a mark on the enemy!",
+        "🗡️ Your attack lands cleanly, leaving the enemy struggling to recover!",
+        "🗡️ With a focused attack, you manage to break through the enemy's guard, causing visible pain!",
+        "🗡️ Your powerful attack stunned the enemy.",
+        "🗡️ Your strike pierced through the enemy with precision."
     ]
     print(random.choice(attack_descriptions).replace("enemy", enemy))
 
@@ -124,7 +124,8 @@ def choose_enemy_based_on_level(character, enemy_stat, boss_fight):
         boss = make_enemies('Majestic Fluffy BunBun',
                             '🐰',
                             'An old and tattered bunny plushie, once loved but now abandoned in the attic. '
-                            'Majestic Fluffy BunBun believes he is the noble protector of all the forgotten treasures here. You must fight to get the ',
+                            'Majestic Fluffy BunBun believes he is the noble protector of all the forgotten treasures '
+                            'here.',
                             '10',
                             enemy_stat["HP Range"]["Boss"],
                             enemy_stat["Basic Attack"]["Boss"],
@@ -161,14 +162,16 @@ def display_skill_uses(current_skill_usage, skill_usage_limit):
 
 
 def display_enemy_info(enemy, enemy_copy):
-    print("--------------------------------------------\n"
+    print("------------------------------------------------------\n"
           "‼️‼️ ENEMY ENCOUNTERED ‼️‼️\n"
-          "--------------------------------------------\n"
+          "------------------------------------------------------\n"
           f"{enemy['Icon']} {enemy['Name']}\n"
           f"{enemy['Description']}\n"
           f"Level: {enemy['Level']}\n"
           f"HP: {enemy_copy['HP']}/{enemy['HP']}\n"
-          "--------------------------------------------")
+          "------------------------------------------------------")
+
+# def get_battle_choice():
 
 
 def battle(character, boss_fight=False):
@@ -184,51 +187,62 @@ def battle(character, boss_fight=False):
     in_battle, has_won = True, False
 
     while is_alive(character) and enemy_copy["HP"] > 0 and in_battle:
-        options = ['Attack', 'Skill', 'Flee', 'Stat', 'Inventory']
+        options = ['Attack', 'Skill', 'Flee', 'Stats', 'Inventory']
         while True:
-            user_choice = input(f'Enter battle options ("{options[0]}", "{options[1]}", "{options[2]}" to run away, "{options[3]}" to see your current condition, or "{options[4]}" to use items):')
-            if user_choice.lower() == "attack":
+            user_choice = input(
+                "\nChoose your battle stance (enter one of the actions below):\n"
+                "--------------------------------------------------------\n"
+                "🗡️  Attack     - Attack with basic attack\n"
+                "✨  Skill      - Use a special skill\n"
+                "🐕  Flee       - Run away from the battle (Heart -1)\n"
+                "📊  Stats      - View your current condition\n"
+                "🎒  Inventory  - Use an item from your inventory\n"
+                "--------------------------------------------------------\n"
+                "Enter your action: "
+            ).lower()
+            # user_choice = input(f'Enter battle options ("{options[0]}", "{options[1]}", "{options[2]}" to run away, "{options[3]}" to see your current condition, or "{options[4]}" to use items):')
+            if user_choice == "attack":
                 display_attack_description(enemy["Name"])
                 enemy_copy['HP'] -= character["Skill"]['Basic Attack']
                 have_break = show_current_hp(enemy_copy['HP'], enemy['HP'], enemy_copy['Name'])
                 if have_break:
                     break
-            elif user_choice.lower() == "skill":
+            elif user_choice == "skill":
                 if skill_usage_limit > 0:
-                    current_skills = character['Skill']['Current Skills']
-                    formatted_skill = '\n'.join(current_skills.keys())
+                    while True:
 
-                    print(f"In each battle, you are allowed a total of {total_skill_use} skill uses.")
-                    display_skill_uses(current_skill_usage, skill_usage_limit)
-                    skill_choice = input("--------------------------------------------\n"
-                                         "⚔️ Skills: \n"
-                                         f"{formatted_skill}\n"
-                                         "--------------------------------------------\n"
-                                         "Choose skill you would like to use:")
+                        print(f"In each battle, you are allowed a total of {total_skill_use} skill uses.")
+                        display_skill_uses(current_skill_usage, skill_usage_limit)
+                        display_skills(character)
+                        skill_choice = input("Choose skill you would like to use:")
 
-                    display_attack_description(enemy["Name"])
-                    selected_skill_damage = current_skills[skill_choice.title()]
-                    enemy_copy['HP'] -= selected_skill_damage['Damage']
-                    have_break = show_current_hp(enemy_copy['HP'], enemy['HP'], enemy_copy['Name'])
-                    if have_break:
-                        break
-                    skill_usage_limit -= 1
-                    current_skill_usage += 1
+                        display_attack_description(enemy["Name"])
+                        try:
+                            selected_skill_damage = character['Skill']['Current Skills'][skill_choice.title()]
+                        except KeyError:
+                            print("❌ Invalid skill. Please enter a valid skill from the list above.\n")
+                            continue
+                        else:
+                            enemy_copy['HP'] -= selected_skill_damage['Damage']
+                            have_break = show_current_hp(enemy_copy['HP'], enemy['HP'], enemy_copy['Name'])
+                            if have_break:
+                                break
+                            skill_usage_limit -= 1
+                            current_skill_usage += 1
+                            break
                 else:
-                    print("Sorry. You used all the available skill uses.")
+                    print("Sorry. You used all the available skill uses already.")
                     display_skill_uses(current_skill_usage, skill_usage_limit)
-                    break
-
-            elif user_choice.lower() == "flee":
+                    continue
+            elif user_choice == "flee":
                 print(f"{enemy["Name"]} seems to be too strong for me.. Let me retreat before it's too late!")
                 lose_heart(character)
                 in_battle = False
                 break
-            elif user_choice.lower() == "stat":
-                print("stats = ", character['Stat'])
-                print("skills = ", character['Skill'])
+            elif user_choice == "stats":
+                display_stats(character)
                 continue
-            elif user_choice.lower() == "inventory":
+            elif user_choice == "inventory":
                 print("inventory = ", character['Inventory'])
                 print("--------------------------------------------\n"
                          "🎒️ Items: \n"
@@ -247,15 +261,15 @@ def battle(character, boss_fight=False):
                     character['Inventory']['Hunger'] -= 1
                     continue
             else:
-                print("Invalid input. Please try again.")
+                print("❌ Invalid input. Please type your action.")
                 continue
 
             if enemy_copy["HP"] > 0:
                 time.sleep(1.5)
                 enemy_skill = random.choice(list(enemy_copy['Attack'].items()))
                 character["Stat"]["Current HP"] -= enemy_skill[1]
-                print(f"Ouch! {enemy["Name"]} attacked you!")
-
+                print(f"😣 Ouch! {enemy["Name"]} fought back!")
+                print(f"{enemy["Name"]} used {enemy_skill[0]} on you!")
                 have_break = show_current_hp(character["Stat"]["Current HP"], character['Stat']['HP'], 'Your')
                 if have_break:
                     break
@@ -264,7 +278,7 @@ def battle(character, boss_fight=False):
         lose_heart(character)
         has_won = False
     elif enemy_copy["HP"] < 0:
-        print("Woo hoo! You won against a ruff battle. Time for a treat!")
+        print("🎉 Woo hoo! You won against a ruff battle. Time for a treat! 🎉")
         has_won = True
 
     return character, has_won
