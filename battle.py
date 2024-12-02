@@ -1,7 +1,7 @@
 # from game import make_character, is_alive
 import random
 import time
-from helpers import is_alive, display_stats, display_skills
+from helpers import is_alive, display_stats, display_skills, display_inventory, get_item_choice
 import warnings
 warnings.filterwarnings("ignore")
 
@@ -188,7 +188,7 @@ def battle(character, boss_fight=False):
 
     while is_alive(character) and enemy_copy["HP"] > 0 and in_battle:
         options = ['Attack', 'Skill', 'Flee', 'Stats', 'Inventory']
-        while True:
+        while not has_won:
             user_choice = input(
                 "\nChoose your battle stance (enter one of the actions below):\n"
                 "--------------------------------------------------------\n"
@@ -204,8 +204,9 @@ def battle(character, boss_fight=False):
             if user_choice == "attack":
                 display_attack_description(enemy["Name"])
                 enemy_copy['HP'] -= character["Skill"]['Basic Attack']
-                have_break = show_current_hp(enemy_copy['HP'], enemy['HP'], enemy_copy['Name'])
-                if have_break:
+                victory_check = show_current_hp(enemy_copy['HP'], enemy['HP'], enemy_copy['Name'])
+                if victory_check:
+                    has_won = True
                     break
             elif user_choice == "skill":
                 if skill_usage_limit > 0:
@@ -224,8 +225,9 @@ def battle(character, boss_fight=False):
                             continue
                         else:
                             enemy_copy['HP'] -= selected_skill_damage['Damage']
-                            have_break = show_current_hp(enemy_copy['HP'], enemy['HP'], enemy_copy['Name'])
-                            if have_break:
+                            victory_check = show_current_hp(enemy_copy['HP'], enemy['HP'], enemy_copy['Name'])
+                            if victory_check:
+                                has_won = True
                                 break
                             skill_usage_limit -= 1
                             current_skill_usage += 1
@@ -243,23 +245,28 @@ def battle(character, boss_fight=False):
                 display_stats(character)
                 continue
             elif user_choice == "inventory":
-                print("inventory = ", character['Inventory'])
-                print("--------------------------------------------\n"
-                         "🎒️ Items: \n"
-                         f"1. HP Potion : {character['Inventory']['HP Potion']}\n"
-                         f"2. Kibble : {character['Inventory']['Kibble']}\n"
-                         "--------------------------------------------\n")
-                item_to_use = input("Enter item to use: ").lower()
-                if item_to_use == '1' or item_to_use == 'hp potion':
-                    character["Stat"]["Current HP"] = character["Stat"]["HP"]
-                    print(f"Your HP is full now. (HP: {character['Stat']['Current HP']}/{character['Stat']['HP']})")
-                    character['Inventory']['HP Potion'] -= 1
-                    continue
-                elif item_to_use == '2' or item_to_use == 'kibble':
-                    character["Stat"]["Hunger"] += 1
-                    print(f"Hunger increased by 1. (Hunger: {character['Stat']['Current HP']}/{character['Stat']['HP']})")
-                    character['Inventory']['Hunger'] -= 1
-                    continue
+                display_inventory(character)
+                # print("inventory = ", character['Inventory'])
+                # print("--------------------------------------------\n"
+                #          "🎒️ Items: \n"
+                #          f"1. HP Potion : {character['Inventory']['HP Potion']}\n"
+                #          f"2. Kibble : {character['Inventory']['Kibble']}\n"
+                #          "--------------------------------------------\n")
+                # item_use = input("Which item would you like to use? (Enter the item number or type 'q' to quit): ").lower()
+
+                # if item_use == '1' or item_use == 'hp potion':
+                #     character["Stat"]["Current HP"] = character["Stat"]["HP"]
+                #     print(f"Your HP is full now. (HP: {character['Stat']['Current HP']}/{character['Stat']['HP']})")
+                #     character['Inventory']['HP Potion'] -= 1
+                #     continue
+                # elif item_use == '2' or item_use == 'kibble':
+                #     character["Stat"]["Hunger"] += 1
+                #     print(f"Hunger increased by 1. (Hunger: {character['Stat']['Current HP']}/{character['Stat']['HP']})")
+                #     character['Inventory']['Hunger'] -= 1
+                #     continue
+                do_break = get_item_choice(character)
+                if do_break:
+                    break
             else:
                 print("❌ Invalid input. Please type your action.")
                 continue
@@ -270,17 +277,16 @@ def battle(character, boss_fight=False):
                 character["Stat"]["Current HP"] -= enemy_skill[1]
                 print(f"😣 Ouch! {enemy["Name"]} fought back!")
                 print(f"{enemy["Name"]} used {enemy_skill[0]} on you!")
-                have_break = show_current_hp(character["Stat"]["Current HP"], character['Stat']['HP'], 'Your')
-                if have_break:
+                victory_check = show_current_hp(character["Stat"]["Current HP"], character['Stat']['HP'], 'Your')
+                if victory_check:
+                    has_won = True
                     break
     if not is_alive(character):
         print("I collapsed on the floor. The enemy stands victorious as my vision fades to darkness...")
         lose_heart(character)
         has_won = False
-    elif enemy_copy["HP"] < 0:
+    elif has_won:
         print("🎉 Woo hoo! You won against a ruff battle. Time for a treat! 🎉")
-        has_won = True
-
     return character, has_won
 
 
