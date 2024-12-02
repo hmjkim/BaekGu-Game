@@ -7,12 +7,13 @@ Important Rules
 
 - Keep an eye on "Hunger" level. On every move, you will lose 1 Hunger and need to “Sleep” to recharge your stamina before it runs out.
 - You have 10 Hearts to start with.
+- You will face challenges that you need to overcome throughout the game. Win to move forward, or lose a Heart.
 - There are 3 maps to explore to reach your goal.
 - You need to reach Level 3 and find the door marked with a "!" on the map.
 - To level up, you'll need:
-- To stand in front of the door (!).
-- A key in your inventory to unlock the way.
-- Full Exp level (varies by level).
+    - To stand in front of the door (!).
+    - A key in your inventory to unlock the way.
+    - Full Exp level (varies by level).
 
 Your ultimate objective:
 Defeat the boss who is holding Haru captive and bring him back home to your loving family!!!!!
