@@ -2,9 +2,16 @@ def is_alive(character):
     return character['Stat']['Heart'] > 0
 
 
+def lose_heart(character):
+    character["Stat"]["Heart"] -= 1
+    print(f"💔 You lost 1 Heart. You have {character['Stat']['Heart']} Heart(s) left.")
+    character['Stat']['Current HP'] = character['Stat']['HP']
+
+
 def get_item_choice(character):
     while True:
-        item_use = input("Which item would you like to use? (Enter the item number or type 'q' to quit): ").lower()
+        item_use = (input("Which item would you like to use? (Enter the item number or type 'q' to quit): ")
+                    .strip().lower())
 
         if item_use == '1' or item_use == 'hp potion':
             if character["Inventory"]["HP Potion"] > 0:

@@ -1,5 +1,6 @@
 import random
 
+from helpers import lose_heart
 from hangman_art import stages
 import warnings
 warnings.filterwarnings("ignore")
@@ -111,7 +112,7 @@ def hangman(word_list, character):
     empty_incorrect = []
     end_of_game = False
     while not end_of_game:
-        guess = input("Guess a letter: ").lower()
+        guess = input("Guess a letter: ").strip().lower()
         if guess in display or guess in empty_incorrect:
             print(f"You've already guessed '{guess}'")
             continue
@@ -128,7 +129,8 @@ def hangman(word_list, character):
             if lives == 0:
                 print("You lose.")
                 print(f"The word was: '{chosen_word}'")
-                character['Stat']['Heart'] -= 1
+                # character['Stat']['Heart'] -= 1
+                lose_heart(character)
                 break
 
         print(f"{' '.join(display)}")
