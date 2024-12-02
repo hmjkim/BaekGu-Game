@@ -145,16 +145,16 @@ def move_character_valid_move(grid, position, direction, prev_cell_content, char
 
     if direction == 'w':
         new_row -= 1
-        print("You took a step to the Up. Everything seems quiet.")
+        print("You moved one step up. Everything seems quiet.")
     elif direction == 's':
         new_row += 1
-        print("You took a step to the Down. Everything seems quiet.")
+        print("You moved one step down. Everything seems quiet.")
     elif direction == 'a':
         new_col -= 1
-        print("You took a step to the Left. Everything seems quiet.")
+        print("You moved one step left. Everything seems quiet.")
     elif direction == 'd':
         new_col += 1
-        print("You took a step to the Right. Everything seems quiet.")
+        print("You moved one step right. Everything seems quiet.")
     else:
         print("❌ Invalid input.")
 
