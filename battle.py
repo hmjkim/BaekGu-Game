@@ -30,29 +30,37 @@ def display_attack_description(enemy):
 def configure_enemy_stat():
     # Configure enemies
     # HP, Attack damage, Skill damage random
-    return {
-        "HP Range": {
-            "Level 1": (80, 100),
-            "Level 2": (101, 200),
-            "Level 3": (201, 300),
-            "Level 4": (301, 400),
-            "Boss": (500, 600)
-        },
-        "Basic Attack": {
-            "Level 1": (5, 10),
-            "Level 2": (15, 30),
-            "Level 3": (35, 50),
-            "Level 4": (60, 90),
-            "Boss": (100, 300)
-        },
-        "Skill Damage": {
-            "Level 1": (10, 25),
-            "Level 2": (26, 45),
-            "Level 3": (46, 70),
-            "Level 4": (75, 100),
-            "Boss": (130, 300)
-        }
-    }
+    level = ["Level 1", "Level 2", "Level 3", "Level 4", "Boss"]
+    hp_range = [(80, 100), (101, 200), (201, 300), (301, 400), (500, 600)]
+    attack_dmg = [(5, 10), (15, 30), (35, 50), (60, 90), (100, 300)]
+    skill_dmg = [(10, 25), (26, 45), (46, 70), (75, 100), (130, 300)]
+
+    # return {
+    #     "HP Range": {
+    #         "Level 1": (80, 100),
+    #         "Level 2": (101, 200),
+    #         "Level 3": (201, 300),
+    #         "Level 4": (301, 400),
+    #         "Boss": (500, 600)
+    #     },
+    #     "Basic Attack": {
+    #         "Level 1": (5, 10),
+    #         "Level 2": (15, 30),
+    #         "Level 3": (35, 50),
+    #         "Level 4": (60, 90),
+    #         "Boss": (100, 300)
+    #     },
+    #     "Skill Damage": {
+    #         "Level 1": (10, 25),
+    #         "Level 2": (26, 45),
+    #         "Level 3": (46, 70),
+    #         "Level 4": (75, 100),
+    #         "Boss": (130, 300)
+    #     }
+    # }
+    return {"HP Range": {i: j for i, j in zip(level, hp_range)},
+            "Basic Attack": {i: j for i, j in zip(level, attack_dmg)},
+            "Skill Damage": {i: j for i, j in zip(level, skill_dmg)}}
 
 
 def make_enemies(name, icon, description, level, hp_range, basic_attack, skill_damage, skill_name):
