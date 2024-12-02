@@ -104,6 +104,7 @@ def get_user_choice(character,grid):
             " 3: 📊 Stats       - View your current stats\n"
             " 4: ⚔️ Skills      - View your skills you have\n"
             " 5: 💤 Sleep       - Rest to regain energy\n"
+            " 6: ℹ️ Help        - Read about How to play\n"
             "--------------------------------------------------------\n"
             "Enter the number of your choice: "
         )
@@ -134,8 +135,11 @@ def get_user_choice(character,grid):
             display_skills(character)
         elif user_choice == '5':
             go_to_sleep(character, 10)
+        elif user_choice == '6':
+            for line in load_text('intro.txt'):
+                print(line)
         elif user_choice not in types_input:
-            print("❌ Invalid input. Please enter a valid choice (1-5).\n")
+            print("❌ Invalid input. Please enter a valid choice (1-6).\n")
 
 
 def move_character_valid_move(grid, position, direction, prev_cell_content, character):
@@ -182,7 +186,7 @@ def check_character_1_level_location_exp(first_location, character):
             character['Stat']['Exp'] >= character['Stat']['Max Exp']['Level 1']):
         # print('1렙 claer! 1렙 up 다음 2렙 맵으로 move')
         print("⬆️⬆️⬆️ Level UP ⬆️⬆️⬆️\n"
-              "1st Level clear! You are moving to Level 2.\n")
+              "1st Level clear! You are moving to Level 2.")
         return True
 
 
@@ -191,7 +195,7 @@ def check_character_2_level_location_exp(first_location, character):
             character['Stat']['Exp'] >= character['Stat']['Max Exp']['Level 2']) :
         # print('2렙 claer! 1렙 up 다음 3렙 맵으로 move')
         print("⬆️⬆️⬆️ Level UP ⬆️⬆️⬆️\n"
-              "2nd Level clear! You are moving to Level 3.\n")
+              "2nd Level clear! You are moving to Level 3.")
         return True
 
 
@@ -247,7 +251,7 @@ def load_text(file):
     try:
         with open(file, 'r') as file:
             texts = file.readlines()
-        return [text.strip() for text in texts]
+        return [text.rstrip() for text in texts]
     except FileNotFoundError:
         print(f"Error: The file {file} was not found.")
         return []
@@ -264,6 +268,7 @@ def introduce_game(user_name):
         print(line)
         time.sleep(3)
 
+
 def check_user(user_name):
     # try except when file doesn't exist
     try:
@@ -272,17 +277,18 @@ def check_user(user_name):
     except FileNotFoundError:
         with open("players.txt", "w") as players:
             players.write(f'{user_name}')
-            print("✅New user is created!")
+            print("✅ New user is created!")
             return False
     else:
         if f'{user_name}\n' in player_list or user_name in player_list:
             print("You're already a player! Welcome back, %s!" % user_name)
             return True
         else:
-            print("✅New user is created!")
+            print("✅ New user is created!")
             with open("players.txt", "a") as players:
                 players.write(f'\n{user_name}')
                 return False
+
 
 def describe_map_based_on_level(character):
     if character['Stat']['Level'] == 1:
@@ -296,6 +302,7 @@ def describe_map_based_on_level(character):
         print("🚪 UPPER FLOOR - THE ATTIC 🚪\n"
               "The attic is filled with forgotten toys and old memories. Someone seems to be standing guard,\n"
               "ready to protect these treasures. Proceed with caution.")
+
 
 def game():
     """
@@ -319,7 +326,8 @@ def game():
             print('🚨🚨🚨 You only have 1 Hunger! You must sleep now. 🚨🚨🚨')
 
         direction, character = get_user_choice(character, grid)
-        (new_row, new_col), prev_cell_content, character, valid_checking = move_character_valid_move(grid, first_location, direction, prev_cell_content, character)
+        (new_row, new_col), prev_cell_content, character, valid_checking = (
+            move_character_valid_move(grid, first_location, direction, prev_cell_content, character))
         first_location = (new_row, new_col)
         if not valid_checking:
             continue
@@ -375,7 +383,7 @@ def game():
             #             "Scratch": random.randint(20, 50),
             #             "Digging": random.randint(20, 50)}}
             print(f"Your maximum HP has been increased by 200. "
-                  f"You earned two new skills({','.join(skill_set['Level 2'].keys())}). (max HP +200)")
+                  f"You earned two new skills ({','.join(skill_set['Level 2'].keys())}). (max HP +200)\n")
             describe_map_based_on_level(character)
 
 
@@ -398,7 +406,7 @@ def game():
             #         "Tail Whip": random.randint(20, 50),
             #         "Bite": random.randint(20, 50)}}
             print(f"Your maximum HP has been increased by 250. "
-                  f"You earned two new skills({','.join(skill_set['Level 3'].keys())}). (max HP +250)")
+                  f"You earned two new skills ({','.join(skill_set['Level 3'].keys())}). (max HP +250)\n")
             # print("당신의 hp 200상승, level up, skill을 얻으셧습니다(Tail whip, bite)")
             describe_map_based_on_level(character)
         final_goal = check_character_3_level_location_for_final(first_location, character)
