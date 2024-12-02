@@ -5,7 +5,7 @@ from hangman import *
 from hangman_art import stages
 from matching_direction_game import *
 from battle import battle
-from helpers import is_alive, display_skills, display_inventory, display_stats
+from helpers import is_alive, display_skills, display_inventory, display_stats, get_item_choice
 
 
 def configure_skills():
@@ -118,42 +118,18 @@ def get_user_choice(character):
                     return direction_input, character
                 else:
                     print("❌ Invalid direction.")
-
-
         elif user_choice == '2':
             while True:
                 display_inventory(character)
-                item_use = input("Which item would you like to use? (Enter the item number or type 'q' to quit): ")
-
-                if item_use == '1' or item_use.lower() == 'hp potion':
-                    if character["Inventory"]["HP Potion"] > 0:
-                        character['Stat']['Current HP'] = character['Stat']['HP']
-                        character['Inventory']['HP Potion'] -= 1
-                        print("You used 'HP Potion'. Your HP is fully restored now. (HP %s/%s) - Remaining quantity: %s"
-                              % (character['Stat']['Current HP'], character['Stat']['HP'], character['Inventory']['HP Potion']))
-                    else:
-                        print("❌ You don't have any HP Potion.")
-                elif item_use == "2" or item_use.lower() == 'kibble':
-                    if character['Inventory']['Kibble'] > 0:
-                        character['Inventory']['Kibble'] -= 1
-                        character['Stat']['Hunger'] += 1
-                        print(f"You ate 'Kibble'. Hunger increased by +1. - Remaining quantity: %s"
-                              % character['Inventory']['Kibble'])
-                    else:
-                        print("❌ You don't have any Kibble.")
-                elif item_use == "3" or item_use.lower() == 'key':
-                    print("❌ You cannot directly use the key. The key will be automatically used at the door.")
-                elif item_use == "q":
+                have_break = get_item_choice(character)
+                if have_break:
                     break
-                else:
-                    print("❌ Invalid input. Please enter a correct option from the list.")
         elif user_choice == '3':
             display_stats(character)
         elif user_choice == '4':
             display_skills(character)
         elif user_choice == '5':
             go_to_sleep(character, 10)
-
         elif user_choice not in types_input:
             print("\n❌ Invalid input. Please enter a valid choice (1-4).")
 
@@ -194,27 +170,28 @@ def check_character_hunger(character):
 
 
 def check_character_1_level_location_exp(first_location, character):
-    if first_location == (7, 1) and character['Inventory']['Key'] >= 1 and character['Stat']['Level'] == 1 and character['Stat']['Exp'] >= 1000 :
-        print('1렙 claer! 1렙 up 다음 2렙 맵으로 move')
+    if (first_location == (7, 1) and character['Inventory']['Key'] >= 1 and character['Stat']['Level'] == 1 and
+            character['Stat']['Exp'] >= character['Max Exp']['Level 1']):
+        # print('1렙 claer! 1렙 up 다음 2렙 맵으로 move')
+        print("⬆️⬆️⬆️ Level UP ⬆️⬆️⬆️"
+              "1st Level Clear! You are moving to Level 2.\n")
         return True
 
 
 def check_character_2_level_location_exp(first_location, character):
-    if first_location == (4, 8) and character['Inventory']['Key'] >= 1 and character['Stat']['Level'] == 2 and character['Stat']['Exp'] >= 1300 :
-        print('2렙 claer! 1렙 up 다음 3렙 맵으로 move')
+    if (first_location == (4, 8) and character['Inventory']['Key'] >= 1 and character['Stat']['Level'] == 2 and
+            character['Stat']['Exp'] >= character['Max Exp']['Level 2']) :
+        # print('2렙 claer! 1렙 up 다음 3렙 맵으로 move')
+        print("⬆️⬆️⬆️ Level UP ⬆️⬆️⬆️"
+              "2nd Level Clear! You are moving to Level 3.\n")
         return True
 
 
 def check_character_3_level_location_for_final(first_location, character):
     if first_location == (4, 4) and character['Stat']['Level'] == 3:
-        print('마지막 보스를 만나러 갑니다 화이팅!')
-        i, check = battle(character, True)
-        if check:
-            print("you win")
-            return True
-        else:
-            print("you lose")
-            return False
+        print('You are going to fight the boss to save Haru. Good luck!')
+        character, has_won = battle(character, True)
+        return has_won
 
 
 def check_probability(rate):
@@ -348,6 +325,18 @@ def check_user(user_name):
                 players.write(f'\n{user_name}')
                 return False
 
+def describe_map_based_on_level(character):
+    if character['Stat']['Level'] == 1:
+        print("🕸️ UNDERGROUND - THE GARAGE 🕸️\n"
+              "A dark space is filled with stacked boxes, tools, and the smell of dust. It is dead quiet, \n"
+              "but you know you are not alone. You can sense some sneaky creatures watching your every move.")
+    elif character['Stat']['Level'] == 2:
+        print("🏠 GROUND FLOOR - LIVING ROOM 🏠\n"
+              "The once lively living room now feels quiet. Stay alert for obstacles that will try to keep you away.")
+    else:
+        print("🚪 UPPER FLOOR - THE ATTIC 🚪\n"
+              "The attic is filled with forgotten toys and old memories. Someone seems to be standing guard,\n"
+              "ready to protect these treasures. Proceed with caution.")
 
 def game():
     """
@@ -363,6 +352,7 @@ def game():
     skill_set = configure_skills()
     character = make_character(skill_set)
 
+    describe_map_based_on_level(character)
     achieved_goal = False
     while is_alive(character) and not achieved_goal:
         display_grid(grid)
@@ -414,7 +404,7 @@ def game():
         if goal_lv1:
             grid = make_board_lv2()
             first_location, prev_cell_content = make_character_location(grid)
-            character['Stat']['HP'] += 250
+            character['Stat']['HP'] += 200
             character['Stat']['Current HP'] = character['Stat']['HP']
             character['Stat']['Level'] = 2
             character['Stat']['Exp'] = 0
@@ -426,7 +416,9 @@ def game():
             #             "Bark": random.randint(20, 50),
             #             "Scratch": random.randint(20, 50),
             #             "Digging": random.randint(20, 50)}}
-            print(f"Your maximum HP has been increased by 200. You earned two new skills({','.join(skill_set['Level 2'].keys())}). (max HP +200)")
+            print(f"Your maximum HP has been increased by 200. "
+                  f"You earned two new skills({','.join(skill_set['Level 2'].keys())}). (max HP +200)")
+            describe_map_based_on_level(character)
 
 
         goal_lv2 = check_character_2_level_location_exp(first_location, character)
@@ -447,20 +439,26 @@ def game():
             #         "Digging": random.randint(20, 50),
             #         "Tail Whip": random.randint(20, 50),
             #         "Bite": random.randint(20, 50)}}
-            print("당신의 hp 200상승, level up, skill을 얻으셧습니다(Tail whip, bite)")
+            print(f"Your maximum HP has been increased by 250. "
+                  f"You earned two new skills({','.join(skill_set['Level 3'].keys())}). (max HP +250)")
+            # print("당신의 hp 200상승, level up, skill을 얻으셧습니다(Tail whip, bite)")
+            describe_map_based_on_level(character)
         final_goal = check_character_3_level_location_for_final(first_location, character)
         if final_goal:
-            print("game clear! good job!")
+            print("🎉 Victory! You defeated the boss, but soon realized it was all a misunderstanding "
+                  "with Majestic Fluffy BunBun. With Haru safe, it's time to return home.")
             achieved_goal = True
-        elif final_goal is False:
-            print('안녕 태초마을이야')
+        else:
+            print("😞 Oh no! You weren't strong enough to defeat the boss this time. Train harder and grow stronger! "
+                  "Returning to checkpoint - the start of Level 3. Keep going, you can do this!")
             grid = make_board_lv3()
             first_location, prev_cell_content = make_character_location(grid)
 
     if achieved_goal:
-        print('Congratulations! You have reached the goal.')
+        print("Congratulations! You made it home safely with Haru. Your pawrents and Haru shower you with "
+              "love and kisses. Great job, hero! 🐾")
     else:
-        print('Game over! You have lost all your HP.')
+        print("Game over! You have lost all your Hearts. Try again and show your courage once more!")
 
 
 def main():
