@@ -43,7 +43,7 @@ def display_inventory(character):
         "--------------------------------------------------------\n"
         f" 1: 🩸 HP Potion ({character['Inventory']['HP Potion']})   - Fully restores your HP\n"
         f" 2: 🍽️ Kibble ({character['Inventory']['Kibble']})      - Increases your Hunger by +1\n"
-        f" 3: 🗝️ Key ({character['Inventory']['Key']})         - not usable directly\n"
+        f" 3: 🗝️ Key ({character['Inventory']['Key']})         - Not directly usable\n"
         "--------------------------------------------------------"
     )
 
