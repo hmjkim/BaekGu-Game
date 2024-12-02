@@ -44,7 +44,7 @@ def display_inventory(character):
         f" 1: 🩸 HP Potion ({character['Inventory']['HP Potion']})   - Fully restores your HP\n"
         f" 2: 🍽️ Kibble ({character['Inventory']['Kibble']})      - Increases your Hunger by +1\n"
         f" 3: 🗝️ Key ({character['Inventory']['Key']})         - not usable directly\n"
-        "--------------------------------------------------------\n"
+        "--------------------------------------------------------"
     )
 
 
@@ -59,7 +59,7 @@ def display_stats(character):
         f"⭐ Exp       : {character['Stat']['Exp']}/{max_exp}\n"
         f"❤️ Hearts    : {character['Stat']['Heart']}/{character['Stat']['Max Heart']}\n"
         f"🍗 Hunger    : {character['Stat']['Hunger']}/{character['Stat']['Max Hunger']}\n"
-        "--------------------------------------------------------"
+        "--------------------------------------------------------\n"
     )
 
 

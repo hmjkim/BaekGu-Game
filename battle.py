@@ -164,9 +164,7 @@ def display_enemy_info(enemy, enemy_copy):
           f"{enemy['Description']}\n"
           f"Level: {enemy['Level']}\n"
           f"HP: {enemy_copy['HP']}/{enemy['HP']}\n"
-          "------------------------------------------------------")
-
-# def get_battle_choice():
+          "------------------------------------------------------\n")
 
 
 def battle(character, boss_fight=False):
@@ -195,20 +193,20 @@ def battle(character, boss_fight=False):
                 "--------------------------------------------------------\n"
                 "Enter the number of your choice: "
             ).strip().lower()
-            if user_choice == "attack":
+            if user_choice == "1":
                 display_attack_description(enemy["Name"])
                 enemy_copy['HP'] -= character["Skill"]['Basic Attack']
                 victory_check = show_current_hp(enemy_copy['HP'], enemy['HP'], enemy_copy['Name'])
                 if victory_check:
                     has_won = True
                     break
-            elif user_choice == "skill":
+            elif user_choice == "2":
                 if skill_usage_limit > 0:
                     while True:
                         print(f"In each battle, you are allowed a total of {total_skill_use} skill uses.")
                         display_skill_uses(current_skill_usage, skill_usage_limit)
                         display_skills(character)
-                        skill_choice = input("Choose skill you would like to use:")
+                        skill_choice = input("Choose skill you would like to use:").strip()
 
                         display_attack_description(enemy["Name"])
                         try:
@@ -226,24 +224,24 @@ def battle(character, boss_fight=False):
                             current_skill_usage += 1
                             break
                 else:
-                    print("Sorry. You used all the available skill uses already.")
+                    print("❌ You can't use skill anymore as you ran out of uses already.")
                     display_skill_uses(current_skill_usage, skill_usage_limit)
                     continue
-            elif user_choice == "flee":
+            elif user_choice == "3":
                 print(f"{enemy["Name"]} seems to be too strong for me.. Let me retreat before it's too late!")
                 lose_heart(character)
                 in_battle = False
                 break
-            elif user_choice == "stats":
+            elif user_choice == "4":
                 display_stats(character)
                 continue
-            elif user_choice == "inventory":
+            elif user_choice == "5":
                 display_inventory(character)
                 do_break = get_item_choice(character)
                 if do_break:
                     break
             else:
-                print("❌ Invalid input. Please type your action.\n")
+                print("❌ Invalid input. Please enter a valid choice (1-5).\n")
                 continue
 
             if enemy_copy["HP"] > 0:

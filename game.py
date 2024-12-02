@@ -110,14 +110,14 @@ def get_user_choice(character,grid):
 
         if user_choice == '1':
             movement_keys = ['w', 'a', 's', 'd']
-            movement_directions = ['North', 'West', 'South', 'East']
+            movement_directions = ['Up', 'Left', 'Down', 'Right']
             print("\n🐕 Directions Available:")
             for count, element in enumerate(movement_keys):
-                print(f"{element.upper()} : {movement_directions[count]}.")
+                print(f"{element.upper()} : {movement_directions[count]}")
 
             while True:
                 direction_input = input("\nEnter the direction you wish to travel "
-                                        f"({'/'.join(movement_keys).upper()}): ").lower()
+                                        f"({'/'.join(movement_keys).upper()}): ").strip().lower()
                 if direction_input in movement_keys:
                     return direction_input, character
                 else:
@@ -135,7 +135,7 @@ def get_user_choice(character,grid):
         elif user_choice == '5':
             go_to_sleep(character, 10)
         elif user_choice not in types_input:
-            print("\n❌ Invalid input. Please enter a valid choice (1-5).")
+            print("❌ Invalid input. Please enter a valid choice (1-5).\n")
 
 
 def move_character_valid_move(grid, position, direction, prev_cell_content, character):
@@ -145,14 +145,18 @@ def move_character_valid_move(grid, position, direction, prev_cell_content, char
 
     if direction == 'w':
         new_row -= 1
+        print("You took a step to the Up. Everything seems quiet.")
     elif direction == 's':
         new_row += 1
+        print("You took a step to the Down. Everything seems quiet.")
     elif direction == 'a':
         new_col -= 1
+        print("You took a step to the Left. Everything seems quiet.")
     elif direction == 'd':
         new_col += 1
+        print("You took a step to the Right. Everything seems quiet.")
     else:
-        print("Invalid input.")
+        print("❌ Invalid input.")
 
     if grid[new_row][new_col] != '#':
         grid[row][col] = prev_cell_content
@@ -161,7 +165,7 @@ def move_character_valid_move(grid, position, direction, prev_cell_content, char
         character["Stat"]["Hunger"] -= 1
         return (new_row, new_col), new_prev_cell_content, character, valid_check
     else:
-        print("can't move this way")
+        print("❌ You can't move that way.")
         valid_check = False
         return (row, col), prev_cell_content, character, valid_check
 
@@ -175,7 +179,7 @@ def check_character_hunger(character):
 
 def check_character_1_level_location_exp(first_location, character):
     if (first_location == (7, 1) and character['Inventory']['Key'] >= 1 and character['Stat']['Level'] == 1 and
-            character['Stat']['Exp'] >= character['Max Exp']['Level 1']):
+            character['Stat']['Exp'] >= character['Stat']['Max Exp']['Level 1']):
         # print('1렙 claer! 1렙 up 다음 2렙 맵으로 move')
         print("⬆️⬆️⬆️ Level UP ⬆️⬆️⬆️\n"
               "1st Level clear! You are moving to Level 2.\n")
@@ -184,7 +188,7 @@ def check_character_1_level_location_exp(first_location, character):
 
 def check_character_2_level_location_exp(first_location, character):
     if (first_location == (4, 8) and character['Inventory']['Key'] >= 1 and character['Stat']['Level'] == 2 and
-            character['Stat']['Exp'] >= character['Max Exp']['Level 2']) :
+            character['Stat']['Exp'] >= character['Stat']['Max Exp']['Level 2']) :
         # print('2렙 claer! 1렙 up 다음 3렙 맵으로 move')
         print("⬆️⬆️⬆️ Level UP ⬆️⬆️⬆️\n"
               "2nd Level clear! You are moving to Level 3.\n")
@@ -208,27 +212,27 @@ def get_reward(character):
     max_exp = character['Stat']['Max Exp']['Level 1'] if character['Stat']['Level'] == 1 else (
         character)['Stat']['Max Exp']['Level 2']
     print("🏆 Reward Earned 🏆\n"
-          f"{'- Exp Points +%d':<20} ({character['Stat']['Exp']}/{max_exp})" % exp)
+          f"{' - Exp +%d':<20} |({character['Stat']['Exp']}/{max_exp})" % exp)
     if check_probability(0.1):
-        print(f"{' - Bone +1':<20} Permanently increases Basic Attack damage by +30")
+        print(f"{' - Bone +1':<20} |Permanently increases Basic Attack damage by +30")
         character['Skill']['Basic Attack'] += 30
     if check_probability(0.3):
-        print(f"{' - HP Potion +1':<20} Fully restores current HP (saved to inventory)")
+        print(f"{' - HP Potion +1':<20} |Fully restores current HP (saved to inventory)")
         try:
             character['Inventory']['HP Potion'] += 1
         except KeyError:
             character['Inventory']['HP Potion'] = 1
     if check_probability(0.1):
-        print(f"{' - Paw Boots +1':<20} Permanently increases maximum HP by +100")
+        print(f"{' - Paw Boots +1':<20} |Permanently increases maximum HP by +100")
         character['Stat']['HP'] += 100
     if check_probability(0.3):
-        print(f"{' - Kibble +1':<20} Increases Hunger by +1 (saved to inventory)")
+        print(f"{' - Kibble +1':<20} |Increases Hunger by +1 (saved to inventory)")
         try:
             character['Inventory']['Kibble'] += 1
         except KeyError:
             character['Inventory']['Kibble'] = 1
     if check_probability(0.3):
-        print(f"{' - Bowl Collar:<20'} Increases Hunger by +1 now")
+        print(f"{' - Bowl Collar':<20} |Increases Hunger by +1 now")
         character['Stat']['Hunger'] += 1
     if check_probability(0.5):
         print(f"{' - Key +1':<20} Used to move to the next level (saved to inventory)")
@@ -312,7 +316,7 @@ def game():
     while is_alive(character) and not achieved_goal:
 
         if character["Stat"]['Hunger'] == 1:
-            print('🚨🚨🚨You only have 1 Hunger! You must sleep now.🚨🚨🚨')
+            print('🚨🚨🚨 You only have 1 Hunger! You must sleep now. 🚨🚨🚨')
 
         direction, character = get_user_choice(character, grid)
         (new_row, new_col), prev_cell_content, character, valid_checking = move_character_valid_move(grid, first_location, direction, prev_cell_content, character)
@@ -332,10 +336,10 @@ def game():
                     get_reward(character)
             elif challenge == 'hangman':
                 print("You are about to play Hangman!\n\n" 
-                      "How to Play:\n "
-                      "Try to guess the secret word, one letter at a time. You have limited tries, so make each guess "
-                      "count. Good luck!")
-                input("Press Enter to continue...")
+                      "📖 How to Play 📖\n"
+                      "Try to guess the secret word, one letter at a time. You have limited tries. "
+                      "Remember: every key counts as a guess, so be careful. Good luck!")
+                input("Press any key to continue...")
                 level = check_character_level_hangman(character)
                 has_won, character = hangman(level, character)
                 print(has_won, character)
@@ -344,10 +348,10 @@ def game():
                     get_reward(character)
             elif challenge == 'memory game':
                 print("You are about to play Memory Game!\n\n"
-                      "How to Play:\n"
+                      "📖 How to Play 📖\n"
                       "You'll be shown a sequence of letters. You have 5 seconds to memorize it. Then, enter each "
                       "letter one at a time in the correct order. Good luck!")
-                input("Press Enter to continue...")
+                input("Press any key to continue...")
                 level_matching_game = check_character_level_matching_game(character)
                 has_won, character = play_game(level_matching_game, character)
                 if has_won:
