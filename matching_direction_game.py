@@ -1,6 +1,8 @@
 import random
 import time
 
+from battle import lose_heart
+
 
 def check_character_level_matching_game(character: dict) -> int:
     """
@@ -43,23 +45,22 @@ def play_game(level, character):
     :return: a True or False through result of game and the updated character dictionary
     """
     strings = random.choices(['A', 'D', 'S', 'W'], k=level)
-    print("memorize this direiton:")
+    print("Memorize the given directions:")
     print(strings)
-    for i in range(5):
+    for count in range(5):
         time.sleep(1)
-        print(5-i)
+        print(5 - count)
     print("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n")
     print("Enter the answer")
-    user_inputs = [input(f"{i+1} direction: ") for i in range(len(strings))]
-    upper_inputs = [i.upper() for i in user_inputs]
+    user_inputs = [input(f"{number+1} direction: ") for number in range(len(strings))]
+    upper_inputs = [user_input.upper() for user_input in user_inputs]
     if upper_inputs == strings:
-        print("correct")
+        print("Correct!")
         return True, character
     else:
-        print("wrong")
-        print("answer is ", strings)
-        character['Stat']['Heart'] -= 1
-        print("reduce 1 heart")
+        print("Wrong!")
+        print("The answer was ", strings)
+        lose_heart(character)
         return False, character
 
 
