@@ -69,16 +69,15 @@ def make_character(skill_set):
             "Basic Attack": random.randint(10, 30),
             "Current Skills": {
                 **skill_set["Level 1"],
-                **skill_set["Level 2"],
-                **skill_set["Level 3"]
             }
         },
         "Inventory": {
-            "Key": 1,
-            "HP Potion": 3,
+            "Key": 0,
+            "HP Potion": 0,
             "Kibble": 0
         }
     }
+
 
 def make_character_location(grid):
     first_location = (1, 1)
@@ -173,8 +172,8 @@ def check_character_1_level_location_exp(first_location, character):
     if (first_location == (7, 1) and character['Inventory']['Key'] >= 1 and character['Stat']['Level'] == 1 and
             character['Stat']['Exp'] >= character['Max Exp']['Level 1']):
         # print('1렙 claer! 1렙 up 다음 2렙 맵으로 move')
-        print("⬆️⬆️⬆️ Level UP ⬆️⬆️⬆️"
-              "1st Level Clear! You are moving to Level 2.\n")
+        print("⬆️⬆️⬆️ Level UP ⬆️⬆️⬆️\n"
+              "1st Level clear! You are moving to Level 2.\n")
         return True
 
 
@@ -182,8 +181,8 @@ def check_character_2_level_location_exp(first_location, character):
     if (first_location == (4, 8) and character['Inventory']['Key'] >= 1 and character['Stat']['Level'] == 2 and
             character['Stat']['Exp'] >= character['Max Exp']['Level 2']) :
         # print('2렙 claer! 1렙 up 다음 3렙 맵으로 move')
-        print("⬆️⬆️⬆️ Level UP ⬆️⬆️⬆️"
-              "2nd Level Clear! You are moving to Level 3.\n")
+        print("⬆️⬆️⬆️ Level UP ⬆️⬆️⬆️\n"
+              "2nd Level clear! You are moving to Level 3.\n")
         return True
 
 
@@ -198,44 +197,36 @@ def check_probability(rate):
     return random.random() <= rate
 
 
-def reward(character):
+def get_reward(character):
     exp = random.randint(200, 400)
     character['Stat']['Exp'] += exp
-    print("Exp +=", exp)
+    max_exp = character['Stat']['Max Exp']['Level 1'] if character['Stat']['Level'] == 1 else (
+        character)['Stat']['Max Exp']['Level 2']
+    print("🏆 Reward Earned 🏆\n"
+          f"{'- Exp Points +%d':<20} ({character['Stat']['Exp']}/{max_exp})" % exp)
     if check_probability(0.1):
-        print("reward!")
-        print(" you get 'bone'")
-        print(" it Increase basic attack damage  permanet +30")
+        print(f"{' - Bone +1':<20} Permanently increases Basic Attack damage by +30")
         character['Skill']['Basic Attack'] += 30
     if check_probability(0.3):
-        print("reward!")
-        print(" you get 'HP Potion'")
-        print("full hp when you use it")
+        print(f"{' - HP Potion +1':<20} Fully restores current HP (saved to inventory)")
         try:
             character['Inventory']['HP potion'] += 1
         except KeyError:
             character['Inventory']['HP potion'] = 1
     if check_probability(0.1):
-        print('reward!1')
-        print("you get 'Paw boots'")
-        print(' increase HP permanet +100')
+        print(f"{' - Paw Boots +1':<20} Permanently increases maximum HP by +100")
         character['Stat']['HP'] += 100
     if check_probability(0.3):
-        print('reward!2')
-        print("you get 'Kibble'")
-        print(' increase hunger +1 when you use it')
+        print(f"{' - Kibble +1':<20} Increases Hunger by +1 (saved to inventory)")
         try:
             character['Inventory']['Kibble'] += 1
         except KeyError:
             character['Inventory']['Kibble'] = 1
     if check_probability(0.3):
-        print('reward!3')
-        print("you get 'Bowl collar'")
-        print(' increase hunger +1 now')
+        print(f"{' - Bowl Collar:<20'} Increases Hunger by +1 now")
         character['Stat']['Hunger'] += 1
     if check_probability(0.5):
-        print('reward!4')
-        print("you get 'key'")
+        print(f"{' - Key +1':<20} Used to move to the next level (saved to inventory)")
         try:
             character['Inventory']['key'] += 1
         except KeyError:
@@ -243,7 +234,7 @@ def reward(character):
     return character
 
 
-def load_texts(file):
+def load_text(file):
     try:
         with open(file, 'r') as file:
             texts = file.readlines()
@@ -255,7 +246,7 @@ def load_texts(file):
 
 def introduce_game(user_name):
     file_path = "intro.txt"
-    texts = load_texts(file_path)
+    texts = load_text(file_path)
     if not texts:
         return
     print(f"Welcome to Baekgu, {user_name}!")
@@ -263,47 +254,6 @@ def introduce_game(user_name):
     for line in texts:
         print(line)
         time.sleep(3)
-
-# def introduce_game(user_name):
-#     print("Welcome to Baekgu, %s!" % user_name)
-#     time.sleep(1)
-#     print("You are Baekgu, a loyal white Jindo dog with a brave heart and a strong bond with your family."
-#           "Life has always been happy, full of love and play, until today—something is terribly wrong.")
-#     time.sleep(4)
-#     print("Using your extraordinary sense of smell and intuition, you've realized that your family's little boy, Haru, "
-#           "has suddenly gone missing.")
-#     time.sleep(3)
-#     print("Your mission is clear - Find Haru and bring him back home safely before it's too late.\n")
-#     time.sleep(3)
-#     print("Important Rules:")
-#     time.sleep(2)
-#     print('- Keep an eye on "Hunger" level. On every move, you will lose 1 Hunger and '
-#           'need to “Sleep” to recharge your stamina before it runs out.')
-#     time.sleep(3)
-#     print('- You have 10 Hearts to start with.')
-#     time.sleep(2)
-#     print("- There are 3 maps to explore to reach your goal.")
-#     time.sleep(3)
-#     print('- You need to reach Level 3 and find the door marked with a "!" on the map.')
-#     time.sleep(3)
-#     print("- To level up, you'll need:")
-#     time.sleep(2)
-#     print("  - To stand in front of the door (!).")
-#     time.sleep(2)
-#     print("  - A key in your inventory to unlock the way.")
-#     time.sleep(2)
-#     print("  - Full Exp level (varies by level).\n")
-#     time.sleep(3)
-#     print("Your ultimate objective:")
-#     time.sleep(2)
-#     print("Defeat the boss who is holding Haru captive and bring him back home to your loving family!!!!!")
-#     time.sleep(3)
-#     print("Your journey may be filled with dangers, but with your sharp senses and loyalty, you are Haru's only hope.")
-#     time.sleep(3)
-#     print("Without further ado, let the rescue begin!")
-#     time.sleep(2)
-#     print("Time to save Haru, Baekgu!\n")
-
 
 def check_user(user_name):
     # try except when file doesn't exist
@@ -366,39 +316,39 @@ def game():
         if not valid_checking:
             continue
         check_character_hunger(character)
-        there_is_a_challenger = check_probability(1)
+        there_is_a_challenger = check_probability(0.3)
         if there_is_a_challenger:
-            # game_list = ['battle', 'hangman', 'memory game']
-            game_list = ['battle']
+            game_list = ['battle', 'hangman', 'memory game']
             challenge = random.choice(game_list)
             if challenge == 'battle':
                 print("You are going to battle! Prepare yourself.")
                 character, has_won = battle(character)
                 # print(has_won, character)
                 if has_won:
-                    reward(character)
+                    get_reward(character)
             elif challenge == 'hangman':
-                print("play hangman")
+                print("You are about to play Hangman!\n\n" 
+                      "How to Play:\n "
+                      "Try to guess the secret word, one letter at a time. You have limited tries, so make each guess "
+                      "count. Good luck!")
+                input("Press Enter to continue...")
                 level = check_character_level_hangman(character)
-                has_won, j = hangman(level, character)
-                print(has_won, j)
+                has_won, character = hangman(level, character)
+                print(has_won, character)
                 if has_won:
-                    print("you win")
-                    print("get reward")
-                    reward(character)
-                else:
-                    print("continue game")
+                    print("Congratulations! You have won!")
+                    get_reward(character)
             elif challenge == 'memory game':
-                print("play memory game")
+                print("You are about to play Memory Game!\n\n"
+                      "How to Play:\n"
+                      "You'll be shown a sequence of letters. You have 5 seconds to memorize it. Then, enter each "
+                      "letter one at a time in the correct order. Good luck!")
+                input("Press Enter to continue...")
                 level_matching_game = check_character_level_matching_game(character)
-                check, character = play_game(level_matching_game, character)
-                print(check, character)
-                if check:
-                    print("you win")
-                    print("get reward")
-                    reward(character)
-                else:
-                    print("continue game")
+                has_won, character = play_game(level_matching_game, character)
+                if has_won:
+                    print("Congratulations! You have won!")
+                    get_reward(character)
 
         goal_lv1 = check_character_1_level_location_exp(first_location, character)
         if goal_lv1:
@@ -444,15 +394,16 @@ def game():
             # print("당신의 hp 200상승, level up, skill을 얻으셧습니다(Tail whip, bite)")
             describe_map_based_on_level(character)
         final_goal = check_character_3_level_location_for_final(first_location, character)
-        if final_goal:
-            print("🎉 Victory! You defeated the boss, but soon realized it was all a misunderstanding "
-                  "with Majestic Fluffy BunBun. With Haru safe, it's time to return home.")
-            achieved_goal = True
-        else:
-            print("😞 Oh no! You weren't strong enough to defeat the boss this time. Train harder and grow stronger! "
-                  "Returning to checkpoint - the start of Level 3. Keep going, you can do this!")
-            grid = make_board_lv3()
-            first_location, prev_cell_content = make_character_location(grid)
+        if final_goal is not None:
+            if final_goal:
+                print("🎉 Victory! You defeated the boss, but soon realized it was all a misunderstanding "
+                      "with Majestic Fluffy BunBun. With Haru safe, it's time to return home.")
+                achieved_goal = True
+            else:
+                print("😞 Oh no! You weren't strong enough to defeat the boss this time. Train harder and grow "
+                      "stronger! Returning to checkpoint - the start of Level 3. Keep going, you can do this!")
+                grid = make_board_lv3()
+                first_location, prev_cell_content = make_character_location(grid)
 
     if achieved_goal:
         print("Congratulations! You made it home safely with Haru. Your pawrents and Haru shower you with "

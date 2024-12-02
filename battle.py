@@ -190,7 +190,7 @@ def battle(character, boss_fight=False):
         options = ['Attack', 'Skill', 'Flee', 'Stats', 'Inventory']
         while not has_won:
             user_choice = input(
-                "\nChoose your battle stance (enter one of the actions below):\n"
+                "What is your next move? (type in one of the actions below):\n"
                 "--------------------------------------------------------\n"
                 "🗡️  Attack     - Attack with basic attack\n"
                 "✨  Skill      - Use a special skill\n"
@@ -268,7 +268,7 @@ def battle(character, boss_fight=False):
                 if do_break:
                     break
             else:
-                print("❌ Invalid input. Please type your action.")
+                print("❌ Invalid input. Please type your action.\n")
                 continue
 
             if enemy_copy["HP"] > 0:
