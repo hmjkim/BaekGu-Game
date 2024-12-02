@@ -50,6 +50,9 @@ def go_to_sleep(character, total_time):
 
 
 def make_character(skill_set):
+    inventory_items = ['Key', 'HP Potion', 'Kibble']
+    inventory = {item: 0 for item in inventory_items}
+
     return {
         "Stat": {
             "HP": 250,
@@ -71,11 +74,12 @@ def make_character(skill_set):
                 **skill_set["Level 1"],
             }
         },
-        "Inventory": {
-            "Key": 0,
-            "HP Potion": 0,
-            "Kibble": 0
-        }
+        "Inventory": inventory
+        #     {
+        #     "Key": 0,
+        #     "HP Potion": 0,
+        #     "Kibble": 0
+        # }
     }
 
 
