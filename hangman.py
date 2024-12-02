@@ -71,8 +71,8 @@ def word_strike(text):
 
     >>> word_strike('hello')
     '̶h ̶e ̶l ̶l ̶o'
-    >>> word_strike('')
-    ''
+    >>> word_strike('!')
+    '̶!'
     >>> word_strike('A')
     '̶A'
     """
