@@ -135,7 +135,7 @@ def get_user_choice(character,grid):
         elif user_choice == '5':
             go_to_sleep(character, 10)
         elif user_choice not in types_input:
-            print("\n❌ Invalid input. Please enter a valid choice (1-4).")
+            print("\n❌ Invalid input. Please enter a valid choice (1-5).")
 
 
 def move_character_valid_move(grid, position, direction, prev_cell_content, character):
