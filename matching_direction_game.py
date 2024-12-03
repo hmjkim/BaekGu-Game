@@ -50,7 +50,7 @@ def play_game(level, character):
     for count in range(5):
         time.sleep(1)
         print(5 - count)
-    print("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n")
+    print("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n")
     print("Enter the answer")
     user_inputs = [input(f"{number+1} direction: ") for number in range(len(strings))]
     upper_inputs = [user_input.upper() for user_input in user_inputs]
