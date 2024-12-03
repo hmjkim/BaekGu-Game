@@ -45,8 +45,8 @@ def go_to_sleep(character, total_time):
         time.sleep(1)
         print("%d sec" % count)
     character['Stat']['Hunger'] = 10
-    character['Stat']['Current HP'] = character['Stat']['HP']
-    print("You feel well-rested! Your Hunger and HP have been fully restored.")
+    # character['Stat']['Current HP'] = character['Stat']['HP']
+    print("You feel well-rested! Your Hunger has been fully restored.")
 
 
 def make_character(skill_set):
