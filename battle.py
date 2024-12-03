@@ -58,9 +58,9 @@ def configure_enemy_stat():
     #         "Boss": (130, 300)
     #     }
     # }
-    return {"HP Range": {i: j for i, j in zip(level, hp_range)},
-            "Basic Attack": {i: j for i, j in zip(level, attack_dmg)},
-            "Skill Damage": {i: j for i, j in zip(level, skill_dmg)}}
+    return {"HP Range": {level: hp_range for level, hp_range in zip(level, hp_range)},
+            "Basic Attack": {level: damage_range for level, damage_range in zip(level, attack_dmg)},
+            "Skill Damage": {level: damage_range for level, damage_range in zip(level, skill_dmg)}}
 
 
 def make_enemies(name, icon, description, level, hp_range, basic_attack, skill_damage, skill_name):
