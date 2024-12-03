@@ -3,7 +3,7 @@ def add_border_walls(grid, grid_size):
     Add border walls to a grid.
 
     :param grid: a list representing the grid
-    :param grid_size: The size of the grid
+    :param grid_size: the size of the grid
     :preconditions: grid is a 2D square list of size
     :preconditions: grid_size is a positive integer
     :postconditions: the last row and the last columns of the grid are filled with the '#'
@@ -25,6 +25,24 @@ def add_border_walls(grid, grid_size):
 
 
 def fill_spaces(grid, grid_size):
+    """
+    Fill empty spaces in a grid with dots.
+
+    :param grid: a list representing the grid
+    :param grid_size: the size of the grid
+    :preconditions: grid is a 2D square list of size
+    :preconditions: grid_size is a positive integer
+    :postconditions: the grid is filled (' ') with dots ('.')
+    
+     >>> grid_1 = [[' ' for _ in range(1)] for _ in range(1)]
+     >>> fill_spaces(grid_1, 1)
+     >>> grid_1
+     [['.']]
+     >>> grid_3 = [[' ' for _ in range(3)] for _ in range(3)]
+     >>> fill_spaces(grid_3, 3)
+     >>> grid_3
+     [['.', '.', '.'], ['.', '.', '.'], ['.', '.', '.']]
+    """
     for row in range(grid_size):
         for col in range(grid_size):
             if grid[row][col] == ' ':
