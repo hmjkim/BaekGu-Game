@@ -135,7 +135,7 @@ def choose_enemy_based_on_level(character, enemy_stat, boss_fight):
                             enemy_stat["Skill Damage"]["Boss"],
                             'Cuddle Crush')
         enemies = [boss]
-    elif character["Stat"]["Level"] == 3:
+    elif character["Stat"]["Level"] == 3 and not boss_fight:
         # High Level Mobs (Upper Level - Attic)
         giant_moth = make_enemies('Giant Moth',
                                   '🪰',
