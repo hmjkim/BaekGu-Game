@@ -1,7 +1,7 @@
 import random
 
 from helpers import lose_heart
-from hangman_art import stages
+from hangman_art import stage
 import warnings
 warnings.filterwarnings("ignore")
 
@@ -138,7 +138,7 @@ def hangman(word_list, character):
         if "_" not in display:
             end_of_game = True
             print("You win!")
-
+        stages = stage()
         print(stages[lives])
     return end_of_game, character
 
