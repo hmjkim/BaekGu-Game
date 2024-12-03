@@ -1,4 +1,5 @@
-stages = ['''
+def stage():
+    stages = ['''
   +---+
   |   |
   O   |
@@ -70,4 +71,4 @@ stages = ['''
       |
 =========
 ''']
-
+    return stages
