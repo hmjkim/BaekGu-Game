@@ -79,11 +79,12 @@ def display_stats(character):
     print(
         "\n📊 Your Stats:\n"
         "--------------------------------------------------------\n"
-        f"🔰 Level     : {character['Stat']['Level']}\n"
-        f"🩸 HP        : {character['Stat']['Current HP']}/{character['Stat']['HP']}\n"
-        f"⭐ Exp       : {character['Stat']['Exp']}/{max_exp}\n"
-        f"❤️ Hearts    : {character['Stat']['Heart']}/{character['Stat']['Max Heart']}\n"
-        f"🍗 Hunger    : {character['Stat']['Hunger']}/{character['Stat']['Max Hunger']}\n"
+        f"🔰 Level          : {character['Stat']['Level']}\n"
+        f"🩸 HP             : {character['Stat']['Current HP']}/{character['Stat']['HP']}\n"
+        f"⭐ Exp            : {character['Stat']['Exp']}/{max_exp}\n"
+        f"❤️ Hearts         : {character['Stat']['Heart']}/{character['Stat']['Max Heart']}\n"
+        f"🍗 Hunger         : {character['Stat']['Hunger']}/{character['Stat']['Max Hunger']}\n"
+        f"🗡️ Basic Attack   : Damage {character['Skill']['Basic Attack']}\n"
         "--------------------------------------------------------\n"
     )
 
