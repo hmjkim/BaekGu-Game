@@ -8,7 +8,7 @@ def check_character_level_matching_game(character: dict) -> int:
     """
     Check character's current level to determine the number of matches.
 
-    :param character: a dictionary of character including 'Level' key in 'Stat'.
+    :param character: a dictionary of character including 'Level' key in 'Stat'
     :precondition: character must be a dictionary containing a nested dictionary under key 'Stat' and 'Level'
     :postcondition: return the correct number of matches based on the character's level
     :return: number of matches based on the character's level
