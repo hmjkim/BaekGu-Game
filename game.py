@@ -61,7 +61,8 @@ def make_character(skill_set):
             "Exp": 0,
             "Max Exp": {
                 "Level 1": 1000,
-                "Level 2": 1300
+                "Level 2": 1300,
+                "Level 3": 1500
             },
             "Heart": 10,
             "Max Heart": 10,
@@ -199,7 +200,7 @@ def check_character_2_level_location_exp(first_location, character):
 
 
 def check_character_3_level_location_for_final(first_location, character):
-    if first_location == (4, 4) and character['Stat']['Level'] == 3:
+    if first_location == (4, 4) and character['Stat']['Level'] == 3 and character['Stat']['Exp'] >= character['Stat']['Max Exp']['Level 3']:
         print('You are going to fight the boss to save Haru. Good luck!')
         character, has_won = battle(character, True)
         return has_won
