@@ -291,14 +291,14 @@ def check_user(user_name):
 
 def describe_map_based_on_level(character):
     if character['Stat']['Level'] == 1:
-        print("🕸️ UNDERGROUND - THE GARAGE 🕸️\n"
+        print("\n🕸️ UNDERGROUND - THE GARAGE 🕸️\n"
               "A dark space is filled with stacked boxes, tools, and the smell of dust. It is dead quiet, \n"
               "but you know you are not alone. You can sense some sneaky creatures watching your every move.")
     elif character['Stat']['Level'] == 2:
-        print("🏠 GROUND FLOOR - LIVING ROOM 🏠\n"
+        print("\n🏠 GROUND FLOOR - LIVING ROOM 🏠\n"
               "The once lively living room now feels quiet. Stay alert for obstacles that will try to keep you away.")
     else:
-        print("🚪 UPPER FLOOR - THE ATTIC 🚪\n"
+        print("\n🚪 UPPER FLOOR - THE ATTIC 🚪\n"
               "The attic is filled with forgotten toys and old memories. Someone seems to be standing guard,\n"
               "ready to protect these treasures. Proceed with caution.")
 
@@ -381,7 +381,7 @@ def game():
                 input("Press any key to continue...")
                 level = check_character_level_hangman(character)
                 has_won, character = hangman(level, character)
-                print(has_won, character)
+                # print(has_won, character)
                 if has_won:
                     print("Congratulations! You have won!")
                     get_reward(character)
