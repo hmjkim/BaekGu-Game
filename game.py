@@ -310,6 +310,8 @@ def level_up(character, hp, level, skill_set):
     character['Stat']['Level'] = level
     character['Stat']['Exp'] = 0
     character['Stat']['Hunger'] = 10
+    character['Inventory']['Key'] = 0
+    character['Skill']['Basic Attack'] += 5
     character['Skill']['Current Skills'].update(skill_set[f'Level {level}'])
     print(f"Your maximum HP has been increased by {hp}. "
           f"You earned two new skills ({','.join(skill_set[f'Level {level}'].keys())}). (max HP +{hp})\n")
@@ -453,7 +455,9 @@ def game():
                 achieved_goal = True
             else:
                 print("😞 Oh no! You weren't strong enough to defeat the boss this time. Train harder and grow "
-                      "stronger! Returning to checkpoint - the start of Level 3. Keep going, you can do this!")
+                      "stronger! Returning to checkpoint - the start of Level 3. Keep going, you can do this!\n"
+                      "(Exp reset to 0)")
+                character['Stat']['Exp'] = 0
                 grid = make_board_lv3()
                 first_location, prev_cell_content = make_character_location(grid)
 
