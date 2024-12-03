@@ -215,27 +215,27 @@ def get_reward(character):
     max_exp = character['Stat']['Max Exp']['Level 1'] if character['Stat']['Level'] == 1 else (
         character)['Stat']['Max Exp']['Level 2']
     print("🏆 Reward Earned 🏆\n"
-          f"{' - Exp +%d':<20} |({character['Stat']['Exp']}/{max_exp})" % exp)
+          f"{' - Exp +%d':<20}({character['Stat']['Exp']}/{max_exp})" % exp)
     if check_probability(0.1):
-        print(f"{' - Bone +1':<20} |Permanently increases Basic Attack damage by +30")
+        print(f"{' - Bone +1':<20} Permanently increases Basic Attack damage by +30")
         character['Skill']['Basic Attack'] += 30
     if check_probability(0.3):
-        print(f"{' - HP Potion +1':<20} |Fully restores current HP (saved to inventory)")
+        print(f"{' - HP Potion +1':<20} Fully restores current HP (saved to inventory)")
         try:
             character['Inventory']['HP Potion'] += 1
         except KeyError:
             character['Inventory']['HP Potion'] = 1
     if check_probability(0.1):
-        print(f"{' - Paw Boots +1':<20} |Permanently increases maximum HP by +100")
+        print(f"{' - Paw Boots +1':<20} Permanently increases maximum HP by +100")
         character['Stat']['HP'] += 100
     if check_probability(0.3):
-        print(f"{' - Kibble +1':<20} |Increases Hunger by +1 (saved to inventory)")
+        print(f"{' - Kibble +1':<20} Increases Hunger by +1 (saved to inventory)")
         try:
             character['Inventory']['Kibble'] += 1
         except KeyError:
             character['Inventory']['Kibble'] = 1
     if check_probability(0.3):
-        print(f"{' - Bowl Collar':<20} |Increases Hunger by +1 now")
+        print(f"{' - Bowl Collar':<20} Increases Hunger by +1 now")
         character['Stat']['Hunger'] += 1
     if check_probability(0.5):
         print(f"{' - Key +1':<20} Used to move to the next level (saved to inventory)")
@@ -303,26 +303,37 @@ def describe_map_based_on_level(character):
               "ready to protect these treasures. Proceed with caution.")
 
 
-def level_up_2(character, skill_set):
-    character['Stat']['HP'] += 200
+def level_up(character, hp, level, skill_set):
+    character['Stat']['HP'] += hp
     character['Stat']['Current HP'] = character['Stat']['HP']
-    character['Stat']['Level'] = 2
+    character['Stat']['Level'] = level
     character['Stat']['Exp'] = 0
     character['Stat']['Hunger'] = 10
-    character['Skill']['Current Skills'].update(skill_set['Level 2'])
-    print(f"Your maximum HP has been increased by 200. "
-          f"You earned two new skills ({','.join(skill_set['Level 2'].keys())}). (max HP +200)\n")
+    character['Skill']['Current Skills'].update(skill_set[f'Level {level}'])
+    print(f"Your maximum HP has been increased by {hp}. "
+          f"You earned two new skills ({','.join(skill_set[f'Level {level}'].keys())}). (max HP +{hp})\n")
 
 
-def level_up_3(character, skill_set):
-    character['Stat']['HP'] += 250
-    character['Stat']['Current HP'] = character['Stat']['HP']
-    character['Stat']['Level'] = 3
-    character['Stat']['Exp'] = 0
-    character['Stat']['Hunger'] = 10
-    character['Skill']['Current Skills'].update(skill_set['Level 3'])
-    print(f"Your maximum HP has been increased by 250. "
-          f"You earned two new skills ({','.join(skill_set['Level 3'].keys())}). (max HP +250)\n")
+# def level_up_2(character, skill_set):
+#     character['Stat']['HP'] += 200
+#     character['Stat']['Current HP'] = character['Stat']['HP']
+#     character['Stat']['Level'] = 2
+#     character['Stat']['Exp'] = 0
+#     character['Stat']['Hunger'] = 10
+#     character['Skill']['Current Skills'].update(skill_set['Level 2'])
+#     print(f"Your maximum HP has been increased by 200. "
+#           f"You earned two new skills ({','.join(skill_set['Level 2'].keys())}). (max HP +200)\n")
+#
+#
+# def level_up_3(character, skill_set):
+#     character['Stat']['HP'] += 250
+#     character['Stat']['Current HP'] = character['Stat']['HP']
+#     character['Stat']['Level'] = 3
+#     character['Stat']['Exp'] = 0
+#     character['Stat']['Hunger'] = 10
+#     character['Skill']['Current Skills'].update(skill_set['Level 3'])
+#     print(f"Your maximum HP has been increased by 250. "
+#           f"You earned two new skills ({','.join(skill_set['Level 3'].keys())}). (max HP +250)\n")
 
 def game():
     """
@@ -352,7 +363,7 @@ def game():
         if not valid_checking:
             continue
         check_character_hunger(character)
-        there_is_a_challenger = check_probability(0.3)
+        there_is_a_challenger = check_probability(0.25)
         if there_is_a_challenger:
             game_list = ['battle', 'hangman', 'memory game']
             challenge = random.choice(game_list)
@@ -390,7 +401,8 @@ def game():
         if goal_lv1:
             grid = make_board_lv2()
             first_location, prev_cell_content = make_character_location(grid)
-            level_up_2(character, skill_set)
+            level_up(character, 200, 2, skill_set)
+            # level_up_2(character, skill_set)
             # character['Stat']['HP'] += 200
             # character['Stat']['Current HP'] = character['Stat']['HP']
             # character['Stat']['Level'] = 2
@@ -412,7 +424,8 @@ def game():
         if goal_lv2:
             grid = make_board_lv3()
             first_location, prev_cell_content = make_character_location(grid)
-            level_up_3(character, skill_set)
+            level_up(character, 250, 3, skill_set)
+            # level_up_3(character, skill_set)
             # character['Stat']['HP'] += 250
             # character['Stat']['Current HP'] = character['Stat']['HP']
             # character['Stat']['Level'] = 3
