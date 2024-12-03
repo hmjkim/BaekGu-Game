@@ -188,7 +188,7 @@ def battle(character, boss_fight=False):
     in_battle, has_won = True, False
 
     while is_alive(character) and enemy_copy["HP"] > 0 and in_battle:
-        options = ['Attack', 'Skill', 'Flee', 'Stats', 'Inventory']
+        # options = ['Attack', 'Skill', 'Flee', 'Stats', 'Inventory']
         while not has_won:
             user_choice = input(
                 "What is your next move?\n"
