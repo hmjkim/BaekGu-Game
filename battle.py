@@ -32,8 +32,8 @@ def configure_enemy_stat():
     # HP, Attack damage, Skill damage random
     level = ["Level 1", "Level 2", "Level 3", "Level 4", "Boss"]
     hp_range = [(80, 100), (101, 200), (201, 300), (301, 400), (500, 600)]
-    attack_dmg = [(5, 10), (15, 30), (35, 50), (60, 90), (100, 300)]
-    skill_dmg = [(10, 25), (26, 45), (46, 70), (75, 100), (130, 300)]
+    attack_dmg = [(5, 10), (15, 30), (35, 50), (60, 90), (100, 250)]
+    skill_dmg = [(10, 25), (26, 45), (46, 70), (75, 100), (130, 250)]
 
     # return {
     #     "HP Range": {
@@ -266,7 +266,7 @@ def battle(character, boss_fight=False):
         print("I collapsed on the floor. The enemy stands victorious as my vision fades to darkness...")
         lose_heart(character)
         has_won = False
-    elif has_won:
+    elif has_won and not boss_fight:
         print("🎉 Woo hoo! You won against a ruff battle. Time for a treat! 🎉")
     return character, has_won
 
