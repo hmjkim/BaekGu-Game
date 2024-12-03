@@ -1,4 +1,21 @@
 def add_border_walls(grid, grid_size):
+    """
+    Add border walls to a grid.
+
+    :param grid: a list representing the grid
+    :param grid_size: The size of the grid
+    :preconditions: grid is a 2D square list of size
+    :preconditions: grid_size is a positive integer
+    :postconditions: the last row and the last columns of the grid are filled with the '#'
+    :return: the modified grid with border walls added
+
+    >>> grid1 = [[' ' for _ in range(1)] for _ in range(1)]
+    >>> add_border_walls(grid1, 1)
+    [['#']]
+    >>> grid2 = [[' ' for _ in range(3)] for _ in range(3)]
+    >>> add_border_walls(grid2, 3)
+    [['#', '#', '#'], ['#', ' ', '#'], ['#', '#', '#']]
+    """
     for i in range(grid_size):
         grid[0][i] = '#'
         grid[grid_size-1][i] = '#'
