@@ -71,8 +71,30 @@ def go_to_sleep(character, total_time):
     "Hunger" key and its value
     :precondition: total_time must be a positive integer greater than 0
     :postcondition: restore the player's Hunger level fully after sleeping for the given time
+
+    >>> skill_set = configure_skills()
+    >>> character_dict = make_character(skill_set)
+    >>> go_to_sleep(character_dict, 10)
+    <BLANKLINE>
+    💤 You are going to sleep for 10 second(s) to regain energy.
+    1 sec
+    2 sec
+    3 sec
+    4 sec
+    5 sec
+    6 sec
+    7 sec
+    8 sec
+    9 sec
+    10 sec
+    You feel well-rested! Your Hunger has been fully restored.
+    >>> go_to_sleep(character_dict, 1)
+    <BLANKLINE>
+    💤 You are going to sleep for 1 second(s) to regain energy.
+    1 sec
+    You feel well-rested! Your Hunger has been fully restored.
     """
-    print(f"\n💤 You are going to sleep for %d seconds to regain energy." % total_time)
+    print(f"\n💤 You are going to sleep for %d second(s) to regain energy." % total_time)
     for count in range(1, total_time + 1):
         time.sleep(1)
         print("%d sec" % count)
