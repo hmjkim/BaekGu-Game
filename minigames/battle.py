@@ -94,7 +94,7 @@ def choose_enemy_based_on_level(character, enemy_stat, boss_fight):
                              )
         spider = make_enemies('Spider',
                               '🕷️',
-                              'Spider Description',
+                              'Moving slowly in the shadows with its sticky webs.',
                               '2',
                               enemy_stat["HP Range"]["Level 2"],
                               enemy_stat["Basic Attack"]["Level 2"],
@@ -106,7 +106,7 @@ def choose_enemy_based_on_level(character, enemy_stat, boss_fight):
         # Mid-Level Mobs (Ground Level)
         robotic_vacuum = make_enemies('Robotic Vacuum',
                                       '🤖',
-                                      'Robotic Vacuum Description',
+                                      'Going zoom zoom, sucking up everything in its path.',
                                       '2',
                                       enemy_stat["HP Range"]["Level 2"],
                                       enemy_stat["Basic Attack"]["Level 2"],
@@ -114,7 +114,7 @@ def choose_enemy_based_on_level(character, enemy_stat, boss_fight):
                                       'Suction')
         guard_cat = make_enemies('Guard Cat',
                                  '🐱',
-                                 'Guard Cat Description',
+                                 'A fierce feline guarding the living room.',
                                  '3',
                                  enemy_stat["HP Range"]["Level 3"],
                                  enemy_stat["Basic Attack"]["Level 3"],
@@ -138,7 +138,7 @@ def choose_enemy_based_on_level(character, enemy_stat, boss_fight):
         # High Level Mobs (Upper Level - Attic)
         giant_moth = make_enemies('Giant Moth',
                                   '🪰',
-                                  'Giant Moth Description',
+                                  'Every time it flaps its wings, dust comes off.',
                                   '3',
                                   enemy_stat["HP Range"]["Level 3"],
                                   enemy_stat["Basic Attack"]["Level 3"],
@@ -146,7 +146,7 @@ def choose_enemy_based_on_level(character, enemy_stat, boss_fight):
                                   'Wing Flap')
         ghost = make_enemies('Ghost',
                              '👻',
-                             'Ghost Description',
+                             'A forgotten spirit, floating around silently.',
                              '4',
                              enemy_stat["HP Range"]["Level 4"],
                              enemy_stat["Basic Attack"]["Level 4"],
