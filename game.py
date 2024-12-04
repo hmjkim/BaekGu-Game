@@ -219,6 +219,13 @@ def check_probability(rate):
     :precondition: rate must be a floating point number between 0.0 and 1.0 inclusive
     :postcondition: determine whether the event occurs based on the given rate
     :return: a boolean that is True if the event occurs based on the specified probability
+
+    >>> check_probability(0.5) # doctest: +SKIP
+    True
+    >>> check_probability(0) # doctest: +SKIP
+    False
+    >>> check_probability(1) # doctest: +SKIP
+    True
     """
     return random.random() <= rate
 
