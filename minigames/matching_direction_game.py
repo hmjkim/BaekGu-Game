@@ -31,7 +31,7 @@ def check_character_level_matching_game(character: dict) -> int:
         return matching_count
 
 
-def play_game(level, character):
+def play_game(level: int, character: dict) -> tuple[bool, dict]:
     """
     Play a direction game where the player memorize and input a sequence of directions ('A', 'D', 'S', 'W').
 
