@@ -59,6 +59,23 @@ def configure_enemy_stat():
     levels
     :return: a dictionary
 
+    >>> from pprint import pprint
+    >>> pprint(configure_enemy_stat(), sort_dicts=False)
+    {'HP Range': {'Level 1': (80, 100),
+                  'Level 2': (101, 200),
+                  'Level 3': (201, 300),
+                  'Level 4': (301, 400),
+                  'Boss': (500, 600)},
+     'Basic Attack': {'Level 1': (5, 10),
+                      'Level 2': (15, 30),
+                      'Level 3': (35, 50),
+                      'Level 4': (60, 90),
+                      'Boss': (100, 250)},
+     'Skill Damage': {'Level 1': (10, 25),
+                      'Level 2': (26, 45),
+                      'Level 3': (46, 70),
+                      'Level 4': (75, 100),
+                      'Boss': (130, 250)}}
      """
     level = ["Level 1", "Level 2", "Level 3", "Level 4", "Boss"]
     hp_range = [(80, 100), (101, 200), (201, 300), (301, 400), (500, 600)]
