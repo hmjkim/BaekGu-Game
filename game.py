@@ -60,12 +60,23 @@ def configure_skills():
 
 
 def go_to_sleep(character, total_time):
+    """
+    Make the character sleep for the specified duration.
+
+    Hunger level will be fully restored after.
+
+    :param character: a well-formed character dictionary
+    :param total_time: an integer representing the time in seconds
+    :precondition: character must be a dictionary containing a key "Stat" that holds another dictionary with
+    "Hunger" key and its value
+    :precondition: total_time must be a positive integer greater than 0
+    :postcondition: restore the player's Hunger level fully after sleeping for the given time
+    """
     print(f"\n💤 You are going to sleep for %d seconds to regain energy." % total_time)
     for count in range(1, total_time + 1):
         time.sleep(1)
         print("%d sec" % count)
     character['Stat']['Hunger'] = 10
-    # character['Stat']['Current HP'] = character['Stat']['HP']
     print("You feel well-rested! Your Hunger has been fully restored.")
 
 
