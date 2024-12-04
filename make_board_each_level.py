@@ -1,4 +1,4 @@
-def add_border_walls(grid, grid_size):
+def add_border_walls(grid: list[list[str]], grid_size: int) -> list[list[str]]:
     """
     Add border walls to a grid.
 
@@ -24,7 +24,7 @@ def add_border_walls(grid, grid_size):
     return grid
 
 
-def fill_spaces(grid, grid_size):
+def fill_spaces(grid: list[list[str]], grid_size: int) -> None:
     """
     Fill empty spaces in a grid with dots.
 
@@ -49,7 +49,7 @@ def fill_spaces(grid, grid_size):
                 grid[row][col] = '.'
 
 
-def make_board_lv3():
+def make_board_lv3() -> list[list[str]]:
     """
     Build a 10x10 grid and add specific walls with the '#' and special mark '!'.
 
@@ -88,7 +88,7 @@ def make_board_lv3():
     return grid
 
 
-def make_board_lv2():
+def make_board_lv2() -> list[list[str]]:
     """
     Build a 10x10 grid and add specific walls with the '#' and special mark '!'.
 
@@ -128,7 +128,7 @@ def make_board_lv2():
     return grid
 
 
-def make_board_lv1():
+def make_board_lv1() -> list[list[str]]:
     """
     Build a 10x10 grid and add specific walls with the '#' and special mark '!'.
 
@@ -167,7 +167,7 @@ def make_board_lv1():
     return grid
 
 
-def display_grid(grid):
+def display_grid(grid: list[list[str]]) -> None:
     """
     Show a 2D grid.
 
