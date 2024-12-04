@@ -114,6 +114,30 @@ def configure_enemy_stat():
 
 
 def make_enemies(name, icon, description, level, hp_range, basic_attack, skill_damage, skill_name):
+    """
+    Create an enemy including name, icon, description, level, HP, and attack information
+
+    :param name: a string
+    :param icon: a string of an emoji
+    :param description: a string
+    :param level: an integer
+    :param hp_range: a tuple
+    :param basic_attack: a tuple
+    :param skill_damage: a tuple
+    :param skill_name: a string
+    :precondition: name must be a string representing the enemy's name
+    :precondition: icon must be a string representing the enemy's appearance as an emoji
+    :precondition: description must be a string describing the enemy in detail
+    :precondition: level must be an integer, either 1, 2, 3, or 4
+    :precondition: hp_range must be a tuple representing the minimum and maximum HP values
+    :precondition: basic_attack and skill_damage must be a tuple representing a damage range
+    :precondition: skill_name must be a string representing a unique name for the skill the enemy uses
+    :postcondition: create an enemy dictionary containing the specified attributes with HP, basic attack, and skill
+    damage randomly assigned within their given ranges
+    :return: an enemy dictionary including details as key-value pairs
+
+
+    """
     return {
         "Name": name,
         "Icon": icon,
