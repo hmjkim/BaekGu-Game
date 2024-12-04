@@ -380,6 +380,20 @@ def describe_map_based_on_level(character):
     :precondition: character must be a dictionary containing a "Level" key representing the current character level
     :postcondition: print a map description based on the current character's level
 
+    >>> level_1_character = {"Stat": { "Level": 1}}
+    >>> describe_map_based_on_level(level_1_character) # doctest: +NORMALIZE_WHITESPACE
+    🕸️ UNDERGROUND - THE GARAGE 🕸️
+    A dark space is filled with stacked boxes, tools, and the smell of dust. It is dead quiet,
+    but you know you are not alone. You can sense some sneaky creatures watching your every move.
+    >>> level_2_character = {"Stat": { "Level": 2}}
+    >>> describe_map_based_on_level(level_2_character) # doctest: +NORMALIZE_WHITESPACE
+    🏠 GROUND FLOOR - LIVING ROOM 🏠
+    The once lively living room now feels quiet. Stay alert for obstacles that will try to keep you away.
+    >>> level_3_character = {"Stat": { "Level": 3}}
+    >>> describe_map_based_on_level(level_3_character) # doctest: +NORMALIZE_WHITESPACE
+    🚪 UPPER FLOOR - THE ATTIC 🚪
+    The attic is filled with forgotten toys and old memories. Someone seems to be standing guard,
+    ready to protect these treasures. Proceed with caution.
     """
     if character['Stat']['Level'] == 1:
         print("\n🕸️ UNDERGROUND - THE GARAGE 🕸️\n"
