@@ -136,7 +136,10 @@ def make_enemies(name, icon, description, level, hp_range, basic_attack, skill_d
     damage randomly assigned within their given ranges
     :return: an enemy dictionary including details as key-value pairs
 
-
+    >>> make_enemies('Guard Cat', '🐱', 'A fierce feline guarding the living room.', '3', (200, 300),
+    ... (100, 200),(300, 400), 'Hiss') # doctest: +SKIP
+    {'Name': 'Guard Cat', 'Icon': '🐱', 'Description': 'A fierce feline guarding the living room.', 'Level': '3',
+    'HP': 285, 'Attack': {'Hiss': 330, 'Basic Attack': 199}}
     """
     return {
         "Name": name,
