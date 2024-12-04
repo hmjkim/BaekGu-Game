@@ -73,8 +73,8 @@ def go_to_sleep(character, total_time):
     :postcondition: restore the player's Hunger level fully after sleeping for the given time
 
     >>> skill_set = configure_skills()
-    >>> character_dict = make_character(skill_set)
-    >>> go_to_sleep(character_dict, 10)
+    >>> character_with_low_hunger = {"Stat": { "Hunger": 1, "Max Hunger": 10}}
+    >>> go_to_sleep(character_with_low_hunger, 10)
     <BLANKLINE>
     💤 You are going to sleep for 10 second(s) to regain energy.
     1 sec
@@ -88,11 +88,16 @@ def go_to_sleep(character, total_time):
     9 sec
     10 sec
     You feel well-rested! Your Hunger has been fully restored.
-    >>> go_to_sleep(character_dict, 1)
+    >>> print(character_with_low_hunger)
+    {'Stat': {'Hunger': 10, 'Max Hunger': 10}}
+    >>> character_with_full_hunger = {"Stat": { "Hunger": 10, "Max Hunger": 10}}
+    >>> go_to_sleep(character_with_full_hunger, 1)
     <BLANKLINE>
     💤 You are going to sleep for 1 second(s) to regain energy.
     1 sec
     You feel well-rested! Your Hunger has been fully restored.
+    >>> print(character_with_full_hunger)
+    {'Stat': {'Hunger': 10, 'Max Hunger': 10}}
     """
     print(f"\n💤 You are going to sleep for %d second(s) to regain energy." % total_time)
     for count in range(1, total_time + 1):
