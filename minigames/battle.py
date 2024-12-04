@@ -156,7 +156,6 @@ def make_enemies(name, icon, description, level, hp_range, basic_attack, skill_d
 
 
 def choose_enemy_based_on_level(character, enemy_stat, boss_fight):
-    # Create enemies
     enemies = []
     if character["Stat"]["Level"] == 1:
         # Low Level Mobs (Underground)
@@ -245,6 +244,12 @@ def display_skill_uses(current_skill_usage, skill_usage_limit):
     :precondition: skill_usage_limit must a non-zero positive integer
     :postcondition: print the current skill usage with empty boxes and remaining uses with filled boxes
 
+    >>> display_skill_uses(0, 5)
+    SKILL USES LEFT: ⬜️⬜️⬜️⬜️⬜️
+    >>> display_skill_uses(10, 10)
+    SKILL USES LEFT: 🔳🔳🔳🔳🔳🔳🔳🔳🔳🔳
+    >>> display_skill_uses(3, 5)
+    SKILL USES LEFT: 🔳🔳🔳⬜️⬜️
     """
     skill_used = "🔳"
     skill_not_used = "⬜️"
