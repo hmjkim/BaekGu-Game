@@ -95,6 +95,19 @@ def use_kibble(character):
 
 
 def get_item_choice(character):
+    """
+    In order to use an item from the character's inventory, get the user's choice.
+
+    :param character: a dictionary including inventory and stats as keys
+    :precondition: character must have 'Inventory' with keys 'HP Potion', 'Kibble', 'Key'
+    :precondition: character must have 'Stat' with keys 'Current HP', 'HP', 'Hunger'
+    :postcondition: if 'HP Potion' is used, character's current HP is restored and its count is reduced by one
+    :postcondition: if 'Kibble' is used, character's hunger is increased by one and its count is reduced by one
+    :postcondition: if 'Key' is used, print that the user cannot directly use the key
+    :postcondition: if 'q' is used, return True and terminate the prompt loop
+    :postcondition: print invalid input if user input is not one of the above choices
+    :return: True if the user inputs 'q'
+    """
     while True:
         item_use = (input("Which item would you like to use? (Enter the item number or type 'q' to quit): ")
                     .strip().lower())
