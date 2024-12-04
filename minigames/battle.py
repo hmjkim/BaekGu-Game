@@ -172,6 +172,105 @@ def choose_enemy_based_on_level(character, enemy_stat, boss_fight):
     :postcondition: return an appropriate enemy based on character level and boss fight condition
     :return: a tuple containing an enemy dictionary and a copy of that enemy as a dictionary
 
+    >>> character_dict = {
+    ...     'Stat': {
+    ...         'HP': 250,
+    ...         'Current HP': 250,
+    ...         'Level': 1,
+    ...         'Exp': 0,
+    ...         'Max Exp': {
+    ...             'Level 1': 1000,
+    ...             'Level 2': 1300,
+    ...             'Level 3': 1500
+    ...         },
+    ...         'Heart': 10,
+    ...         'Max Heart': 10,
+    ...         'Hunger': 10,
+    ...         'Max Hunger': 10
+    ...     },
+    ...     'Skill': {
+    ...         'Basic Attack': 22,
+    ...         'Current Skills': {
+    ...             'Bark': {
+    ...                 'Damage': 24,
+    ...                 'Description': 'A loud bark that stuns the enemy'
+    ...             }
+    ...         }
+    ...     },
+    ...     'Inventory': {
+    ...         'Key': 0,
+    ...         'HP Potion': 0,
+    ...         'Kibble': 0
+    ...     }
+    ... }
+    >>> enemy_stats = {
+    ...     'HP Range': {
+    ...         'Level 1': (80, 100),
+    ...         'Level 2': (101, 200),
+    ...         'Level 3': (201, 300),
+    ...         'Level 4': (301, 400),
+    ...         'Boss': (500, 600)
+    ...     },
+    ...     'Basic Attack': {
+    ...         'Level 1': (5, 10),
+    ...         'Level 2': (15, 30),
+    ...         'Level 3': (35, 50),
+    ...         'Level 4': (60, 90),
+    ...         'Boss': (100, 250)
+    ...     },
+    ...     'Skill Damage': {
+    ...         'Level 1': (10, 25),
+    ...         'Level 2': (26, 45),
+    ...         'Level 3': (46, 70),
+    ...         'Level 4': (75, 100),
+    ...         'Boss': (130, 250)
+    ...     }
+    ... }
+    >>> choose_enemy_based_on_level(character_dict, enemy_stats, False) # doctest: +SKIP
+    ({'Name': 'Spider', 'Icon': '🕷️', 'Description': 'Moving slowly in the shadows with its sticky webs.', 'Level': '2',
+      'HP': 139, 'Attack': {'Web Trap': 45, 'Basic Attack': 17}},
+     {'Name': 'Spider', 'Icon': '🕷️', 'Description': 'Moving slowly in the shadows with its sticky webs.', 'Level': '2',
+      'HP': 139, 'Attack': {'Web Trap': 45, 'Basic Attack': 17}})
+    >>> character_dict = {
+    ...     'Stat': {
+    ...         'HP': 900,
+    ...         'Current HP': 900,
+    ...         'Level': 3,
+    ...         'Exp': 0,
+    ...         'Max Exp': {
+    ...             'Level 1': 1000,
+    ...             'Level 2': 1300,
+    ...             'Level 3': 1500
+    ...         },
+    ...         'Heart': 10,
+    ...         'Max Heart': 10,
+    ...         'Hunger': 10,
+    ...         'Max Hunger': 10
+    ...     },
+    ...     'Skill': {
+    ...         'Basic Attack': 22,
+    ...         'Current Skills': {
+    ...             'Bark': {
+    ...                 'Damage': 70,
+    ...                 'Description': 'A loud bark that stuns the enemy'
+    ...             }
+    ...         }
+    ...     },
+    ...     'Inventory': {
+    ...         'Key': 0,
+    ...         'HP Potion': 0,
+    ...         'Kibble': 0
+    ...     }
+    ... }
+    >>> choose_enemy_based_on_level(character_dict, enemy_stats, True) # doctest: +SKIP
+    ({'Name': 'Majestic Fluffy BunBun', 'Icon': '🐰',
+      'Description': 'An old and tattered bunny plushie, once loved but now abandoned in the attic. '
+                     'Majestic Fluffy BunBun believes he is the noble protector of all the forgotten treasures here.',
+      'Level': '10', 'HP': 600, 'Attack': {'Cuddle Crush': 228, 'Basic Attack': 180}},
+     {'Name': 'Majestic Fluffy BunBun', 'Icon': '🐰',
+      'Description': 'An old and tattered bunny plushie, once loved but now abandoned in the attic. '
+                     'Majestic Fluffy BunBun believes he is the noble protector of all the forgotten treasures here.',
+      'Level': '10', 'HP': 600, 'Attack': {'Cuddle Crush': 228, 'Basic Attack': 180}})
     """
     enemies = []
     if character["Stat"]["Level"] == 1:
@@ -426,12 +525,37 @@ def battle(character, boss_fight=False):
 
 
 def main():
-    character = {'Stat': {'HP': 250, 'Current HP': 1000, 'Level': 3, 'Exp': 0,
-                          'Max Exp': {'Level 1': 1000, 'Level 2': 1300, 'Level 3': 1500}, 'Heart': 10, 'Max Heart': 10,
-                          'Hunger': 10, 'Max Hunger': 10}, 'Skill': {'Basic Attack': 19, 'Current Skills': {
-        'Bark': {'Damage': 28, 'Description': 'A loud bark that stuns the enemy'}}},
-                 'Inventory': {'Key': 0, 'HP Potion': 0, 'Kibble': 0}}
-
+    character = {
+        'Stat': {
+            'HP': 900,
+            'Current HP': 900,
+            'Level': 3,
+            'Exp': 0,
+            'Max Exp': {
+                'Level 1': 1000,
+                'Level 2': 1300,
+                'Level 3': 1500
+            },
+            'Heart': 10,
+            'Max Heart': 10,
+            'Hunger': 10,
+            'Max Hunger': 10
+        },
+        'Skill': {
+            'Basic Attack': 22,
+            'Current Skills': {
+                'Bark': {
+                    'Damage': 70,
+                    'Description': 'A loud bark that stuns the enemy'
+                }
+            }
+        },
+        'Inventory': {
+            'Key': 0,
+            'HP Potion': 0,
+            'Kibble': 0
+        }
+    }
     battle(character)
 
 
