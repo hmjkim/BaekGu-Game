@@ -39,6 +39,24 @@ def lose_heart(character):
 
 
 def use_hp_potion(character):
+    """
+    Check the count of HP potions in inventory, and if any are available, use it to restore the character's current HP.
+
+    :param character: a dictionary including the keys 'Inventory' and 'Stat' including 'HP Potion' and 'Current HP'
+    :precondition: character must have 'Inventory' and 'Stat' keys with 'HP Potion' and 'Current HP' sub keys
+    :postcondition: character's current HP is restored if an HP potion are available
+    :postcondition: HP potion's count is reduced by one
+    :postcondition: Print that the user has used an HP potion, showing the restored HP and the remaining HP potions
+    :postcondition: if HP potion is not available, print that the user doesn't have any HP potions
+
+    >>> character_with_potions = {'Inventory': {'HP Potion': 1}, 'Stat': {'Current HP': 50, 'HP': 100}}
+    >>> use_hp_potion(character_with_potions)
+    You used '🩸HP Potion'. Your HP is fully restored now. (HP 100/100) - Remaining quantity: 0
+    >>> character_with_potions['Inventory']['HP Potion']
+    0
+    >>> character_with_potions['Stat']['Current HP']
+    100
+    """
     if character["Inventory"]["HP Potion"] > 0:
         character['Stat']['Current HP'] = character['Stat']['HP']
         character['Inventory']['HP Potion'] -= 1
