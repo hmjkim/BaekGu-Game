@@ -6,6 +6,29 @@ from helpers import is_alive, display_skills, display_inventory, display_stats, 
 
 
 def configure_skills():
+    """
+    Configure skills for each character level, including skill name, damage, and description.
+
+    Skill damage values are randomly assigned within the specified range.
+
+    :postcondition: return a dictionary containing skill information for different character levels
+    :return: a dictionary with keys as character levels and values as dictionaries of skills
+
+    >>> from pprint import pprint
+    >>> pprint(configure_skills()) # doctest: +SKIP
+    {'Level 1': {'Bark': {'Damage': 25,
+                          'Description': 'A loud bark that stuns the enemy'}},
+     'Level 2': {'Digging': {'Damage': 40,
+                             'Description': 'Kick up dirt to blind the enemy'},
+                 'Scratch': {'Damage': 45,
+                             'Description': 'A swift paw swipe leaving deep '
+                                            'marks'}},
+     'Level 3': {'Bite': {'Damage': 56,
+                          'Description': 'A strong bite with a headshake'},
+                 'Tail Whip': {'Damage': 57,
+                               'Description': 'A powerful tail swing that knocks '
+                                              'the enemy off balance'}}}
+    """
     return {
         "Level 1": {
             "Bark": {
@@ -48,6 +71,7 @@ def go_to_sleep(character, total_time):
 
 def make_character(skill_set):
     """
+    Create a character with HP, level, initial exp, heart, hunger, skill, and inventory information.
 
     :param skill_set:
     :precondition:
