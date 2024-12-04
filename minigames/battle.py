@@ -36,7 +36,7 @@ def display_attack_description(enemy_name):
     >>> display_attack_description('')
     Traceback (most recent call last):
         ...
-    ValueError: Enemy name cannot be empty!
+    ValueError: Enemy name cannot be empty! Ensure you give the enemy a proper name.
     """
     attack_descriptions = [
         "🗡️ You strike fiercely, leaving a mark on the enemy!",
@@ -46,7 +46,7 @@ def display_attack_description(enemy_name):
         "🗡️ Your strike pierced through the enemy with precision."
     ]
     if len(enemy_name) == 0:
-        raise ValueError("Enemy name cannot be empty!")
+        raise ValueError("Enemy name cannot be empty! Ensure you give the enemy a proper name.")
     else:
         print(random.choice(attack_descriptions).replace("enemy", enemy_name))
 
@@ -262,12 +262,17 @@ def battle(character, boss_fight=False):
                 "Enter the number of your choice: "
             ).strip().lower()
             if user_choice == "1":
-                display_attack_description(enemy["Name"])
-                enemy_copy['HP'] -= character["Skill"]['Basic Attack']
-                victory_check = show_current_hp(enemy_copy['HP'], enemy['HP'], enemy_copy['Name'])
-                if victory_check:
-                    has_won = True
-                    break
+                try:
+                    display_attack_description(enemy['Name'])
+                except ValueError as error:
+                    print(error)
+                    continue
+                else:
+                    enemy_copy['HP'] -= character["Skill"]['Basic Attack']
+                    victory_check = show_current_hp(enemy_copy['HP'], enemy['HP'], enemy_copy['Name'])
+                    if victory_check:
+                        has_won = True
+                        break
             elif user_choice == "2":
                 if skill_usage_limit > 0:
                     while True:
@@ -275,8 +280,11 @@ def battle(character, boss_fight=False):
                         display_skill_uses(current_skill_usage, skill_usage_limit)
                         display_skills(character)
                         skill_choice = input("Choose skill you would like to use:").strip()
-
-                        display_attack_description(enemy["Name"])
+                        try:
+                            display_attack_description(enemy['Name'])
+                        except ValueError as error:
+                            print(error)
+                            continue
                         try:
                             selected_skill_damage = character['Skill']['Current Skills'][skill_choice.title()]
                         except KeyError:
