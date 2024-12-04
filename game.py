@@ -373,6 +373,14 @@ def check_user(user_name):
 
 
 def describe_map_based_on_level(character):
+    """
+    Display a description of the current map based on the character's level.
+
+    :param character: a well-formed character dictionary
+    :precondition: character must be a dictionary containing a "Level" key representing the current character level
+    :postcondition: print a map description based on the current character's level
+
+    """
     if character['Stat']['Level'] == 1:
         print("\n🕸️ UNDERGROUND - THE GARAGE 🕸️\n"
               "A dark space is filled with stacked boxes, tools, and the smell of dust. It is dead quiet, \n"
