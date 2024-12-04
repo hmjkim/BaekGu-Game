@@ -142,6 +142,13 @@ def get_item_choice(character):
 
 
 def display_inventory(character):
+    """
+    Display the inventory of a character.
+
+    :param character: a dictionary including inventory with items
+    :precondition: character must have 'Inventory' with 'HP Potion', 'Kibble', and 'Key' sub keys
+    :postcondition: print inventory items HP Potion, Kibble, and Key
+    """
     print(
         "\n🎒 Your Inventory\n"
         "--------------------------------------------------------\n"
