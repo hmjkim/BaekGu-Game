@@ -1,4 +1,3 @@
-# from game import make_character, is_alive
 import random
 import time
 from helpers import is_alive, display_stats, display_skills, display_inventory, get_item_choice, lose_heart

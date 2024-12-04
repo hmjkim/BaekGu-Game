@@ -1,6 +1,6 @@
 from unittest import TestCase
 from unittest.mock import patch
-from matching_direction_game import play_game
+from minigames.matching_direction_game import play_game
 
 
 class Test(TestCase):

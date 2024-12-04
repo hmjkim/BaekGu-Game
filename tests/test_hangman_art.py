@@ -1,5 +1,5 @@
 from unittest import TestCase
-from hangman_art import stage
+from minigames.hangman_art import stage
 
 
 class Test(TestCase):

@@ -1,10 +1,7 @@
-import random
 from make_board_each_level import *
-import time
-from hangman import *
-from hangman_art import stages
-from matching_direction_game import *
-from battle import battle
+from minigames.hangman import *
+from minigames.matching_direction_game import *
+from minigames.battle import battle
 from helpers import is_alive, display_skills, display_inventory, display_stats, get_item_choice
 
 

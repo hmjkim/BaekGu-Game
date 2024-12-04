@@ -1,5 +1,5 @@
 from unittest import TestCase
-from hangman import word_strike
+from minigames.hangman import word_strike
 
 
 class Test(TestCase):

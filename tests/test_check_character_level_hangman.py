@@ -1,5 +1,5 @@
 from unittest import TestCase
-from hangman import check_character_level_hangman, lists_of_words
+from minigames.hangman import check_character_level_hangman, lists_of_words
 
 
 class Test(TestCase):

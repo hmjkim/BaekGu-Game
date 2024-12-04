@@ -1,7 +1,7 @@
 import random
 
 from helpers import lose_heart
-from hangman_art import stage
+from minigames.hangman_art import stage
 import warnings
 warnings.filterwarnings("ignore")
 

@@ -1,5 +1,5 @@
 from unittest import TestCase
-from matching_direction_game import check_character_level_matching_game
+from minigames.matching_direction_game import check_character_level_matching_game
 
 
 class Test(TestCase):
