@@ -82,7 +82,7 @@ def configure_enemy_stat():
     """
     Configure the HP, basic attack damage, and skil damage ranges for enemies at each level.
 
-    :postcondition: return a dictionary containing ranges for HP, basic attack, and skill damage for different enemy
+    :postcondition: return a dictionary containing ranges of HP, basic attack, and skill damage for different enemy
     levels
     :return: a dictionary
 
@@ -156,6 +156,23 @@ def make_enemies(name, icon, description, level, hp_range, basic_attack, skill_d
 
 
 def choose_enemy_based_on_level(character, enemy_stat, boss_fight):
+    """
+    Return an enemy based on character level and whether the battle is a boss fight.
+
+    When multiple enemies exist for a certain level, an enemy will be randomly chosen.
+
+    :param character: a well-formed character dictionary
+    :param enemy_stat: a dictionary containing ranges of HP, basic attack, and skill damage for different enemy
+    levels
+    :param boss_fight: a boolean
+    :precondition: character must be a dictionary containing a "Stat" key with "Level" information
+    :precondition: enemy_stat must be a dictionary with "HP Range", "Basic Attack", and "Skill Damage" for each enemy
+    level
+    :precondition: boss_fight must be True or False indicating if this battle is against the boss
+    :postcondition: return an appropriate enemy based on character level and boss fight condition
+    :return: a tuple containing an enemy dictionary and a copy of that enemy as a dictionary
+
+    """
     enemies = []
     if character["Stat"]["Level"] == 1:
         # Low Level Mobs (Underground)
