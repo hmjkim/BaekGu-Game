@@ -52,8 +52,14 @@ def display_attack_description(enemy_name):
 
 
 def configure_enemy_stat():
-    # Configure enemies
-    # HP, Attack damage, Skill damage random
+    """
+    Configure the HP, basic attack damage, and skil damage ranges for enemies at each level.
+
+    :postcondition: return a dictionary containing ranges for HP, basic attack, and skill damage for different enemy
+    levels
+    :return: a dictionary
+
+     """
     level = ["Level 1", "Level 2", "Level 3", "Level 4", "Boss"]
     hp_range = [(80, 100), (101, 200), (201, 300), (301, 400), (500, 600)]
     attack_dmg = [(5, 10), (15, 30), (35, 50), (60, 90), (100, 250)]
