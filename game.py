@@ -47,6 +47,13 @@ def go_to_sleep(character, total_time):
 
 
 def make_character(skill_set):
+    """
+
+    :param skill_set:
+    :precondition:
+    :postcondition:
+    :return:
+    """
     inventory_items = ['Key', 'HP Potion', 'Kibble']
     inventory = {item: 0 for item in inventory_items}
 
@@ -189,7 +196,7 @@ def check_character_1_level_location_exp(first_location, character):
 
 def check_character_2_level_location_exp(first_location, character):
     if (first_location == (4, 8) and character['Inventory']['Key'] >= 1 and character['Stat']['Level'] == 2 and
-            character['Stat']['Exp'] >= character['Stat']['Max Exp']['Level 2']) :
+            character['Stat']['Exp'] >= character['Stat']['Max Exp']['Level 2']):
         # print('2렙 claer! 1렙 up 다음 3렙 맵으로 move')
         print("⬆️⬆️⬆️ Level UP ⬆️⬆️⬆️\n"
               "2nd Level clear! You are moving to Level 3.")
@@ -197,13 +204,22 @@ def check_character_2_level_location_exp(first_location, character):
 
 
 def check_character_3_level_location_for_final(first_location, character):
-    if first_location == (4, 4) and character['Stat']['Level'] == 3 and character['Stat']['Exp'] >= character['Stat']['Max Exp']['Level 3']:
+    if first_location == (4, 4) and character['Stat']['Level'] == 3 and character['Stat']['Exp'] >= \
+            character['Stat']['Max Exp']['Level 3']:
         print('You are going to fight the boss to save Haru. Good luck!')
         character, has_won = battle(character, True)
         return has_won
 
 
 def check_probability(rate):
+    """
+    Check if an event occurs based on a given rate.
+
+    :param rate: a floating point number
+    :precondition: rate must be a floating point number between 0.0 and 1.0 inclusive
+    :postcondition: determine whether the event occurs based on the given rate
+    :return: a boolean that is True if the event occurs based on the specified probability
+    """
     return random.random() <= rate
 
 
@@ -374,7 +390,7 @@ def game():
                 if has_won:
                     get_reward(character)
             elif challenge == 'hangman':
-                print("You are about to play Hangman!\n\n" 
+                print("You are about to play Hangman!\n\n"
                       "📖 How to Play 📖\n"
                       "Try to guess the secret word, one letter at a time. You have limited tries. "
                       "Remember: every key counts as a guess, so be careful. Good luck!")
@@ -418,7 +434,6 @@ def game():
             # print(f"Your maximum HP has been increased by 200. "
             #       f"You earned two new skills ({','.join(skill_set['Level 2'].keys())}). (max HP +200)\n")
             describe_map_based_on_level(character)
-
 
         goal_lv2 = check_character_2_level_location_exp(first_location, character)
         if goal_lv2:
