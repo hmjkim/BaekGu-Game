@@ -6,7 +6,7 @@ import warnings
 warnings.filterwarnings("ignore")
 
 
-def show_current_hp(hp, original_hp, name):
+def show_current_hp(hp: int, original_hp: int, name: str) -> bool:
     """
     Display the current HP of the given subject.
 
@@ -43,7 +43,7 @@ def show_current_hp(hp, original_hp, name):
         return False
 
 
-def display_attack_description(enemy_name):
+def display_attack_description(enemy_name: str) -> None:
     """
     Display a randomly chosen attack description, customized for the given enemy.
 
@@ -78,7 +78,7 @@ def display_attack_description(enemy_name):
         print(random.choice(attack_descriptions).replace("enemy", enemy_name))
 
 
-def configure_enemy_stat():
+def configure_enemy_stat() -> dict[str, dict[str, tuple[int, int]]]:
     """
     Configure the HP, basic attack damage, and skil damage ranges for enemies at each level.
 
@@ -113,7 +113,16 @@ def configure_enemy_stat():
             "Skill Damage": {level: damage_range for level, damage_range in zip(level, skill_dmg)}}
 
 
-def make_enemies(name, icon, description, level, hp_range, basic_attack, skill_damage, skill_name):
+def make_enemies(
+        name: str,
+        icon: str,
+        description: str,
+        level: int,
+        hp_range: tuple[int, int],
+        basic_attack: tuple[int, int],
+        skill_damage: tuple[int, int],
+        skill_name: str
+) -> dict:
     """
     Create an enemy including name, icon, description, level, HP, and attack information.
 
@@ -155,7 +164,7 @@ def make_enemies(name, icon, description, level, hp_range, basic_attack, skill_d
     }
 
 
-def choose_enemy_based_on_level(character, enemy_stat, boss_fight):
+def choose_enemy_based_on_level(character: dict, enemy_stat: dict, boss_fight: bool) -> tuple:
     """
     Return an enemy based on character level and whether the battle is a boss fight.
 
@@ -350,7 +359,7 @@ def choose_enemy_based_on_level(character, enemy_stat, boss_fight):
     return enemy, enemy.copy()
 
 
-def display_skill_uses(current_skill_usage, skill_usage_limit):
+def display_skill_uses(current_skill_usage: int, skill_usage_limit: int) -> None:
     """
     Display the remaining number of skill uses.
 
@@ -373,7 +382,7 @@ def display_skill_uses(current_skill_usage, skill_usage_limit):
           f"{skill_not_used * (skill_usage_limit - current_skill_usage)}")
 
 
-def display_enemy_info(enemy):
+def display_enemy_info(enemy: dict) -> None:
     """
     Display information about the enemy being encountered.
     
@@ -417,7 +426,7 @@ def display_enemy_info(enemy):
           "------------------------------------------------------\n")
 
 
-def battle(character, boss_fight=False):
+def battle(character: dict, boss_fight: bool = False) -> tuple[dict, bool]:
     """
     Drive the battle.
     """

@@ -2,7 +2,7 @@ import warnings
 warnings.filterwarnings("ignore")
 
 
-def stage():
+def stage() -> list[str]:
     """
     Create a list representing stages of a hangman game as visual.
 
