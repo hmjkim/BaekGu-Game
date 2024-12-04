@@ -16,12 +16,15 @@ def show_current_hp(hp, original_hp, name):
         return False
 
 
-def display_attack_description(enemy):
+def display_attack_description(enemy_name):
     """
+    Display a randomly chosen attack description, customized for the given enemy.
 
-    :param enemy:
-    :precondition:
-    :postcondition:
+    Replace the placeholder "enemy" in the sentence with the provided enemy name.
+
+    :param enemy_name: enemy's name as a string
+    :precondition: enemy_name must be a string representing the name of enemy being attacked
+    :postcondition: print one of the descriptions with "enemy" replaced by the given name
     """
     attack_descriptions = [
         "🗡️ You strike fiercely, leaving a mark on the enemy!",
@@ -30,7 +33,7 @@ def display_attack_description(enemy):
         "🗡️ Your powerful attack stunned the enemy.",
         "🗡️ Your strike pierced through the enemy with precision."
     ]
-    print(random.choice(attack_descriptions).replace("enemy", enemy))
+    print(random.choice(attack_descriptions).replace("enemy", enemy_name))
 
 
 def configure_enemy_stat():
