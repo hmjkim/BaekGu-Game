@@ -160,6 +160,16 @@ def display_inventory(character):
 
 
 def display_stats(character):
+    """
+    Display the detailed status of a character. 
+    
+    :param character: a dictionary including 'Stat' and 'Skill'
+    :precondition: character must have 'Stat' and 'Skill' keys
+    :precondition: 'Stat' must include 'Level', 'Current HP', 'HP', 'Exp', 'Max Exp', 'Heart', 'Max Heart',
+                    'Hunger', and 'Max Hunger' sub-keys
+    :precondition: 'Skill' must have 'Basic Attack' sub-key
+    :postcondition: print the current status of the character, including stats and basic attack
+    """
     max_exp = character['Stat']['Max Exp']['Level 1'] if character['Stat']['Level'] == 1 else (
         character)['Stat']['Max Exp']['Level 2']
     print(
@@ -176,6 +186,14 @@ def display_stats(character):
 
 
 def display_skills(character):
+    """
+    Display the skills of a character.
+
+    :param character: a dictionary including 'Skill' as key
+    :precondition: character must have a key 'Skill'
+    :precondition: 'Skill' must have a sub key 'Current Skills'
+    :postcondition: print each skill's name, damage, and description
+    """
     print("\n⚔️ Your Skills")
     print("--------------------------------------------------------")
     for skill, details in character['Skill']['Current Skills'].items():
