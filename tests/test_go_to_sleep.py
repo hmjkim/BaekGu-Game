@@ -35,7 +35,7 @@ class TestGoToSleep(TestCase):
         }}
         go_to_sleep(character, 5)
         print_result = mock_output.getvalue()
-        expected_result = ('\n💤 You are going to sleep for 10 second(s) to regain energy.'
+        expected_result = ('\n💤 You are going to sleep for 5 second(s) to regain energy.'
                            '\n1 sec'
                            '\n2 sec'
                            '\n3 sec'
