@@ -7,6 +7,33 @@ warnings.filterwarnings("ignore")
 
 
 def show_current_hp(hp, original_hp, name):
+    """
+    Display the current HP of the given subject
+
+    If HP is less than or equal to 0, current HP becomes 0.
+
+    :param hp: current HP as an integer
+    :param original_hp: total HP as an integer
+    :param name: the name of the subject as a string
+    :precondition: hp must be an integer that can be negative, postivie or zero
+    :precondition: original_hp must be a positive integer
+    :precondition: name must be a string representing either a character or enemy
+    :postcondition: print the current HP out of the total HP for the given character or enemy
+    :return: a boolean that is True if the current HP is 0 or less
+
+    >>> show_current_hp(232, 250, 'Your')
+    *** 🩸 Your HP: 232/250 ***
+    <BLANKLINE>
+    False
+    >>> show_current_hp(0, 300, 'Spider')
+    *** 🩸 Spider HP: 0/300 ***
+    <BLANKLINE>
+    True
+    >>> show_current_hp(-30, 300, 'Spider')
+    *** 🩸 Spider HP: 0/300 ***
+    <BLANKLINE>
+    True
+    """
     if hp <= 0:
         hp = 0
         print(f'*** 🩸 {name} HP: {hp}/{original_hp} ***\n')
@@ -52,42 +79,68 @@ def display_attack_description(enemy_name):
 
 
 def configure_enemy_stat():
-    # Configure enemies
-    # HP, Attack damage, Skill damage random
+    """
+    Configure the HP, basic attack damage, and skil damage ranges for enemies at each level.
+
+    :postcondition: return a dictionary containing ranges for HP, basic attack, and skill damage for different enemy
+    levels
+    :return: a dictionary
+
+    >>> from pprint import pprint
+    >>> pprint(configure_enemy_stat(), sort_dicts=False)
+    {'HP Range': {'Level 1': (80, 100),
+                  'Level 2': (101, 200),
+                  'Level 3': (201, 300),
+                  'Level 4': (301, 400),
+                  'Boss': (500, 600)},
+     'Basic Attack': {'Level 1': (5, 10),
+                      'Level 2': (15, 30),
+                      'Level 3': (35, 50),
+                      'Level 4': (60, 90),
+                      'Boss': (100, 250)},
+     'Skill Damage': {'Level 1': (10, 25),
+                      'Level 2': (26, 45),
+                      'Level 3': (46, 70),
+                      'Level 4': (75, 100),
+                      'Boss': (130, 250)}}
+     """
     level = ["Level 1", "Level 2", "Level 3", "Level 4", "Boss"]
     hp_range = [(80, 100), (101, 200), (201, 300), (301, 400), (500, 600)]
     attack_dmg = [(5, 10), (15, 30), (35, 50), (60, 90), (100, 250)]
     skill_dmg = [(10, 25), (26, 45), (46, 70), (75, 100), (130, 250)]
-
-    # return {
-    #     "HP Range": {
-    #         "Level 1": (80, 100),
-    #         "Level 2": (101, 200),
-    #         "Level 3": (201, 300),
-    #         "Level 4": (301, 400),
-    #         "Boss": (500, 600)
-    #     },
-    #     "Basic Attack": {
-    #         "Level 1": (5, 10),
-    #         "Level 2": (15, 30),
-    #         "Level 3": (35, 50),
-    #         "Level 4": (60, 90),
-    #         "Boss": (100, 300)
-    #     },
-    #     "Skill Damage": {
-    #         "Level 1": (10, 25),
-    #         "Level 2": (26, 45),
-    #         "Level 3": (46, 70),
-    #         "Level 4": (75, 100),
-    #         "Boss": (130, 300)
-    #     }
-    # }
     return {"HP Range": {level: hp_range for level, hp_range in zip(level, hp_range)},
             "Basic Attack": {level: damage_range for level, damage_range in zip(level, attack_dmg)},
             "Skill Damage": {level: damage_range for level, damage_range in zip(level, skill_dmg)}}
 
 
 def make_enemies(name, icon, description, level, hp_range, basic_attack, skill_damage, skill_name):
+    """
+    Create an enemy including name, icon, description, level, HP, and attack information
+
+    :param name: a string
+    :param icon: a string of an emoji
+    :param description: a string
+    :param level: an integer
+    :param hp_range: a tuple
+    :param basic_attack: a tuple
+    :param skill_damage: a tuple
+    :param skill_name: a string
+    :precondition: name must be a string representing the enemy's name
+    :precondition: icon must be a string representing the enemy's appearance as an emoji
+    :precondition: description must be a string describing the enemy in detail
+    :precondition: level must be an integer, either 1, 2, 3, or 4
+    :precondition: hp_range must be a tuple representing the minimum and maximum HP values
+    :precondition: basic_attack and skill_damage must be a tuple representing a damage range
+    :precondition: skill_name must be a string representing a unique name for the skill the enemy uses
+    :postcondition: create an enemy dictionary containing the specified attributes with HP, basic attack, and skill
+    damage randomly assigned within their given ranges
+    :return: an enemy dictionary including details as key-value pairs
+
+    >>> make_enemies('Guard Cat', '🐱', 'A fierce feline guarding the living room.', '3', (200, 300),
+    ... (100, 200),(300, 400), 'Hiss') # doctest: +SKIP
+    {'Name': 'Guard Cat', 'Icon': '🐱', 'Description': 'A fierce feline guarding the living room.', 'Level': '3',
+    'HP': 285, 'Attack': {'Hiss': 330, 'Basic Attack': 199}}
+    """
     return {
         "Name": name,
         "Icon": icon,
