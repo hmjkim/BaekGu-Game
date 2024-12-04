@@ -145,7 +145,7 @@ def make_enemies(
     damage randomly assigned within their given ranges
     :return: an enemy dictionary including details as key-value pairs
 
-    >>> make_enemies('Guard Cat', '🐱', 'A fierce feline guarding the living room.', '3', (200, 300),
+    >>> make_enemies('Guard Cat', '🐱', 'A fierce feline guarding the living room.', 3, (200, 300),
     ... (100, 200),(300, 400), 'Hiss') # doctest: +SKIP
     {'Name': 'Guard Cat', 'Icon': '🐱', 'Description': 'A fierce feline guarding the living room.', 'Level': '3',
     'HP': 285, 'Attack': {'Hiss': 330, 'Basic Attack': 199}}
@@ -288,7 +288,7 @@ def choose_enemy_based_on_level(character: dict, enemy_stat: dict, boss_fight: b
                              '🐭',
                              "A tiny mouse nibbling on a piece of cheese. It looks harmless, "
                              "but don't let your guard down!",
-                             '1',
+                             1,
                              enemy_stat["HP Range"]["Level 1"],
                              enemy_stat["Basic Attack"]["Level 1"],
                              enemy_stat["Skill Damage"]["Level 1"],
@@ -297,7 +297,7 @@ def choose_enemy_based_on_level(character: dict, enemy_stat: dict, boss_fight: b
         spider = make_enemies('Spider',
                               '🕷️',
                               'Moving slowly in the shadows with its sticky webs.',
-                              '2',
+                              2,
                               enemy_stat["HP Range"]["Level 2"],
                               enemy_stat["Basic Attack"]["Level 2"],
                               enemy_stat["Skill Damage"]["Level 2"],
@@ -309,7 +309,7 @@ def choose_enemy_based_on_level(character: dict, enemy_stat: dict, boss_fight: b
         robotic_vacuum = make_enemies('Robotic Vacuum',
                                       '🤖',
                                       'Going zoom zoom, sucking up everything in its path.',
-                                      '2',
+                                      2,
                                       enemy_stat["HP Range"]["Level 2"],
                                       enemy_stat["Basic Attack"]["Level 2"],
                                       enemy_stat["Skill Damage"]["Level 2"],
@@ -317,7 +317,7 @@ def choose_enemy_based_on_level(character: dict, enemy_stat: dict, boss_fight: b
         guard_cat = make_enemies('Guard Cat',
                                  '🐱',
                                  'A fierce feline guarding the living room.',
-                                 '3',
+                                 3,
                                  enemy_stat["HP Range"]["Level 3"],
                                  enemy_stat["Basic Attack"]["Level 3"],
                                  enemy_stat["Skill Damage"]["Level 3"],
@@ -330,7 +330,7 @@ def choose_enemy_based_on_level(character: dict, enemy_stat: dict, boss_fight: b
                             'An old and tattered bunny plushie, once loved but now abandoned in the attic. '
                             'Majestic Fluffy BunBun believes he is the noble protector of all the forgotten treasures '
                             'here.',
-                            '10',
+                            10,
                             enemy_stat["HP Range"]["Boss"],
                             enemy_stat["Basic Attack"]["Boss"],
                             enemy_stat["Skill Damage"]["Boss"],
@@ -341,7 +341,7 @@ def choose_enemy_based_on_level(character: dict, enemy_stat: dict, boss_fight: b
         giant_moth = make_enemies('Giant Moth',
                                   '🪰',
                                   'Every time it flaps its wings, dust comes off.',
-                                  '3',
+                                  3,
                                   enemy_stat["HP Range"]["Level 3"],
                                   enemy_stat["Basic Attack"]["Level 3"],
                                   enemy_stat["Skill Damage"]["Level 3"],
@@ -349,7 +349,7 @@ def choose_enemy_based_on_level(character: dict, enemy_stat: dict, boss_fight: b
         ghost = make_enemies('Ghost',
                              '👻',
                              'A forgotten spirit, floating around silently.',
-                             '4',
+                             4,
                              enemy_stat["HP Range"]["Level 4"],
                              enemy_stat["Basic Attack"]["Level 4"],
                              enemy_stat["Skill Damage"]["Level 4"],
