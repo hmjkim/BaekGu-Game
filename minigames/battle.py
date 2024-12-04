@@ -16,6 +16,12 @@ def show_current_hp(hp, original_hp, name):
 
 
 def display_attack_description(enemy):
+    """
+
+    :param enemy:
+    :precondition:
+    :postcondition:
+    """
     attack_descriptions = [
         "🗡️ You strike fiercely, leaving a mark on the enemy!",
         "🗡️ Your attack lands cleanly, leaving the enemy struggling to recover!",
@@ -163,23 +169,34 @@ def display_skill_uses(current_skill_usage, skill_usage_limit):
     print(f"SKILL USES LEFT: {skill_used * current_skill_usage}{skill_not_used * skill_usage_limit}")
 
 
-def display_enemy_info(enemy, enemy_copy):
+def display_enemy_info(enemy):
+    print(enemy)
+    """
+    Display information about the enemy being encountered.
+    
+    :param enemy: a well-formed enemy dictionary
+    :precondition: enemy must be a dictionary with "Name", "Icon", "Level", "Description", "HP", and "Attack" keys
+    :postcondition: print the enemy's name, icon, level, description, and current HP information
+    """
     print("------------------------------------------------------\n"
           "‼️‼️ ENEMY ENCOUNTERED ‼️‼️\n"
           "------------------------------------------------------\n"
           f"{enemy['Icon']} {enemy['Name']}\n"
           f"{enemy['Description']}\n"
           f"Level: {enemy['Level']}\n"
-          f"HP: {enemy_copy['HP']}/{enemy['HP']}\n"
+          f"HP: {enemy['HP']}/{enemy['HP']}\n"
           "------------------------------------------------------\n")
 
 
 def battle(character, boss_fight=False):
+    """
+    Drive the battle.
+    """
     enemy_stat = configure_enemy_stat()
     enemy, enemy_copy = choose_enemy_based_on_level(character, enemy_stat, boss_fight)
 
     # Display enemy information
-    display_enemy_info(enemy, enemy_copy)
+    display_enemy_info(enemy)
 
     # Get user choice
     # Skill usage
