@@ -423,17 +423,11 @@ def battle(character, boss_fight=False):
     """
     enemy_stat = configure_enemy_stat()
     enemy, enemy_copy = choose_enemy_based_on_level(character, enemy_stat, boss_fight)
-
-    # Display enemy information
     display_enemy_info(enemy)
-
-    # Get user choice
-    # Skill usage
     total_skill_use, skill_usage_limit, current_skill_usage = 5, 5, 0
     in_battle, has_won = True, False
 
     while is_alive(character) and enemy_copy["HP"] > 0 and in_battle:
-        # options = ['Attack', 'Skill', 'Flee', 'Stats', 'Inventory']
         while not has_won:
             user_choice = input(
                 "What is your next move?\n"
@@ -481,7 +475,6 @@ def battle(character, boss_fight=False):
                             if victory_check:
                                 has_won = True
                                 break
-                            # skill_usage_limit -= 1
                             current_skill_usage += 1
                             break
                 else:
