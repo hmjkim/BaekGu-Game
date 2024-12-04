@@ -1,4 +1,19 @@
 def is_alive(character):
+    """
+    Check a character's heart stat.
+
+    :param character: a dictionary including 'Stat' as key including heart
+    :precondition: character must have a 'Stat' key with a 'Heart' sub key
+    :postcondition: return a boolean whether the heart stat is greater than zero or not
+    :return: a boolean
+
+    >>> character_3 = {'Stat': {'Heart': 3}}
+    >>> is_alive(character_3)
+    True
+    >>> character_0 = {'Stat': {'Heart': 0}}
+    >>> is_alive(character_0)
+    False
+    """
     return character['Stat']['Heart'] > 0
 
 
