@@ -25,6 +25,11 @@ def display_attack_description(enemy_name):
     :param enemy_name: enemy's name as a string
     :precondition: enemy_name must be a string representing the name of enemy being attacked
     :postcondition: print one of the descriptions with "enemy" replaced by the given name
+
+    >>> display_attack_description('Ghost') # doctest: +SKIP
+    🗡️ You strike fiercely, leaving a mark on the Ghost!
+    >>> display_attack_description('Spider') # doctest: +SKIP
+    🗡️ Your attack lands cleanly, leaving the Spider struggling to recover!
     """
     attack_descriptions = [
         "🗡️ You strike fiercely, leaving a mark on the enemy!",
