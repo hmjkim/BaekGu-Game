@@ -2,6 +2,7 @@ import random
 import time
 from helpers import is_alive, display_stats, display_skills, display_inventory, get_item_choice, lose_heart
 import warnings
+
 warnings.filterwarnings("ignore")
 
 
@@ -70,17 +71,17 @@ def configure_enemy_stat():
 
 def make_enemies(name, icon, description, level, hp_range, basic_attack, skill_damage, skill_name):
     return {
-            "Name": name,
-            "Icon": icon,
-            "Description": description,
-            "Level": level,
-            "HP": random.randint(*hp_range),
-            "Attack":
-                {
-                    f"{skill_name}": random.randint(*skill_damage),
-                    "Basic Attack": random.randint(*basic_attack)
-                }
+        "Name": name,
+        "Icon": icon,
+        "Description": description,
+        "Level": level,
+        "HP": random.randint(*hp_range),
+        "Attack":
+            {
+                f"{skill_name}": random.randint(*skill_damage),
+                "Basic Attack": random.randint(*basic_attack)
             }
+    }
 
 
 def choose_enemy_based_on_level(character, enemy_stat, boss_fight):
@@ -170,13 +171,38 @@ def display_skill_uses(current_skill_usage, skill_usage_limit):
 
 
 def display_enemy_info(enemy):
-    print(enemy)
     """
     Display information about the enemy being encountered.
     
     :param enemy: a well-formed enemy dictionary
     :precondition: enemy must be a dictionary with "Name", "Icon", "Level", "Description", "HP", and "Attack" keys
     :postcondition: print the enemy's name, icon, level, description, and current HP information
+    
+    >>> enemy_dict = {'Name': 'Mouse', 'Icon': '🐭',
+    ... 'Description': "A tiny mouse nibbling on a piece of cheese. It looks harmless, but don't let your guard down!",
+    ... 'Level': '1', 'HP': 90, 'Attack': {'Nibble': 13, 'Basic Attack': 8}}
+    >>> display_enemy_info(enemy_dict)
+    ------------------------------------------------------
+    ‼️‼️ ENEMY ENCOUNTERED ‼️‼️
+    ------------------------------------------------------
+    🐭 Mouse
+    A tiny mouse nibbling on a piece of cheese. It looks harmless, but don't let your guard down!
+    Level: 1
+    HP: 90/90
+    ------------------------------------------------------
+    <BLANKLINE>
+    >>> enemy_dict = {'Name': 'Ghost', 'Icon': '👻', 'Description': 'A forgotten spirit, floating around silently.',
+    ... 'Level': '4', 'HP': 369, 'Attack': {'Chill Touch': 99, 'Basic Attack': 72}}
+    >>> display_enemy_info(enemy_dict)
+    ------------------------------------------------------
+    ‼️‼️ ENEMY ENCOUNTERED ‼️‼️
+    ------------------------------------------------------
+    👻 Ghost
+    A forgotten spirit, floating around silently.
+    Level: 4
+    HP: 369/369
+    ------------------------------------------------------
+    <BLANKLINE>
     """
     print("------------------------------------------------------\n"
           "‼️‼️ ENEMY ENCOUNTERED ‼️‼️\n"
@@ -288,10 +314,9 @@ def battle(character, boss_fight=False):
 
 
 def main():
-    character = {'Stat': {'Level': 1, 'Heart': 5, 'Current HP': 500, 'HP': 500}}
+    character = {'Stat': {'Level': 3, 'Heart': 5, 'Current HP': 500, 'HP': 500}}
     battle(character)
 
 
 if __name__ == '__main__':
     main()
-
