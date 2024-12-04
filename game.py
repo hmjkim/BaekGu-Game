@@ -109,12 +109,17 @@ def go_to_sleep(character, total_time):
 
 def make_character(skill_set):
     """
-    Create a character with HP, level, initial exp, heart, hunger, skill, and inventory information.
+    Create a character with initial stats, skills, and inventory.
 
-    :param skill_set:
-    :precondition:
-    :postcondition:
-    :return:
+    Basic stats include HP, Level, Exp, Hearts, and Hunger. The character is also equipped with basic and
+    level-specific skills and an empty inventory.
+
+    :param skill_set: a dictionary containing skills for different character levels
+    :precondition: skill_set must be a dictionary with keys as character levels and values as dictionaries of skills
+    :postcondition: create a character dictionary containing HP, level, exp, hearts, hunger, and skills
+    with basic attack and Level 1 skills
+    :return: a character dictionary with current stats, skills, and inventory as key-value pairs
+
     """
     inventory_items = ['Key', 'HP Potion', 'Kibble']
     inventory = {item: 0 for item in inventory_items}
