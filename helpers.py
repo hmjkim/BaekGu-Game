@@ -67,6 +67,24 @@ def use_hp_potion(character):
 
 
 def use_kibble(character):
+    """
+    Check the count of Kibble in inventory, and if any are available, use it to increase the character's hunger by one.
+
+    :param character: a dictionary including the keys 'Inventory' and 'Stat' including 'Kibble' and 'Hunger'
+    :precondition: character must have 'Inventory' and 'Stat' keys with 'Kibble' and 'Hunger' sub keys
+    :postcondition: character's hunger is increased by one if a kibble is available
+    :postcondition: kibble's count is reduced by one
+    :postcondition: Print that the user has used a kibble, showing increased hunger and the remaining kibble
+    :postcondition: if kibble is not available, print that the user doesn't have any kibble
+
+    >>> character_with_kibble = {'Inventory': {'Kibble': 1}, 'Stat': {'Hunger': 5}}
+    >>> use_kibble(character_with_kibble)
+    You ate '🍽️Kibble'. Hunger increased by +1. - Remaining quantity: 0
+    >>> character_with_kibble['Inventory']['Kibble']
+    0
+    >>> character_with_kibble['Stat']['Hunger']
+    6
+    """
     if character['Inventory']['Kibble'] > 0:
         character['Inventory']['Kibble'] -= 1
         character['Stat']['Hunger'] += 1
