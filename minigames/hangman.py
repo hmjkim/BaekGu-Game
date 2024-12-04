@@ -6,7 +6,7 @@ import warnings
 warnings.filterwarnings("ignore")
 
 
-def lists_of_words():
+def lists_of_words() -> tuple[list[str], list[str], list[str]]:
     """
     Generate three lists of words categorized by their lengths.
 
@@ -34,7 +34,7 @@ def lists_of_words():
     return word_4_list, word_5_list, word_6_list
 
 
-def check_character_level_hangman(character, lists=lists_of_words()):
+def check_character_level_hangman(character: dict, lists: list = lists_of_words()) -> list:
     """
     Determine the appropriate word list based on the character's level.
 
@@ -60,7 +60,7 @@ def check_character_level_hangman(character, lists=lists_of_words()):
         return lists[0]
 
 
-def word_strike(text):
+def word_strike(text: str) -> str:
     """
     Applies a strikethrough effect to each character in the strings.
 
@@ -79,7 +79,7 @@ def word_strike(text):
     return ' '.join([u'\u0336{}'.format(c) for c in text])
 
 
-def handle_incorrect_guess(guess, incorrect_guesses, remaining_lives):
+def handle_incorrect_guess(guess: str, incorrect_guesses: list, remaining_lives: int) -> None:
     """
     Print the wrong guess and remaining lives and update incorrect guess
     
@@ -99,7 +99,7 @@ def handle_incorrect_guess(guess, incorrect_guesses, remaining_lives):
     print("Incorrect answers: " + word_strike(incorrect_guesses))
 
 
-def hangman(word_list, character):
+def hangman(word_list: list[str], character: dict) -> tuple[bool, dict]:
     """
     Drive the hangman game.
     """
