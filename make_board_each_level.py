@@ -4,7 +4,7 @@ def add_border_walls(grid, grid_size):
 
     :param grid: a list representing the grid
     :param grid_size: the size of the grid
-    :preconditions: grid is a 2D square list of size
+    :preconditions: grid must be a list of lists
     :preconditions: grid_size is a positive integer
     :postconditions: the last row and the last columns of the grid are filled with the '#'
     :return: the modified grid with border walls added
@@ -30,8 +30,8 @@ def fill_spaces(grid, grid_size):
 
     :param grid: a list representing the grid
     :param grid_size: the size of the grid
-    :preconditions: grid is a 2D square list of size
-    :preconditions: grid_size is a positive integer
+    :preconditions: grid must be a list of lists
+    :preconditions: grid_size must be a positive integer
     :postconditions: the grid is filled (' ') with dots ('.')
     
      >>> grid_1 = [[' ' for _ in range(1)] for _ in range(1)]
@@ -168,5 +168,12 @@ def make_board_lv1():
 
 
 def display_grid(grid):
+    """
+    Show a 2D grid.
+
+    :param grid: a list representing the grid
+    :precondition: grid must be a list of lists
+    :postcondition: print the grid as 2D visual
+    """
     for row in grid:
         print(' '.join(row))
