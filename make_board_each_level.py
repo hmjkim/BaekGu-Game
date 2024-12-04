@@ -174,6 +174,15 @@ def display_grid(grid):
     :param grid: a list representing the grid
     :precondition: grid must be a list of lists
     :postcondition: print the grid as 2D visual
+
+    >>> grid_1 = [['.']]
+    >>> display_grid(grid_1)
+    .
+    >>> grid_3 = [['#', '.', '#'], ['.', '.', '.'], ['#', '.', '#']]
+    >>> display_grid(grid_3)
+    # . #
+    . . .
+    # . #
     """
     for row in grid:
         print(' '.join(row))
