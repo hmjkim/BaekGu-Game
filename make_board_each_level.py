@@ -50,6 +50,14 @@ def fill_spaces(grid, grid_size):
 
 
 def make_board_lv3():
+    """
+    Build a 10x10 grid and add specific walls with the '#' and special mark '!'.
+
+    :preconditions: initialize grid size as 10
+    :preconditions: initialize the grid as a 2D list of size 10x10
+    :postconditions: fill the grid with dots('.'), walls('#'), and a mark('!')
+    :return: the grid with dots, walls, and a mark
+    """
     grid_size = 10
     grid = [[' ' for _ in range(grid_size)] for _ in range(grid_size)]
     add_border_walls(grid, grid_size)
@@ -77,6 +85,14 @@ def make_board_lv3():
 
 
 def make_board_lv2():
+    """
+    Build a 10x10 grid and add specific walls with the '#' and special mark '!'.
+
+    :preconditions: initialize grid size as 10
+    :preconditions: initialize the grid as a 2D list of size 10x10
+    :postconditions: fill the grid with dots('.'), walls('#'), and a mark('!')
+    :return: the grid with dots, walls, and a mark
+    """
     grid_size = 10
     grid = [[' ' for _ in range(grid_size)] for _ in range(grid_size)]
     add_border_walls(grid, grid_size)
@@ -105,6 +121,14 @@ def make_board_lv2():
 
 
 def make_board_lv1():
+    """
+    Build a 10x10 grid and add specific walls with the '#' and special mark '!'.
+
+    :preconditions: initialize grid size as 10
+    :preconditions: initialize the grid as a 2D list of size 10x10
+    :postconditions: fill the grid with dots('.'), walls('#'), and a mark('!')
+    :return: the grid with dots, walls, and a mark
+    """
     grid_size = 10
     grid = [[' ' for _ in range(grid_size)] for _ in range(grid_size)]
     add_border_walls(grid, grid_size)
