@@ -96,6 +96,10 @@ def make_board_lv2():
     :preconditions: initialize the grid as a 2D list of size 10x10
     :postconditions: fill the grid with dots('.'), walls('#'), and a mark('!')
     :return: the grid with dots, walls, and a mark
+
+    >>> grid_mark = make_board_lv2()
+    >>> '!' == grid_mark[4][8]
+    True
     """
     grid_size = 10
     grid = [[' ' for _ in range(grid_size)] for _ in range(grid_size)]
@@ -132,6 +136,10 @@ def make_board_lv1():
     :preconditions: initialize the grid as a 2D list of size 10x10
     :postconditions: fill the grid with dots('.'), walls('#'), and a mark('!')
     :return: the grid with dots, walls, and a mark
+
+    >>> grid_mark= make_board_lv1()
+    >>> '!' == grid_mark[7][1]
+    True
     """
     grid_size = 10
     grid = [[' ' for _ in range(grid_size)] for _ in range(grid_size)]
