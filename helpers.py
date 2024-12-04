@@ -18,6 +18,21 @@ def is_alive(character):
 
 
 def lose_heart(character):
+    """
+    Reduce the character's heart count by one and reset their Current HP to the HP value.
+
+    :param character: a dictionary including 'Stat' as key including 'Heart', 'Current HP' and 'HP'
+    :precondition: character must have a 'Stat' key with a 'Heart', 'Current HP', and 'HP' sub keys
+    :postcondition: character's 'Heart' count is reduced by one, and 'Current HP' is set to 'HP'
+
+    >>> character_3_10_20 = {'Stat': {'Heart': 3, 'Current HP': 10, 'HP': 20}}
+    >>> lose_heart(character_3_10_20)
+    💔 You lost 1 Heart. You have 2 Heart(s) left.
+    >>> character_3_10_20['Stat']['Heart']
+    2
+    >>> character_3_10_20['Stat']['Current HP']
+    20
+    """
     character["Stat"]["Heart"] -= 1
     print(f"💔 You lost 1 Heart. You have {character['Stat']['Heart']} Heart(s) left.")
     character['Stat']['Current HP'] = character['Stat']['HP']
