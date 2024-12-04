@@ -21,6 +21,18 @@ def show_current_hp(hp, original_hp, name):
     :postcondition: print the current HP out of the total HP for the given character or enemy
     :return: a boolean that is True if the current HP is 0 or less
 
+    >>> show_current_hp(232, 250, 'Your')
+    *** 🩸 Your HP: 232/250 ***
+    <BLANKLINE>
+    False
+    >>> show_current_hp(0, 300, 'Spider')
+    *** 🩸 Spider HP: 0/300 ***
+    <BLANKLINE>
+    True
+    >>> show_current_hp(-30, 300, 'Spider')
+    *** 🩸 Spider HP: 0/300 ***
+    <BLANKLINE>
+    True
     """
     if hp <= 0:
         hp = 0
