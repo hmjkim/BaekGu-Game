@@ -1,4 +1,4 @@
-def is_alive(character):
+def is_alive(character: dict) -> bool:
     """
     Check a character's heart stat.
 
@@ -17,7 +17,7 @@ def is_alive(character):
     return character['Stat']['Heart'] > 0
 
 
-def lose_heart(character):
+def lose_heart(character: dict) -> None:
     """
     Reduce the character's heart count by one and reset their Current HP to the HP value.
 
@@ -38,7 +38,7 @@ def lose_heart(character):
     character['Stat']['Current HP'] = character['Stat']['HP']
 
 
-def use_hp_potion(character):
+def use_hp_potion(character: dict) -> None:
     """
     Check the count of HP potions in inventory, and if any are available, use it to restore the character's current HP.
 
@@ -66,7 +66,7 @@ def use_hp_potion(character):
         print("❌ You don't have any HP Potion.")
 
 
-def use_kibble(character):
+def use_kibble(character: dict) -> None:
     """
     Check the count of Kibble in inventory, and if any are available, use it to increase the character's hunger by one.
 
@@ -94,7 +94,7 @@ def use_kibble(character):
         print("❌ You don't have any Kibble.")
 
 
-def get_item_choice(character):
+def get_item_choice(character: dict) -> bool:
     """
     In order to use an item from the character's inventory, get the user's choice.
 
@@ -141,7 +141,7 @@ def get_item_choice(character):
             print("❌ Invalid input. Please enter a correct option from the list.")
 
 
-def display_inventory(character):
+def display_inventory(character: dict) -> None:
     """
     Display the inventory of a character.
 
@@ -159,7 +159,7 @@ def display_inventory(character):
     )
 
 
-def display_stats(character):
+def display_stats(character: dict) -> None:
     """
     Display the detailed status of a character. 
     
@@ -185,7 +185,7 @@ def display_stats(character):
     )
 
 
-def display_skills(character):
+def display_skills(character: dict) -> None:
     """
     Display the skills of a character.
 
