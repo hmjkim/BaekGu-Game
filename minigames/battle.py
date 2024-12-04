@@ -8,7 +8,7 @@ warnings.filterwarnings("ignore")
 
 def show_current_hp(hp, original_hp, name):
     """
-    Display the current HP of the given subject
+    Display the current HP of the given subject.
 
     If HP is less than or equal to 0, current HP becomes 0.
 
@@ -115,7 +115,7 @@ def configure_enemy_stat():
 
 def make_enemies(name, icon, description, level, hp_range, basic_attack, skill_damage, skill_name):
     """
-    Create an enemy including name, icon, description, level, HP, and attack information
+    Create an enemy including name, icon, description, level, HP, and attack information.
 
     :param name: a string
     :param icon: a string of an emoji
@@ -236,9 +236,20 @@ def choose_enemy_based_on_level(character, enemy_stat, boss_fight):
 
 
 def display_skill_uses(current_skill_usage, skill_usage_limit):
+    """
+    Display the remaining number of skill uses.
+
+    :param current_skill_usage: an integer representing the current number of skill uses
+    :param skill_usage_limit: an integer representing the total skill usage limit
+    :precondition: current_skill_usage must an integer between 0 and skill_usage_limit inclusive
+    :precondition: skill_usage_limit must a non-zero positive integer
+    :postcondition: print the current skill usage with empty boxes and remaining uses with filled boxes
+
+    """
     skill_used = "🔳"
     skill_not_used = "⬜️"
-    print(f"SKILL USES LEFT: {skill_used * current_skill_usage}{skill_not_used * skill_usage_limit}")
+    print(f"SKILL USES LEFT: {skill_used * current_skill_usage}"
+          f"{skill_not_used * (skill_usage_limit - current_skill_usage)}")
 
 
 def display_enemy_info(enemy):
@@ -327,7 +338,7 @@ def battle(character, boss_fight=False):
                         has_won = True
                         break
             elif user_choice == "2":
-                if skill_usage_limit > 0:
+                if current_skill_usage < skill_usage_limit:
                     while True:
                         print(f"In each battle, you are allowed a total of {total_skill_use} skill uses.")
                         display_skill_uses(current_skill_usage, skill_usage_limit)
@@ -349,7 +360,7 @@ def battle(character, boss_fight=False):
                             if victory_check:
                                 has_won = True
                                 break
-                            skill_usage_limit -= 1
+                            # skill_usage_limit -= 1
                             current_skill_usage += 1
                             break
                 else:
@@ -393,7 +404,12 @@ def battle(character, boss_fight=False):
 
 
 def main():
-    character = {'Stat': {'Level': 3, 'Heart': 5, 'Current HP': 500, 'HP': 500}}
+    character = {'Stat': {'HP': 250, 'Current HP': 1000, 'Level': 3, 'Exp': 0,
+                          'Max Exp': {'Level 1': 1000, 'Level 2': 1300, 'Level 3': 1500}, 'Heart': 10, 'Max Heart': 10,
+                          'Hunger': 10, 'Max Hunger': 10}, 'Skill': {'Basic Attack': 19, 'Current Skills': {
+        'Bark': {'Damage': 28, 'Description': 'A loud bark that stuns the enemy'}}},
+                 'Inventory': {'Key': 0, 'HP Potion': 0, 'Kibble': 0}}
+
     battle(character)
 
 
