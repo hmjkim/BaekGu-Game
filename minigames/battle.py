@@ -7,6 +7,21 @@ warnings.filterwarnings("ignore")
 
 
 def show_current_hp(hp, original_hp, name):
+    """
+    Display the current HP of the given subject
+
+    If HP is less than or equal to 0, current HP becomes 0.
+
+    :param hp: current HP as an integer
+    :param original_hp: total HP as an integer
+    :param name: the name of the subject as a string
+    :precondition: hp must be an integer that can be negative, postivie or zero
+    :precondition: original_hp must be a positive integer
+    :precondition: name must be a string representing either a character or enemy
+    :postcondition: print the current HP out of the total HP for the given character or enemy
+    :return: a boolean that is True if the current HP is 0 or less
+
+    """
     if hp <= 0:
         hp = 0
         print(f'*** 🩸 {name} HP: {hp}/{original_hp} ***\n')
@@ -81,30 +96,6 @@ def configure_enemy_stat():
     hp_range = [(80, 100), (101, 200), (201, 300), (301, 400), (500, 600)]
     attack_dmg = [(5, 10), (15, 30), (35, 50), (60, 90), (100, 250)]
     skill_dmg = [(10, 25), (26, 45), (46, 70), (75, 100), (130, 250)]
-
-    # return {
-    #     "HP Range": {
-    #         "Level 1": (80, 100),
-    #         "Level 2": (101, 200),
-    #         "Level 3": (201, 300),
-    #         "Level 4": (301, 400),
-    #         "Boss": (500, 600)
-    #     },
-    #     "Basic Attack": {
-    #         "Level 1": (5, 10),
-    #         "Level 2": (15, 30),
-    #         "Level 3": (35, 50),
-    #         "Level 4": (60, 90),
-    #         "Boss": (100, 300)
-    #     },
-    #     "Skill Damage": {
-    #         "Level 1": (10, 25),
-    #         "Level 2": (26, 45),
-    #         "Level 3": (46, 70),
-    #         "Level 4": (75, 100),
-    #         "Boss": (130, 300)
-    #     }
-    # }
     return {"HP Range": {level: hp_range for level, hp_range in zip(level, hp_range)},
             "Basic Attack": {level: damage_range for level, damage_range in zip(level, attack_dmg)},
             "Skill Damage": {level: damage_range for level, damage_range in zip(level, skill_dmg)}}
