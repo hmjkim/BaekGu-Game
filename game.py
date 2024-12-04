@@ -120,6 +120,24 @@ def make_character(skill_set):
     with basic attack and Level 1 skills
     :return: a character dictionary with current stats, skills, and inventory as key-value pairs
 
+    >>> from pprint import pprint
+    >>> skills = configure_skills()
+    >>> pprint(make_character(skills), sort_dicts=False) # doctest: +SKIP
+    {'Stat': {'HP': 250,
+              'Current HP': 250,
+              'Level': 1,
+              'Exp': 0,
+              'Max Exp': {'Level 1': 1000, 'Level 2': 1300, 'Level 3': 1500},
+              'Heart': 10,
+              'Max Heart': 10,
+              'Hunger': 10,
+              'Max Hunger': 10},
+     'Skill': {'Basic Attack': 28,
+               'Current Skills': {'Bark': {'Damage': 25,
+                                           'Description': 'A loud bark that stuns '
+                                                          'the enemy'}}},
+     'Inventory': {'Key': 0, 'HP Potion': 0, 'Kibble': 0}}
+
     """
     inventory_items = ['Key', 'HP Potion', 'Kibble']
     inventory = {item: 0 for item in inventory_items}
