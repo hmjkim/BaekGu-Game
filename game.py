@@ -328,6 +328,22 @@ def check_character_1_level_location_exp(first_location, character):
 
 
 def check_character_2_level_location_exp(first_location, character):
+    """
+    Evaluate the character's location, level, exp,and key to move next map.
+
+    :param first_location: the location of the character 
+    :param character: a dictionary including character's Stat as key
+    :precondition: first_location must be (4, 8)
+    :precondition: character must have 'Inventory' with 'Key', 'Stat' with 'Level', 'Exp', and 'Max Exp' keys
+    :postcondition: move the character to Level 3 if conditions are satisfied
+    :return: True if the character satisfies all conditions
+
+    >>> character_true = {'Inventory': {'Key': 3}, 'Stat': {'Level': 2, 'Exp': 1350, 'Max Exp': {'Level 2': 1300}}}
+    >>> check_character_2_level_location_exp((4, 8), character_true)
+    ⬆️⬆️⬆️ Level UP ⬆️⬆️⬆️
+    2nd Level clear! You are moving to Level 3.
+    True
+    """
     if (first_location == (4, 8) and character['Inventory']['Key'] >= 1 and character['Stat']['Level'] == 2 and
             character['Stat']['Exp'] >= character['Stat']['Max Exp']['Level 2']):
         # print('2렙 claer! 1렙 up 다음 3렙 맵으로 move')
@@ -340,8 +356,8 @@ def check_character_3_level_location_for_final(first_location, character):
     """
     Evaluate the character's location, level, and Exp to encounter final boss.
 
-    :param first_location: a tuple representing the location
-    :param character: A dictionary including character's Stat as key
+    :param first_location: the location of the character 
+    :param character: a dictionary including character's Stat as key
     :precondition: first_location must be (4, 4)
     :precondition: character must have 'Stat' key with 'Level' and 'Exp' keys, and 'Max Exp' key
     :postcondtion: print to fight the boss if the character is at the right location, level, and Exp level
