@@ -422,6 +422,24 @@ def introduce_game(user_name):
     :precondition: user_name must be a non-empty string registered in the game
     :postcondition: print an introductory story with a personalized greeting and explaination on how to play the game
 
+    >>> introduce_game('Heather') # doctest: +ELLIPSIS
+    Welcome to Baekgu, Heather!
+    You are Baekgu, a loyal white Jindo dog with a brave heart and a strong bond with your family.
+    Life has always been happy, full of love and play, until today—something is terribly wrong.
+    ...
+    Time to save Haru, Baekgu!
+    >>> introduce_game('Young Bin') # doctest: +ELLIPSIS
+    Welcome to Baekgu, Young Bin!
+    You are Baekgu, a loyal white Jindo dog with a brave heart and a strong bond with your family.
+    Life has always been happy, full of love and play, until today—something is terribly wrong.
+    ...
+    Time to save Haru, Baekgu!
+    >>> introduce_game('   ') # doctest: +ELLIPSIS
+    Welcome to Baekgu,    !
+    You are Baekgu, a loyal white Jindo dog with a brave heart and a strong bond with your family.
+    Life has always been happy, full of love and play, until today—something is terribly wrong.
+    ...
+    Time to save Haru, Baekgu!
     """
     file_path = "intro.txt"
     texts = load_text(file_path)
