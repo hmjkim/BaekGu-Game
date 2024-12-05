@@ -198,7 +198,7 @@ def make_character_location(grid: list) -> tuple:
     return first_location, prev_cell_content
 
 
-def get_user_choice(character: dict, grid: list) -> None:
+def get_user_choice(character: dict, grid: list) -> tuple[str, dict]:
     """
     Get the player's choice of which action they want to perform.
 
