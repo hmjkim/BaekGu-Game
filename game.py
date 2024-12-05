@@ -452,7 +452,7 @@ def introduce_game(user_name):
         time.sleep(3)
 
 
-def check_user(user_name):
+def check_user(user_name: str) -> bool:
     """
     Check if a user is registered in the game.
 
