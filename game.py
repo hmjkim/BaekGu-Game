@@ -352,7 +352,7 @@ def get_reward(character):
     return character
 
 
-def load_text(file):
+def load_text(file: str) -> list:
     """
     Load a list of lines of text read from a text file.
 
