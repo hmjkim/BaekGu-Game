@@ -453,6 +453,20 @@ def introduce_game(user_name):
 
 
 def check_user(user_name):
+    """
+    Check if a user is registered in the game.
+
+    If the user is not found in the players list, they are added to the list. If the user already exists, they are
+    notified as a returning player.
+
+    :param user_name: a string representing a player's name
+    :precondition: user_name must be a non-empty string
+    :postcondition: add the name of the new user to a file
+    :postcondition: print an informative message if the user is already registered
+    :return: a boolean indicating if the user is a returning player (True) or a new player (False)
+
+
+    """
     try:
         with open("players.txt") as players:
             player_list = players.readlines()
