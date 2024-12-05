@@ -165,11 +165,6 @@ def make_character(skill_set: dict) -> dict:
             }
         },
         "Inventory": inventory
-        #     {
-        #     "Key": 0,
-        #     "HP Potion": 0,
-        #     "Kibble": 0
-        # }
     }
 
 
@@ -347,7 +342,6 @@ def check_character_1_level_location_exp(first_location: tuple, character: dict)
     """
     if (first_location == (7, 1) and character['Inventory']['Key'] >= 1 and character['Stat']['Level'] == 1 and
             character['Stat']['Exp'] >= character['Stat']['Max Exp']['Level 1']):
-        # print('1렙 claer! 1렙 up 다음 2렙 맵으로 move')
         print("⬆️⬆️⬆️ Level UP ⬆️⬆️⬆️\n"
               "1st Level clear! You are moving to Level 2.")
         return True
@@ -372,7 +366,6 @@ def check_character_2_level_location_exp(first_location: tuple[int, int], charac
     """
     if (first_location == (4, 8) and character['Inventory']['Key'] >= 1 and character['Stat']['Level'] == 2 and
             character['Stat']['Exp'] >= character['Stat']['Max Exp']['Level 2']):
-        # print('2렙 claer! 1렙 up 다음 3렙 맵으로 move')
         print("⬆️⬆️⬆️ Level UP ⬆️⬆️⬆️\n"
               "2nd Level clear! You are moving to Level 3.")
         return True
@@ -725,7 +718,6 @@ def game():
             if challenge == 'battle':
                 print("You are going to battle! Prepare yourself.")
                 character, has_won = battle(character)
-                # print(has_won, character)
                 if has_won:
                     get_reward(character)
             elif challenge == 'hangman':
@@ -736,7 +728,6 @@ def game():
                 input("Press any key to continue...")
                 level = check_character_level_hangman(character)
                 has_won, character = hangman(level, character)
-                # print(has_won, character)
                 if has_won:
                     print("Congratulations! You have won!")
                     get_reward(character)
@@ -757,21 +748,6 @@ def game():
             grid = make_board_lv2()
             first_location, prev_cell_content = make_character_location(grid)
             level_up(character, 200, 2, skill_set)
-            # level_up_2(character, skill_set)
-            # character['Stat']['HP'] += 200
-            # character['Stat']['Current HP'] = character['Stat']['HP']
-            # character['Stat']['Level'] = 2
-            # character['Stat']['Exp'] = 0
-            # character['Stat']['Hunger'] = 10
-            # character['Skill']['Current Skills'].update(skill_set['Level 2'])
-            # # character['Skill'] = {
-            # #     "Basic Attack": random.randint(10, 30),
-            # #     "Current Skills": {
-            # #             "Bark": random.randint(20, 50),
-            # #             "Scratch": random.randint(20, 50),
-            # #             "Digging": random.randint(20, 50)}}
-            # print(f"Your maximum HP has been increased by 200. "
-            #       f"You earned two new skills ({','.join(skill_set['Level 2'].keys())}). (max HP +200)\n")
             describe_map_based_on_level(character)
 
         goal_lv2 = check_character_2_level_location_exp(first_location, character)
@@ -779,24 +755,6 @@ def game():
             grid = make_board_lv3()
             first_location, prev_cell_content = make_character_location(grid)
             level_up(character, 250, 3, skill_set)
-            # level_up_3(character, skill_set)
-            # character['Stat']['HP'] += 250
-            # character['Stat']['Current HP'] = character['Stat']['HP']
-            # character['Stat']['Level'] = 3
-            # character['Stat']['Exp'] = 0
-            # character['Stat']['Hunger'] = 10
-            # character['Skill']['Current Skills'].update(skill_set['Level 3'])
-            # character['Skill'] = {
-            #     "Basic Attack": random.randint(10, 30),
-            #     "Current Skills": {
-            #         "Bark": random.randint(20, 50),
-            #         "Scratch": random.randint(20, 50),
-            #         "Digging": random.randint(20, 50),
-            #         "Tail Whip": random.randint(20, 50),
-            #         "Bite": random.randint(20, 50)}}
-            # print(f"Your maximum HP has been increased by 250. "
-            #       f"You earned two new skills ({','.join(skill_set['Level 3'].keys())}). (max HP +250)\n")
-            # print("당신의 hp 200상승, level up, skill을 얻으셧습니다(Tail whip, bite)")
             describe_map_based_on_level(character)
         final_goal = check_character_3_level_location_for_final(first_location, character)
         if final_goal is not None:
