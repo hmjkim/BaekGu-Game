@@ -5,7 +5,7 @@ from minigames.battle import battle
 from helpers import is_alive, display_skills, display_inventory, display_stats, get_item_choice
 
 
-def configure_skills():
+def configure_skills() -> dict[str, dict[str, dict[str, str | int]]]:
     """
     Configure skills for each character level, including skill name, damage, and description.
 
@@ -59,7 +59,7 @@ def configure_skills():
     }
 
 
-def go_to_sleep(character, total_time):
+def go_to_sleep(character: dict, total_time: int) -> None:
     """
     Make the character sleep for the specified duration.
 
@@ -107,7 +107,7 @@ def go_to_sleep(character, total_time):
     print("You feel well-rested! Your Hunger has been fully restored.")
 
 
-def make_character(skill_set):
+def make_character(skill_set: dict) -> dict:
     """
     Create a character with initial stats, skills, and inventory.
 
@@ -173,7 +173,7 @@ def make_character(skill_set):
     }
 
 
-def make_character_location(grid):
+def make_character_location(grid: list[list[str]]) -> tuple[tuple[int, int], str]:
     """
     Initiate first location as 1,1 and save privious content and put dog in the first location.
 
@@ -318,7 +318,7 @@ def check_character_hunger(character: dict) -> dict:
     return character
 
 
-def check_character_1_level_location_exp(first_location, character):
+def check_character_1_level_location_exp(first_location: tuple, character: dict) -> bool:
     """
     Evaluate the character's location, level, exp,and key to move next map.
 
@@ -343,7 +343,7 @@ def check_character_1_level_location_exp(first_location, character):
         return True
 
 
-def check_character_2_level_location_exp(first_location, character):
+def check_character_2_level_location_exp(first_location: tuple[int, int], character: dict) -> bool:
     """
     Evaluate the character's location, level, exp,and key to move next map.
 
@@ -368,7 +368,7 @@ def check_character_2_level_location_exp(first_location, character):
         return True
 
 
-def check_character_3_level_location_for_final(first_location, character):
+def check_character_3_level_location_for_final(first_location: tuple[int, int], character: dict) -> bool:
     """
     Evaluate the character's location, level, and Exp to encounter final boss.
 
@@ -387,7 +387,7 @@ def check_character_3_level_location_for_final(first_location, character):
         return has_won
 
 
-def check_probability(rate):
+def check_probability(rate: float) -> bool:
     """
     Check if an event occurs based on a given rate.
 
@@ -497,7 +497,7 @@ def load_text(file: str) -> list:
         return []
 
 
-def introduce_game(user_name):
+def introduce_game(user_name: str) -> None:
     """
     Provide an introduction to the game, including a personalized greeting and how-to-play instructions.
 
