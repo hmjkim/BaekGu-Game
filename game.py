@@ -263,14 +263,16 @@ def move_character_valid_move(grid, position, direction, prev_cell_content, char
     :param direction: a string indicating the direction of movement ('w', 'a', 's', 'd')
     :param prev_cell_content: the content of the previous cell before the character moved
     :param character: a well-formed character dictionary containing character stats
-    :precondition: grid must be a 2D list representing the map, with each cell containing either a '#' or a valid cell content
+    :precondition: grid must be a 2D list representing the map, with each cell containing either a '#' or a valid
+    cell content
     :precondition: position must be a tuple (row, col) within the bounds of the grid
     :precondition: direction must be one of 'w', 'a', 's', 'd' representing up, left, down, or right respectively
     :precondition: prev_cell_content must be the content of the previous cell before the character moved
     :precondition: character must be a dictionary containing key "Stat" which includes "Hunger"
     :postcondition: the character is moved if the target cell is not a wall ('#')
     :postcondition: character's Hunger level decreases by 1 if the move is successful
-    :return: a tuple containing the new position (row, col), new_prev_cell_content, updated character dictionary, and a boolean indicating if the move was valid
+    :return: a tuple containing the new position (row, col), new_prev_cell_content, updated character dictionary, and
+    a boolean indicating if the move was valid
 
     >>> map_grid = [['#', '#', '#'], ['#', '.', '#'], ['#', '🐶', '#']]
     >>> character_position = (2, 1)
