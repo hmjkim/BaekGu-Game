@@ -174,6 +174,24 @@ def make_character(skill_set):
 
 
 def make_character_location(grid):
+    """
+    Initiate first location as 1,1 and save privious content and put dog in the first location.
+
+    :param grid: a list representing the grid
+    :precondition: grid must be a list of lists
+    :postcondition: initial location (1, 1) on the grid
+    :postcondition: save the previous content in prev_cell_content
+    :postcondition: initiate a character as '🐶' in the first location of the grid
+    :return: a tuple including the initial location of the character and the previous content
+
+    >>> grid_first = [['.', '.', '.'],['.', '.', '.'],['.', '.', '.']]
+    >>> make_character_location(grid_first)
+    ((1, 1), '.')
+    >>> make_character_location(grid_first)
+    ((1, 1), '🐶')
+    >>> grid_first
+    [['.', '.', '.'], ['.', '🐶', '.'], ['.', '.', '.']]
+    """
     first_location = (1, 1)
     prev_cell_content = grid[first_location[0]][first_location[1]]
     grid[first_location[0]][first_location[1]] = '🐶'
