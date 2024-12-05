@@ -362,6 +362,16 @@ def load_text(file):
     :precondition: file must be a valid path to a text file containing Unicode characters or an empty file
     :postcondition: return a list of strings representing each line of text, with trailing whitespaces removed
     :return: a list of strings or an empty list if invalid file path
+
+    >>> content = load_text('intro.txt')
+    >>> content[:4] # doctest: +NORMALIZE_WHITESPACE
+    ['You are Baekgu, a loyal white Jindo dog with a brave heart and a strong bond with your family.',
+    'Life has always been happy, full of love and play, until today—something is terribly wrong.',
+    "Using your extraordinary sense of smell and intuition, you've realized that your family's little boy, Haru, has
+    suddenly gone missing.", "Your mission is clear - Find Haru and bring him back home safely before it's too late."]
+    >>> load_text('')
+    Error: The file  was not found.
+    []
     """
     try:
         with open(file, 'r') as file:
@@ -375,6 +385,7 @@ def load_text(file):
 def introduce_game(user_name):
     file_path = "intro.txt"
     texts = load_text(file_path)
+    print(texts)
     if not texts:
         return
     print(f"Welcome to Baekgu, {user_name}!")
