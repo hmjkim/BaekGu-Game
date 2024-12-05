@@ -79,7 +79,7 @@ def word_strike(text: str) -> str:
     return ' '.join([u'\u0336{}'.format(c) for c in text])
 
 
-def handle_incorrect_guess(guess: str, incorrect_guesses: list, remaining_lives: int) -> None:
+def handle_incorrect_guess(guess: str, incorrect_guesses, remaining_lives: int) -> None:
     """
     Print the wrong guess and remaining lives and update incorrect guess
     
