@@ -273,6 +273,22 @@ def check_character_hunger(character):
     :postcondition: make character sleep to restore their Hunger to the Max Hunger value when Hunger becomes 0
     :return: a character dictionary with updated Hunger level
 
+    >>> starving_character = {"Stat": {"Hunger": 0, "Max Hunger": 10}}
+    >>> check_character_hunger(starving_character) # doctest: +ELLIPSIS
+    ⚠️⚠️⚠️ Oops! You have run out of energy. It's a nap time, Baekgu ⚠️⚠️⚠️
+    <BLANKLINE>
+    💤 You are going to sleep for 20 second(s) to regain energy.
+    1 sec
+    2 sec
+    3 sec
+    ...
+    19 sec
+    20 sec
+    You feel well-rested! Your Hunger has been fully restored.
+    {'Stat': {'Hunger': 10, 'Max Hunger': 10}}
+    >>> less_hungry_character = {"Stat": {"Hunger": 2, "Max Hunger": 10}}
+    >>> check_character_hunger(less_hungry_character)
+    {'Stat': {'Hunger': 2, 'Max Hunger': 10}}
     """
     if character["Stat"]['Hunger'] == 0:
         print("⚠️⚠️⚠️ Oops! You have run out of energy. It's a nap time, Baekgu ⚠️⚠️⚠️")
