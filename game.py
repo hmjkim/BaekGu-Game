@@ -413,9 +413,18 @@ def load_text(file: str) -> list:
 
 
 def introduce_game(user_name):
+    """
+    Provide an introduction to the game, including a personalized greeting and how-to-play instructions.
+
+    Each line of text will be displayed with a delay to give the player time to follow along.
+
+    :param user_name: a string representing a player's name
+    :precondition: user_name must be a non-empty string registered in the game
+    :postcondition: print an introductory story with a personalized greeting and explaination on how to play the game
+
+    """
     file_path = "intro.txt"
     texts = load_text(file_path)
-    print(texts)
     if not texts:
         return
     print(f"Welcome to Baekgu, {user_name}!")
