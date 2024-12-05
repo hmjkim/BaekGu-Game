@@ -198,10 +198,20 @@ def make_character_location(grid):
     return first_location, prev_cell_content
 
 
-def get_user_choice(character, grid):
+def get_user_choice(character: dict, grid: list) -> None:
+    """
+    Get the player's choice of which action they want to perform.
+
+    Actions include moving around, checking inventory, viewing stats, viewing skills, going to sleep,
+    and reading how-to-play instructions.
+
+    :param character: a well-formed character dictionary
+    :param grid: a list representing the grid
+    :precondition: character must be a dictionary containing a key "Stat", "Skill", and "Inventory"
+    :postcondition: perform the action based on user's decision
+    """
     types_input = ['1', '2', '3', '4', '5', '6']
 
-    # Main game loop to handle user choices
     while True:
         display_grid(grid)
         user_choice = input(
