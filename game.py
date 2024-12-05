@@ -346,6 +346,19 @@ def check_probability(rate):
 
 
 def get_reward(character):
+    """
+    Give rewards to the player based on drop rates.
+
+    Experience points (Exp) are always given, and additional items will drop based on their specific drop rates.
+    Each reward either increases character stats permanently or is added to the character's inventory.
+
+    :param character: a well-formed character dictionary
+    :precondition: character must be a dictionary containing "Stat" and "Inventory" keys, with "Stat" including
+    "Level", "Exp", "Max Exp", and "Hunger"
+    :postcondition: update character's inventory with rewards received or apply effects directly to character stats
+    :return: a character dictionary with updated inventory and stats
+
+    """
     exp = random.randint(200, 400)
     character['Stat']['Exp'] += exp
     max_exp = character['Stat']['Max Exp']['Level 1'] if character['Stat']['Level'] == 1 else (
