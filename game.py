@@ -173,7 +173,7 @@ def make_character(skill_set):
     }
 
 
-def make_character_location(grid):
+def make_character_location(grid: list) -> tuple:
     """
     Initiate first location as 1,1 and save privious content and put dog in the first location.
 
