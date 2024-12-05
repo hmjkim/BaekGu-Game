@@ -270,6 +270,7 @@ def check_character_hunger(character: dict) -> dict:
     :param character: a well-formed character dictionary
     :precondition: character must be a dictionary containing a key "Stat" that holds another dictionary with a "Hunger"
     key and a "Max Hunger" key
+    :precondition: character must have "Hunger" and "Max Hunger" values that are greater than or equal to 0
     :postcondition: make character sleep to restore their Hunger to the Max Hunger value when Hunger becomes 0
     :return: a character dictionary with updated Hunger level
 
@@ -289,6 +290,9 @@ def check_character_hunger(character: dict) -> dict:
     >>> less_hungry_character = {"Stat": {"Hunger": 2, "Max Hunger": 10}}
     >>> check_character_hunger(less_hungry_character)
     {'Stat': {'Hunger': 2, 'Max Hunger': 10}}
+    >>> full_character = {"Stat": {"Hunger": 10, "Max Hunger": 10}}
+    >>> check_character_hunger(full_character)
+    {'Stat': {'Hunger': 10, 'Max Hunger': 10}}
     """
     if character["Stat"]['Hunger'] == 0:
         print("⚠️⚠️⚠️ Oops! You have run out of energy. It's a nap time, Baekgu ⚠️⚠️⚠️")
