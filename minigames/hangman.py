@@ -79,7 +79,7 @@ def word_strike(text: str) -> str:
     return ' '.join([u'\u0336{}'.format(c) for c in text])
 
 
-def handle_incorrect_guess(guess: str, incorrect_guesses: list, remaining_lives: int) -> None:
+def handle_incorrect_guess(guess: str, incorrect_guesses, remaining_lives: int) -> None:
     """
     Print the wrong guess and remaining lives and update incorrect guess
     
@@ -129,7 +129,6 @@ def hangman(word_list: list[str], character: dict) -> tuple[bool, dict]:
             if lives == 0:
                 print("You lose.")
                 print(f"The word was: '{chosen_word}'")
-                # character['Stat']['Heart'] -= 1
                 lose_heart(character)
                 break
 
@@ -141,14 +140,3 @@ def hangman(word_list: list[str], character: dict) -> tuple[bool, dict]:
         stages = stage()
         print(stages[lives])
     return end_of_game, character
-
-
-def main():
-    character = {'Stat': {'Level': 1, 'Heart': 1}}
-    words = check_character_level_hangman(character)
-    i, j = hangman(words, character)
-    print(i, j)
-
-
-if __name__ == "__main__":
-    main()

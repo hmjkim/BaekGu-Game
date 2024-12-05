@@ -1,6 +1,5 @@
 import random
 import time
-
 from helpers import lose_heart
 
 
@@ -62,15 +61,3 @@ def play_game(level: int, character: dict) -> tuple[bool, dict]:
         print("The answer was ", strings)
         lose_heart(character)
         return False, character
-
-
-def main():
-    character = {'Stat': {'Level': 1, 'Heart': 5}}
-    level_matching_game = check_character_level_matching_game(character)
-    check, character = play_game(level_matching_game, character)
-    print(check, character)
-
-
-if __name__ == "__main__":
-    main()
-
