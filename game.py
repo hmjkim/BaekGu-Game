@@ -264,6 +264,16 @@ def move_character_valid_move(grid, position, direction, prev_cell_content, char
 
 
 def check_character_hunger(character):
+    """
+    Force the character to go to sleep when Hunger level reaches 0.
+
+    :param character: a well-formed character dictionary
+    :precondition: character must be a dictionary containing a key "Stat" that holds another dictionary with a "Hunger"
+    key and a "Max Hunger" key
+    :postcondition: make character sleep to restore their Hunger to the Max Hunger value when Hunger becomes 0
+    :return: a character dictionary with updated Hunger level
+
+    """
     if character["Stat"]['Hunger'] == 0:
         print("⚠️⚠️⚠️ Oops! You have run out of energy. It's a nap time, Baekgu ⚠️⚠️⚠️")
         go_to_sleep(character, 20)
@@ -396,7 +406,6 @@ def introduce_game(user_name):
 
 
 def check_user(user_name):
-    # try except when file doesn't exist
     try:
         with open("players.txt") as players:
             player_list = players.readlines()
@@ -464,27 +473,6 @@ def level_up(character, hp, level, skill_set):
     print(f"Your maximum HP has been increased by {hp}. "
           f"You earned two new skills ({','.join(skill_set[f'Level {level}'].keys())}). (max HP +{hp})\n")
 
-
-# def level_up_2(character, skill_set):
-#     character['Stat']['HP'] += 200
-#     character['Stat']['Current HP'] = character['Stat']['HP']
-#     character['Stat']['Level'] = 2
-#     character['Stat']['Exp'] = 0
-#     character['Stat']['Hunger'] = 10
-#     character['Skill']['Current Skills'].update(skill_set['Level 2'])
-#     print(f"Your maximum HP has been increased by 200. "
-#           f"You earned two new skills ({','.join(skill_set['Level 2'].keys())}). (max HP +200)\n")
-#
-#
-# def level_up_3(character, skill_set):
-#     character['Stat']['HP'] += 250
-#     character['Stat']['Current HP'] = character['Stat']['HP']
-#     character['Stat']['Level'] = 3
-#     character['Stat']['Exp'] = 0
-#     character['Stat']['Hunger'] = 10
-#     character['Skill']['Current Skills'].update(skill_set['Level 3'])
-#     print(f"Your maximum HP has been increased by 250. "
-#           f"You earned two new skills ({','.join(skill_set['Level 3'].keys())}). (max HP +250)\n")
 
 def game():
     """
