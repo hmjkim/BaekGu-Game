@@ -353,6 +353,16 @@ def get_reward(character):
 
 
 def load_text(file):
+    """
+    Load a list of lines of text read from a text file.
+
+    Whitespaces at the end of each line will be removed.
+
+    :param file: a string representing a path to a text file
+    :precondition: file must be a valid path to a text file containing Unicode characters or an empty file
+    :postcondition: return a list of strings representing each line of text, with trailing whitespaces removed
+    :return: a list of strings or an empty list if invalid file path
+    """
     try:
         with open(file, 'r') as file:
             texts = file.readlines()
