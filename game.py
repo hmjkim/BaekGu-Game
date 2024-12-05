@@ -465,7 +465,15 @@ def check_user(user_name):
     :postcondition: print an informative message if the user is already registered
     :return: a boolean indicating if the user is a returning player (True) or a new player (False)
 
-
+    >>> check_user('Heather')
+    You're already a player! Welcome back, Heather!
+    True
+    >>> check_user('Young Bin') # doctest: +SKIP
+    ✅ New user is created!
+    False
+    >>> check_user('     ')
+    You're already a player! Welcome back,      !
+    True
     """
     try:
         with open("players.txt") as players:
