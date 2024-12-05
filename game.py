@@ -358,6 +358,16 @@ def get_reward(character):
     :postcondition: update character's inventory with rewards received or apply effects directly to character stats
     :return: a character dictionary with updated inventory and stats
 
+    >>> character_dict = {"Stat": {"Level": 1, "Exp": 0, "Hunger": 3, "Max Exp":
+    ... {'Level 1': 1000, 'Level 2': 1300, 'Level 3': 1500},},
+    ... "Inventory": {"HP Potion": 0, "Key": 0, "Kibble": 0}}
+    >>> get_reward(character_dict) # doctest: +SKIP
+    🏆 Reward Earned 🏆
+     - Exp +232          (232/1000)
+     - HP Potion +1      Fully restores current HP (saved to inventory)
+     - Key +1            Used to move to the next level (saved to inventory)
+    {'Stat': {'Level': 1, 'Exp': 232, 'Hunger': 3, 'Max Exp': {'Level 1': 1000, 'Level 2': 1300, 'Level 3': 1500}},
+    'Inventory': {'HP Potion': 1, 'Key': 1, 'Kibble': 0}}
     """
     exp = random.randint(200, 400)
     character['Stat']['Exp'] += exp
