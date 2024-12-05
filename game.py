@@ -553,6 +553,35 @@ def level_up(character: dict, hp: int, level: int, skill_set: dict) -> None:
     :precondition: skill_set must be a dictionary with keys as character levels and values as dictionaries of skills
     :postcondition: update the character dictionary with the new stats and inventory
 
+    >>> character_ready_to_level_up = {
+    ... "Stat": {
+    ...        "HP": 250,
+    ...        "Current HP": 250,
+    ...        "Level": 1,
+    ...        "Exp": 0,
+    ...        "Heart": 10,
+    ...        "Hunger": 10
+    ...    },
+    ...    "Inventory": {
+    ...        "Key": 5
+    ...    },
+    ...    "Skill": {
+    ...        "Basic Attack": 20,
+    ...        "Current Skills": {}
+    ...    }
+    ... }
+    >>> skill_list = configure_skills()
+    >>> level_up(character_ready_to_level_up, 200, 2, skill_list)
+    Your maximum HP has been increased by 200. You earned two new skills (Scratch,Digging). (max HP +200)
+    <BLANKLINE>
+    >>> character_ready_to_level_up # doctest: +SKIP
+    {'Stat': {'HP': 450, 'Current HP': 450, 'Level': 2, 'Exp': 0, 'Heart': 10, 'Hunger': 10}, 'Inventory': {'Key': 0},
+    'Skill': {'Basic Attack': 25, 'Current Skills': {'Scratch': {'Damage': 44, 'Description':
+    'A swift paw swipe leaving deep marks'}, 'Digging': {'Damage': 45, 'Description':
+    'Kick up dirt to blind the enemy'}}}}
+    >>> level_up(character_ready_to_level_up, 0, 3, skill_list)
+    Your maximum HP has been increased by 0. You earned two new skills (Tail Whip,Bite). (max HP +0)
+    <BLANKLINE>
     """
     character['Stat']['HP'] += hp
     character['Stat']['Current HP'] = character['Stat']['HP']
