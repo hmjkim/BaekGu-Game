@@ -263,7 +263,7 @@ def move_character_valid_move(grid, position, direction, prev_cell_content, char
         return (row, col), prev_cell_content, character, valid_check
 
 
-def check_character_hunger(character):
+def check_character_hunger(character: dict) -> dict:
     """
     Force the character to go to sleep when Hunger level reaches 0.
 
