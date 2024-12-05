@@ -25,7 +25,7 @@ class Test(TestCase):
     @patch('builtins.input', side_effect=['W', 'S', 'D', 'A'])
     @patch('random.choices', return_value=['A', 'D', 'S', 'W'])
     def test_play_game_failure_boolean(self, _, __):
-        character = {'Stat': {'Heart': 3}}
+        character = {'Stat': {'Heart': 3, 'Current HP': 30, 'HP': 100}}
         level = 4
         actual, updated_character = play_game(level, character)
         expected = False
@@ -34,8 +34,8 @@ class Test(TestCase):
     @patch('builtins.input', side_effect=['W', 'S', 'D', 'A'])
     @patch('random.choices', return_value=['A', 'D', 'S', 'W'])
     def test_play_game_failure_reduce_heart(self, _, __):
-        character = {'Stat': {'Heart': 3}}
+        character = {'Stat': {'Heart': 3, 'Current HP': 30, 'HP': 100}}
         level = 4
         result, actual = play_game(level, character)
-        expected = {'Stat': {'Heart': 2}}
+        expected = {'Stat': {'Heart': 2, 'Current HP': 100, 'HP': 100}}
         self.assertEqual(actual, expected)
