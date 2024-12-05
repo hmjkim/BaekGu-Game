@@ -345,7 +345,7 @@ def check_probability(rate):
     return random.random() <= rate
 
 
-def get_reward(character):
+def get_reward(character: dict) -> dict:
     """
     Give rewards to the player based on drop rates.
 
