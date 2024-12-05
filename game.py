@@ -530,7 +530,30 @@ def describe_map_based_on_level(character):
               "ready to protect these treasures. Proceed with caution.")
 
 
-def level_up(character, hp, level, skill_set):
+def level_up(character: dict, hp: int, level: int, skill_set: dict) -> None:
+    """
+    Update character stats when character levels up.
+
+    When the character levels up:
+    - Maximum HP increases by the specified value.
+    - Current HP is fully restored to match the new maximum HP.
+    - The character's level is updated to the new value provided.
+    - Hunger level is fully restored to its maximum value.
+    - The number of keys the character holds is reset to zero.
+    - The character gains new skills from the skill set appropriate to the new level.
+
+    :param character: a well-formed character dictionary
+    :param hp: an integer representing the max HP should increase by
+    :param level: an integer representing the character's new level
+    :param skill_set: a dictionary containing skills for different character levels
+    :precondition: character must be a dictionary containing keys "Stat", "HP", "Exp", "Current HP", "Inventory",
+    and "Skill"
+    :precondition: hp must be greater than or equal to 0
+    :precondition: level must be greater than or equal to 0
+    :precondition: skill_set must be a dictionary with keys as character levels and values as dictionaries of skills
+    :postcondition: update the character dictionary with the new stats and inventory
+
+    """
     character['Stat']['HP'] += hp
     character['Stat']['Current HP'] = character['Stat']['HP']
     character['Stat']['Level'] = level
