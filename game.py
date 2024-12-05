@@ -319,6 +319,22 @@ def check_character_hunger(character: dict) -> dict:
 
 
 def check_character_1_level_location_exp(first_location, character):
+    """
+    Evaluate the character's location, level, exp,and key to move next map.
+
+    :param first_location: the location of the character
+    :param character: a dictionary including character's Stat as key
+    :precondition: first_location must be (7, 1)
+    :precondition: character must have 'Inventory' with 'Key', 'Stat' with 'Level', 'Exp', and 'Max Exp' keys
+    :postcondition: move the character to Level 2 if conditions are satisfied
+    :return: True if the character satisfies all conditions
+
+    >>> character_true = {'Inventory': {'Key': 1}, 'Stat': {'Level': 1, 'Exp': 1350, 'Max Exp': {'Level 1': 1350}}}
+    >>> check_character_1_level_location_exp((7, 1), character_true)
+    ⬆️⬆️⬆️ Level UP ⬆️⬆️⬆️
+    1st Level clear! You are moving to Level 2.
+    True
+    """
     if (first_location == (7, 1) and character['Inventory']['Key'] >= 1 and character['Stat']['Level'] == 1 and
             character['Stat']['Exp'] >= character['Stat']['Max Exp']['Level 1']):
         # print('1렙 claer! 1렙 up 다음 2렙 맵으로 move')
