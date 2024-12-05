@@ -353,13 +353,14 @@ def get_reward(character: dict) -> dict:
     Each reward either increases character stats permanently or is added to the character's inventory.
 
     :param character: a well-formed character dictionary
-    :precondition: character must be a dictionary containing "Stat" and "Inventory" keys, with "Stat" including
+    :precondition: character must be a dictionary containing "Stat", "Inventory", "Skill" keys, with "Stat" including
     "Level", "Exp", "Max Exp", and "Hunger"
     :postcondition: update character's inventory with rewards received or apply effects directly to character stats
     :return: a character dictionary with updated inventory and stats
 
     >>> character_dict = {"Stat": {"Level": 1, "Exp": 0, "Hunger": 3, "Max Exp":
     ... {'Level 1': 1000, 'Level 2': 1300, 'Level 3': 1500},},
+    ... "Skill": { "Basic Attack": 2 },
     ... "Inventory": {"HP Potion": 0, "Key": 0, "Kibble": 0}}
     >>> get_reward(character_dict) # doctest: +SKIP
     🏆 Reward Earned 🏆
@@ -517,7 +518,7 @@ def check_user(user_name: str) -> bool:
                 return False
 
 
-def describe_map_based_on_level(character):
+def describe_map_based_on_level(character: dict) -> None:
     """
     Display a description of the current map based on the character's level.
 
