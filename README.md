@@ -10,7 +10,34 @@ comprehensive doctests, this project aims to demonstrate clean, bug-free, and we
 
 - Python 3.12.6
 
+## Installation Guide
+
+Follow these steps to install and run the game on your local machine.
+
+1. Open your terminal and clone the repository.
+
+```shell
+https://github.com/hmjkim/BaekGu-Game.git
+```
+
+2. Navigate to the game directory. Ensure you replace `YOUR_FOLDER_PATH` with the actual path where the repository was
+   cloned.
+
+```shell
+cd YOUR_FOLDER_PATH/BaekGu-Game
+```
+
+3. Run the game using Python 3.
+
+```shell
+python3 game.py
+```
+
+4. Have fun!
+
 ## 📖 How to Play 📖
+
+Find Haru and defeat the final boss. Rescue Haru and return him home safely!
 
 - Keep an eye on "Hunger" level. On every move, you will lose 1 Hunger and need to “Sleep” to recharge your stamina
   before it runs out.
@@ -22,10 +49,6 @@ comprehensive doctests, this project aims to demonstrate clean, bug-free, and we
     - 🚪 To stand in front of the door (❕).
     - 🗝️ A key in your inventory to unlock the way.
     - ⭐️ Full Exp level (varies by level).
-
-Your ultimate objective:
-Defeat the boss who is holding Haru captive and bring him back home to your loving family!!!!!
-Your journey may be filled with dangers, but with your sharp senses and loyalty, you are Haru's only hope.
 
 ## Authors
 
